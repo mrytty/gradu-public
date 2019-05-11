@@ -1,0 +1,308 @@
+\documentclass[12pt,a4paper,english,oneside,oldtoc,titlepage]{book}
+\usepackage[
+top=1.5cm,
+bottom=1.5cm,
+left=4cm,
+right=2.5cm,
+headheight=17pt, % as per the warning by fancyhdr
+includehead,includefoot,
+heightrounded, % to avoid spurious underfull messages
+]{geometry}
+
+%KIELI JA ��KK�SET
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}    % Linux, paketti sy�tetiedoston merkist�koodauksen valintaan
+%\usepackage[ansinew]{inputenc}  % Windows
+% \usepackage[cp850]{inputenc}   % DOS
+%\usepackage[T1]{fontenc}         % paketti, jolla m��ritet��n LaTeXin k�ytt�m� merkist�koodaus
+\usepackage[english]{babel}      % suomen kielinen tavutus
+\usepackage{csquotes}
+
+% Paketti babel muuttaa my�s kirjoitelmassa olevat nimikkeet kuten 'table of contents'
+% vastaaviksi suomenkielisiksi nimikkeiksi kuten sis�lt� tai sis�llysluettelo
+
+%PAKETIT
+
+\usepackage[hyphens]{url}             % AMS-LaTeX, matemaattisia makroja
+\usepackage[fleqn]{amsmath}             % AMS-LaTeX, matemaattisia makroja
+\usepackage{amsmath}             % AMS-LaTeX, matemaattisia makroja
+\usepackage{textcomp}            % tekstiss� k�ytett�vi� symboleita
+\usepackage{mathcomp}            % textcompin symboleita matematiikkaan
+\usepackage{amssymb}             % American mathematical Societyn tekemi� symboleita
+\usepackage{amsfonts}            % American Mathematical Societyn fonttikokoelma 
+                                 % matematiikkaa varten: liitutaulufontit yms.
+\usepackage{latexsym}            % matemaattisia symboleita
+\usepackage{amsxtra}              % tuki vanhoille amslatexin komennoille
+\usepackage{amsthm}              % Paketti teoreemaymp�rist�ille
+\usepackage{mathtools}           % Lis�� ty�kaluja matemaattisten kaavojen kirjoittamiseen
+                                 % vain yht�l�t, joihin viitataan, numeroidaan
+
+%\usepackage[active]{srcltx}      % k��nteisen haun mahdollistava paketti Linuxille
+
+\usepackage{graphicx}            % paketti grafiikan lis��miseen
+%\usepackage{color}               % paketti v�rillien tulostuksen hallintaan
+\usepackage{paralist}            % lis�� hallintaa listarakenteille
+\usepackage{booktabs}            % tyylikk��mpi� viivoja taulukoihin
+\usepackage{longtable}           % usean sivun mittaisia taulukoita
+\usepackage{float}               % parempi hallinta leijuvaisille
+\usepackage{afterpage}           % hy�dyllinen makro leijuvaisten yms. yhteydess�
+\usepackage{enumitem}    
+\usepackage[official]{eurosym}
+
+\usepackage{float}               % parempi hallinta leijuvaisille
+\usepackage{afterpage}           % hyödyllinen makro leijuvaisten yms. yhteydessä
+
+\usepackage{setspace}
+
+\usepackage{mathptmx}
+
+%\usepackage[round]{natbib}
+\usepackage[bottom]{footmisc}
+
+\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+
+\usepackage{fancyhdr}
+
+\fancypagestyle{plain}{
+	\fancyhf{} 
+	\fancyhead[R]{\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+	%\setlength{\hoffset}{0.5748in}
+	%\setlength{\voffset}{-1in}
+	%\setlength{\topmargin}{0.5cm}
+	%\setlength{\headheight}{1.25cm}
+	%\setlength{\footskip}{1.25cm}
+	%\setlength{\textheight}{247mm}
+	%\setlength{\textheight}{227mm}
+	%\setlength{\textwidth}{14.5cm}
+}
+
+\pagestyle{plain}
+
+\mathindent=1.5cm
+
+
+
+%TEKSTIN ULKOASUUN VAIKUTTAVIA PARAMETREJA
+\linespread{1.3}                  % Riviväli. 1.3='riviväli 1.5' 1.6='riviväli 2'
+
+\expandafter\def\expandafter\quote\expandafter{\quote\singlespacing}
+
+\frenchspacing                    % normaali väli pisteen jälkeen; englanninkielisessä 
+
+\usepackage[toc,page]{appendix}
+\usepackage{adjustbox}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]
+  	{\normalfont\bfseries}
+		{\MakeUppercase{\chaptertitlename}\ \thechapter.}
+			{.5em}
+				{\MakeUppercase}
+	
+\titleformat{\section}[hang]
+	{\normalfont\bfseries}
+		{\thesection.}
+			{.5em}
+				{}
+				
+\titleformat{\subsection}[hang]
+	{\normalfont}
+		{\thesubsection.}
+			{.5em}
+				{}
+				
+\usepackage{changes}
+
+%This is \added[remark={we need this}]{new} text.
+%This is \added[remark={has to be in it}]{new} text.
+%This is \deleted[remark=obsolete]{unnecessary}text.
+%This is \replaced{nice}{bad} text.
+
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=blue,      
+	urlcolor=blue,
+	citecolor=blue,
+	bookmarks=true,
+	pdfpagemode=FullScreen,
+}
+
+\usepackage{csquotes}
+\usepackage[style=authoryear,citestyle=authoryear,firstinits,dashed=false,citetracker=true,maxcitenames=1]{biblatex}
+\AtEveryCitekey{\ifciteseen{}{\defcounter{maxnames}{99}}}
+\renewbibmacro{in:}{}
+\renewbibmacro*{volume+number+eid}{
+  \printfield{volume}\printfield{number}
+  \setunit{\addcomma\space}
+  \printfield{eid}
+  }
+\DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
+\DeclareNameAlias{sortname}{last-first}
+\DeclareFieldFormat[article]{pages}{#1}
+\DefineBibliographyStrings{english}{
+  bibliography = {References},
+}
+
+\addbibresource{gradubib.bib}
+
+%TEKSTIN ULKOASUUN VAIKUTTAVIA PARAMETREJA
+\linespread{1.3}                  % Riviv�li. 1.3='riviv�li 1.5' 1.6='riviv�li 2'
+
+\frenchspacing                    % normaali v�li pisteen j�lkeen; englanninkielisess� 
+                                  % dokumentissa
+
+%OMIA MAKROJA
+
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+% Markoja lukujoukoille
+\newcommand{\field}[1]{\mathbb{#1}}    % Makro lukujoukkojen m��rittely� varten
+\newcommand{\N}{\field{N}}             % Luonnollisten lukujen joukko 
+\newcommand{\Z}{\field{Z}}             % Kokonaislukujen joukko
+\newcommand{\Q}{\field{Q}}             % Rationaalilukujen joukko
+\newcommand{\R}{\field{R}}             % Reaalilukujen joukko
+\newcommand{\Pm}{\field{Q}}
+\newcommand{\Pf}{\field{P}}            % Reaalilukujen joukko
+\newcommand{\Co}{\field{C}}          % Kompleksilukujen joukko
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Hf}{\mathcal{H}}
+\newcommand{\Fe}{\field{F}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\Ho}{\mathcal{H}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Ne}{\mathcal{N}}
+\newcommand{\Le}{\mathcal{L}}
+\newcommand{\Se}{\mathcal{S}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\kom}[1]{{#1}^{\mathsf{c}}}
+\newcommand{\1}{\boldsymbol{1}}
+\newcommand{\dx}{\mathrm{d}} 
+\newcommand{\LGD}{\mathrm{L_{GD}}} 
+\newcommand{\Rec}{\mathrm{R_{EC}}} 
+
+\newcommand{\dayc}{\Delta}
+\newcommand{\Rfix}{R}
+\newcommand{\Rflt}{L}
+\newcommand{\Forwardrate}{f}
+\newcommand{\DF}{D}
+\newcommand{\Bank}{B}
+\newcommand{\Bond}{p}
+\newcommand{\DBond}{d}
+\newcommand{\default}{\zeta}
+
+
+\newcommand{\disc}[1]{p_\mathrm{#1}}
+\newcommand{\tfix}{t^\mathrm{fix}}
+\newcommand{\tflt}{t^\mathrm{flt}}
+\newcommand{\delay}[1]{\delta_{\mathrm{#1}}}
+
+%OMIA MATEMAATTISIA OPERAATTOREITA
+\DeclareMathOperator{\re}{\mathrm{Re}} % Makro reaaliosaa varten
+\DeclareMathOperator{\im}{\mathrm{Im}} % Makro imagin��riosaa varten
+
+\DeclareMathOperator{\Inf}{\mathrm{inf}}
+\DeclareMathOperator{\Sup}{\mathrm{sup}}
+\DeclareMathOperator{\sgn}{\mathrm{sgn}}
+\DeclareMathOperator{\E}{\boldsymbol{\mathrm{E}}}
+\DeclareMathOperator{\Var}{\boldsymbol{\mathrm{Var}}}
+\DeclareMathOperator{\Cov}{\boldsymbol{\mathrm{Cov}}}
+\DeclareMathOperator{\Image}{\mathrm{Im}}
+\DeclareMathOperator{\Kernel}{\mathrm{Ker}}
+\DeclareMathOperator{\FRA}{\mathrm{FRA}}
+\DeclareMathOperator{\FUT}{\mathrm{Fut}}
+\DeclareMathOperator{\ZBC}{\mathrm{ZBC}}
+\DeclareMathOperator{\ZBP}{\mathrm{ZBP}}
+\DeclareMathOperator{\Caplet}{\mathrm{Caplet}}
+\DeclareMathOperator{\Floorlet}{\mathrm{Floorlet}}
+\DeclareMathOperator{\Swap}{\mathrm{Swap}}
+\DeclareMathOperator{\Swaption}{\mathrm{Swaption}}
+\DeclareMathOperator{\Protection}{\mathrm{CDS_{pro}}}
+\DeclareMathOperator{\Premium}{\mathrm{CDS_{pre}}}
+
+%TEOREEMAYMP�RIST�J�
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]     % Ymp�rist� lauseille, numerointi 2 numeroinen 
+\newtheorem{lemma}[thm]{Lemma}       % Ymp�rist� lemmoille
+\newtheorem{cor}[thm]{Corollary}      % Ymp�rist� seurauksille, 
+
+%\theoremstyle{definition}
+%\newtheorem{def}[thm]{Definition}   % Ymp�rist� m��ritelmille
+
+%\theoremstyle{remark}
+%\newtheorem{huom}[lause]{Huomautus}    % Ymp�rist� huomautuksille
+%\newtheorem{esim}[lause]{Esimerkki}    % Ymp�rist� esimerkeille
+
+\numberwithin{equation}{section}       % yht�l�iden numerointi 2-numeroiseksi
+
+% TAVUTUSVIHJEIT�
+%\hyphenation{jul-ki-suu-des-sa to-den-n�-k�i-nen}
+
+% huomaa, ett� hyphenation-ymp�rist� ei ymm�rr� sanoja, 
+% joissa on tavuviiva (esim. yli-ihminen). T�ll�in LaTeXia on k�skett�v� 
+% leip�tekstin seassa, k�sky \- ilmoittaa mahdollisen 
+% tavutuspaikan: y\-li-\-ih\-mi\-nen. Vaihtoehtoisesti voi k�ytt�� k�sky�
+% "- joka tuottaa v�liviivan, joka sallii tavutuksen muualla sanassa
+
+\newlist{DS}{enumerate}{1}
+\setlist[DS]{label=(DS\arabic*)}
+
+
+\begin{document}
+	
+\listofchanges
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\include{introduction}
+\include{notation}
+\include{instruments}
+\include{arbitrage}
+\include{market}
+\include{shortrate}
+\include{fourier}
+\include{intensiteetti}
+\include{empirical}
+\include{conclusions}
+
+\begin{appendix}
+\include{math}
+\include{appendix}
+\end{appendix}
+
+\linespread{1}
+
+
+
+\begingroup
+\sloppy
+\printbibliography
+\endgroup
+
+\end{document}

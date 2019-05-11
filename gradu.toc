@@ -1,0 +1,222 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {english}{}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{9}{chapter.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Overview of the arbitrage-free asset pricing}{9}{section.1.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.1.1}Arbitrage-free interest rate models}{11}{subsection.1.1.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.1.2}Intensity based modeling of credit risk}{13}{subsection.1.1.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.2}Overview of the thesis}{13}{section.1.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.3}Fixed notation}{17}{section.1.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {2}Idealized rates and instruments}{18}{chapter.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Fundamental rates and instruments}{18}{section.2.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.1}Short-rate, idealized bank account and stochastic discount factor}{18}{subsection.2.1.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.2}Zero-coupon bond}{19}{subsection.2.1.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.3}Simple spot $L(t,T)$ and $k$-times compounded simple spot rate}{19}{subsection.2.1.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1.4}Forward rate agreement}{20}{subsection.2.1.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}Interest rate instruments}{23}{section.2.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.1}Fixed leg and floating leg}{23}{subsection.2.2.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.2}Coupon bearing bond}{24}{subsection.2.2.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.3}Vanilla interest rate swap}{24}{subsection.2.2.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.4}Overnight indexed swap}{25}{subsection.2.2.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.5}Call and put option and call-put parity}{25}{subsection.2.2.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.6}Caplet, cap, floorlet and floor}{25}{subsection.2.2.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2.7}Swaption}{27}{subsection.2.2.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.3}Defaultable instruments and credit default swaps}{28}{section.2.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.1}Defaultable $T$-bond}{28}{subsection.2.3.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.3.2}Credit default swap}{29}{subsection.2.3.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {3}An introduction to arbitrage pricing theory}{31}{chapter.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.1}Discrete one period model}{31}{section.3.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1.1}The first fundamental theorem of asset pricing in discrete one period model}{32}{subsection.3.1.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1.2}The second fundamental theorem of asset pricing in discrete one period model}{36}{subsection.3.1.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.2}Arbitrage theory in continuous markets}{39}{section.3.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2.1}Risk-free measure}{43}{subsection.3.2.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2.2}Black-Scholes--model}{44}{subsection.3.2.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2.3}Black-76--model}{47}{subsection.3.2.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2.4}$T$-forward measure}{48}{subsection.3.2.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2.5}Change of num\'{e}raire}{49}{subsection.3.2.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {4}Short-rate models}{51}{chapter.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.1}Introduction to short-rate models}{51}{section.4.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1.1}Term-structure equation}{51}{subsection.4.1.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1.2}Fundamental models}{53}{subsection.4.1.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1.3}Preference-free models}{54}{subsection.4.1.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Preference-free +-models}{54}{subsubsection*.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Preference-free ++-models}{54}{subsubsection*.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Preference-free +++-models}{55}{subsubsection*.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.2}One-factor short-rate models}{55}{section.4.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2.1}Affine one-factor term-structures models}{55}{subsection.4.2.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2.2}Va\v {s}\'{i}\v {c}ek--model}{57}{subsection.4.2.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Bond pricing in the Va\v {s}\'{i}\v {c}ek--model}{59}{subsubsection*.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Option pricing in the Va\v {s}\'{i}\v {c}ek--model}{61}{subsubsection*.8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2.3}Cox-Ingersol-Ross--model (CIR)}{61}{subsection.4.2.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Bond pricing in the CIR--model}{62}{subsubsection*.9}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Option pricing in the CIR--model}{62}{subsubsection*.10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.3}Multi-factor short-rate models}{63}{section.4.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.3.1}Simple $A(M,N)$--models}{63}{subsection.4.3.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.4}Dynamic extension to match the given term-structure}{65}{section.4.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.1}Va\v {s}\'{i}\v {c}ek++--model}{68}{subsection.4.4.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.2}CIR++--model}{70}{subsection.4.4.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.3}G2++--model}{71}{subsection.4.4.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.5}Option valuation using Fourier inversion method}{72}{section.4.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {5}Intensity models}{77}{chapter.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.1}Foundations of intensity models}{77}{section.5.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.1.1}Introduction}{77}{subsection.5.1.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.1.2}The credit triangle}{81}{subsection.5.1.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.2}Pricing}{82}{section.5.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Defaultable zero coupon bond with no recovery}{83}{subsubsection*.11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Defaultable zero coupon bond with partial recovery $0 < \mathrm {R_{EC}}< 1$ at the maturity}{84}{subsubsection*.12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Defaultable zero coupon bond with partial recovery at the default}{84}{subsubsection*.13}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.1}The protection leg of a credit default swap}{85}{subsection.5.2.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.2}The premium leg of a credit default swap}{86}{subsection.5.2.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Premium leg of a CDS with continuous premium}{88}{subsubsection*.14}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.3}The assumption that the default is independent from interest rates}{88}{section.5.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.4}$A(M,N)$ model for credit risk}{89}{section.5.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {6}Empirical work}{94}{chapter.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6.1}Research environment}{94}{section.6.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6.2}Stationary calibration}{95}{section.6.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Data}{95}{subsubsection*.15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2.1}Models without credit risk}{95}{subsection.6.2.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Results}{98}{subsubsection*.16}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Cap pricing comparison}{102}{subsubsection*.17}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2.2}Models with credit risk}{103}{subsection.6.2.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Results}{104}{subsubsection*.18}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6.3}Dynamic Euribor calibration without credit risk}{105}{section.6.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Data}{105}{subsubsection*.19}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{Calibration}{107}{subsubsection*.20}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {7}Summary}{112}{chapter.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {A}Mathematical appendix}{115}{appendix.A}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.1}Characteristic function and Fourier transformation}{115}{section.A.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.2}Radon-Nikod\'{y}m-theorem and the change of measure}{116}{section.A.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.3}Conditional expectation}{117}{section.A.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.4}Filtrations and martingales}{121}{section.A.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.5}A stopping time and localization}{121}{section.A.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.6}Brownian motion}{122}{section.A.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.7}It\^{o}-integral}{125}{section.A.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.8}It\^{o} processes and It\^{o}'s lemma}{126}{section.A.8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.9}Geometric Brownian motion}{128}{section.A.9}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.10}Girsanov's theorem}{128}{section.A.10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.11}Martingale representation theorem}{130}{section.A.11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.12}Feynman-Kac theorem}{131}{section.A.12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.13}Partial information}{131}{section.A.13}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.14}Doubly stochastic default time}{133}{section.A.14}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.15}Characteristic functions and Fourier inversion method}{135}{section.A.15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.16}A Gaussian calculation}{136}{section.A.16}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A.17}Differential evolution}{137}{section.A.17}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {B}Charts and graphs}{139}{appendix.B}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.1}Graphical presentation of the initial curve data}{140}{section.B.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.2}Comparison of actual inferred rates and calibrated model prices without default risk}{145}{section.B.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.3}Comparison of different calibrations between models without default risk}{157}{section.B.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.4}Model parameters for affine models without default risk}{160}{section.B.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.5}Comparison of parameters for affine models without default risk between different calibration attempts}{161}{section.B.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.6}Actual prices and calibrated prices of default models}{167}{section.B.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.7}Relative errors of default models}{171}{section.B.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.8}Comparison of calibrated parameters for affine models with default risk}{172}{section.B.8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B.9}Dynamic Euribor calibration without credit risk}{175}{section.B.9}% 

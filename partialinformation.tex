@@ -1,0 +1,113 @@
+\section{Modelling the partial information}
+
+We assume that $(\F_t)$ is the partial market filtration the complete market information $(\G_t)$ is given by $\G_t = \F_t \vee \Hf_t$. We also assume that filtrations $(\G_t)$ and $(\F_t)$ satisfy the usual conditions. These conditions are
+  \begin{enumerate}[labelindent=\parindent, leftmargin=*]
+    \item $\F_0$ and $\G_0$ contain all $\Pm$-null sets (null set). 
+    \item $\F_t = \bigcap_{s>t} \F_s$ and $\G_t = \bigcap_{s>t} \G_s$ for all $t \geq 0$ (right-continuity).
+  \end{enumerate}
+
+Informally, assuming that we know $\tau > t$, there is no real difference between the information sets $\F_t \subseteq \G_t$. More formally we have the following lemma.
+
+%\begin{lemma}
+%\label{lemma-weaksigmasameness}
+%For every $A \in \G_t$, there exists such $B \in \F_t$ that
+%  \begin{align}
+%    \label{eq-weaksigmasameness}
+%    A \cap \{ \tau > t \} = B \cap \{ \tau > t \},
+%  \end{align}
+%where $t \in \R_+$.
+%\end{lemma}
+
+%\begin{proof}
+%We consider the filtration given by
+%  \begin{align}
+%    \G_t^* = \{ A \in \G_t \ | \ A \cap \{ \tau > t \} = B \cap \{ \tau > t \} \textup{ for some } B \in \F_t \}
+%  \end{align}
+%and it is sufficient to show that $\G_t \subseteq \G_t^*$. It is clear that $\F_t \subseteq \G_t^*$. If $A \in \Hf_t$, then $A \cap \{ \tau %> t \}$ is either $\emptyset$ or $\{ \tau > t \}$ and it follows that $\Hf_t \subseteq \G_t^*$.
+
+%Trivially $\Omega \in \G_t^*$ and it is also easy to see that $\G_t^*$ is closed under countable unions. If $A \in \G_t^*$ and $B \in \F_t$ satisfies the equation (\ref{eq-weaksigmasameness}), then 
+%  \begin{align}
+%    \kom{A} \cup \{ \tau \leq t \} = \kom{B} \cup \{ \tau \leq t \}
+%  \end{align}
+%and $\kom{A} \cap \{ \tau > t \} = ( \kom{A} \cup \{ \tau \leq t \} ) \cap \{ \tau > t \}$ implies that $\kom{A} \in \G_t^*$. Hence, $\G_t^*$ is a $\sigma$-algebra and $\G_t = \F_t \vee \Hf_t \subseteq \G_t^*$.
+%\end{proof}
+
+We need to also introduce the following technical condition. A stochastic process $X$ is $(\F_t)$-progressive, if the mapping $\Omega \times [0,t]\rightarrow \R, (\omega, t) \mapsto X_t(\omega)$ is $\F_t \otimes \B [0,t ]$-measurable for all $t \geq 0$. This is needed to ensure that $\int_0^t X_s \dx s \in \F_t$ and $X_{\tau \wedge t} \in \F_t$.
+
+We add the following assumption
+  \begin{enumerate}[labelindent=\parindent, leftmargin=*, label*=(\Alph*), resume]
+    \item there exists such a non-negative $(\F_t)$-progressive process $\lambda$ that \label{ol-hazardrate}
+      \begin{align}
+        \Pm ( \tau > t | \F_t ) = \e^{-\int_0^t \lambda_s \dx s} .
+      \end{align}
+  \end{enumerate}
+This assumption is thus a direct relative of equation \ref{eq-basicinstantaneous}. The assumption implies that $\Pm ( \tau \leq t | \F_t ) < 1$. If $\{ \tau \leq t \} \in \F_t$, then 
+  \begin{align}
+    \1_{ \{ \tau \leq t \} } = \E ( \1_{ \{ \tau \leq t \} } | \F_t ) = \Pm ( \tau \leq t | \F_t ) < 1
+  \end{align}
+and therefore $\{ \tau \leq t \}$ is an empty set. Hence $\Pm ( \tau > t ) = 1$ and this a contradiction with the assumption. Therefore $\tau$ is not $(\F_t)$-stopping time and the partial market information $(\F_t)$ is not enough to observe the whether the default has happened by the time $t$. This means that $\F_t \not = \G_t$.
+
+\begin{lemma}
+\label{lemma-firstconditionalexpectionintensity}
+If \ref{ol-hazardrate} holds and $X$ is a non-negative integrable random variable, then
+  \begin{align}
+    \E (\1_{ \{ \tau > t \} } X | \G_t ) = \1_{ \{ \tau > t \} } \e^{-\int_0^t \lambda_s \dx s} \E ( \1_{ \{ \tau > t \} } X | \F_t )
+  \end{align}
+for all $t > 0$.
+\end{lemma}
+
+\begin{proof}
+For all $B \in \F_t$ By the definition of conditional expectation we may now calculate for all $B \in \F_t$ that
+  \begin{align}
+    \int_B \1_{ \{ \tau > t \} } X \Pm ( \tau > t | \F_t ) \dx \Pm &= \int_B \E ( \1_{ \{ \tau > t \} } X \Pm ( \tau > t | \F_t ) | \F_t ) \dx \Pm \\
+    &= \int_B \Pm ( \tau > t | \F_t ) \E ( \1_{ \{ \tau > t \} } X | \F_t )  \dx \Pm \\
+    &= \int_B \E ( \1_{ \{\tau > t\} } | \F_t ) \E ( \1_{ \{ \tau > t \} } X | \F_t )  \dx \Pm \\
+    &= \int_B \1_{ \{ \tau > t \} } \E ( \1_{ \{ \tau > t \} } X | \G_t ) \dx \Pm .
+  \end{align}
+If $A \in \G_t$, then lemma \ref{lemma-weaksigmasameness} gives such $B \in \F_t$ that $\1_{ \{ \tau > t \} } \1_A = \1_{ \{ \tau > t \} } \1_B$. Hence
+  \begin{align}
+    \int_A \1_{ \{ \tau > t \} } X \Pm ( \tau > t | \F_t ) \dx \Pm &= \int_B \1_{ \{ \tau > t \} } X \Pm ( \tau > t | \F_t ) \dx \Pm \\   
+    &= \int_B \1_{ \{ \tau > t \} } \E ( \1_{ \{ \tau > t \} } X | \F_t ) \dx \Pm \\
+    &= \int_A \1_{ \{ \tau > t \} } \E ( \1_{ \{ \tau > t \} } X | \F_t ) \dx \Pm
+  \end{align}
+for all $A \in \G_t$. This implies
+\begin{align}
+    \E ( \1_{ \{ \tau > t \} } X \Pm ( \tau > t | \F_t ) | \G_t ) &= \E ( \1_{ \{ \tau > t \} } \E ( \1_{ \{ \tau > t \} } X | \F_t ) | \G_t ) \\
+    &= \E ( \1_{ \{ \tau > t \} } | \G_t ) \E ( \1_{ \{ \tau > t \} } X | \F_t ) \\
+    &= \1_{ \{ \tau > t \} } \E ( \1_{ \{ \tau > t \} } X | \F_t )
+  \end{align}
+and thus
+\begin{align}
+    \Pm ( \tau > t | \F_t ) \E ( \1_{ \{ \tau > t \} } X | \G_t ) &= \1_{ \{ \tau > t \} } \E ( \1_{ \{ \tau > t \} } X | \F_t ).
+  \end{align}
+Now the assumption \ref{ol-hazardrate} gives the statement.
+\end{proof}
+
+\begin{lemma}
+If \ref{ol-hazardrate} holds, then
+  \begin{align}
+    \Pm ( \tau > T | \G_t ) &= \1_{ \{ \tau > t \} } \E \left( \e^{-\int_t^T \lambda_s \dx s} | \F_t \right) \\
+    \Pm ( t < \tau \leq T | \G_t ) &= \1_{ \{ \tau > t \} } \E \left( 1 - \e^{-\int_t^T \lambda_s \dx s} | \F_t \right)
+  \end{align}
+for all $0 < t \leq T$.
+\end{lemma}
+
+\begin{proof}
+If we pick $X = \1_{ \{ \tau > T \} }$ in lemma \ref{lemma-firstconditionalexpectionintensity}, then we get
+  \begin{align}
+    \Pm ( \tau > T | \G_t ) &= \E (\1_{ \{ \tau > t \} } \1_{ \{ \tau > T \} } | \G_t ) \\
+      &= \1_{ \{ \tau > t \} } \e^{-\int_0^t \lambda_s \dx s} \E ( \1_{ \{ \tau > t \} } \1_{ \{ \tau > T \} } | \F_t ) \\
+      &= \1_{ \{ \tau > t \} } \e^{-\int_0^t \lambda_s \dx s} \Pm ( \tau > T | \F_t ) \\
+      &= \1_{ \{ \tau > t \} } \e^{-\int_t^T \lambda_s \dx s}
+  \end{align}
+by the assumption \ref{ol-hazardrate}. Similarly the second equation follows if we pick $X = \1_{ \{ t < \tau \leq T \} } = \1_{ \{ \tau \geq T \} } - \1_{ \{ t < \tau \} }$.
+\end{proof}
+
+We now have the following intepretation for the hazard rate $\lambda$. By using the first order approximation for small $\Delta t$ we have
+  \begin{align}
+    \Pm ( t < \tau \leq t + \Delta t | \G_t ) &= \1_{ \{ \tau > t \} } \E \left( 1 - \e^{-\int_t^{t+\Delta t} \lambda_s \dx s} | \F_t \right) \\
+    &\approx \1_{ \{ \tau > t \} } \lambda_t \Delta t .
+  \end{align}
+Hence $\lambda_t$ is the instantaneous conditional default intensity at the time $t$ given that no default has occured before the time $t$.
+
+KESKEN

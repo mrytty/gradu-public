@@ -1,0 +1,731 @@
+\chapter{Short-rate models}
+\label{chap:shortrate}
+
+\added{This chapter introduces basics of short-rate modeling and short-rate models iwth affine term-structures.}
+
+\section{Introduction to short-rate models}
+
+\subsection{Term-structure equation}
+
+\added{The derivation of the term-structure equation follows closely} \textcite[pp. 319--324]{bjork2004arbitrage}.
+
+In this chapter we assume that the short rate process follows
+\begin{align}
+\label{short-ratedynamicsundersomemeasure}
+\dx r(t) = \mu(t,r(t)) \dx t + \sigma(t,r(t)) \dx W(t) ,
+\end{align}
+where $W(t)$ is a Brownian motion under some measure $\Pm^*$ (this may be also physical measure) and $\mu$ and $\sigma$ are well-behaved functions. If $V(t,r(t))$ is a smooth function, then It\'{o}s lemma says that
+\begin{align}
+\dx V = \left( \frac{\partial V}{\partial t} + \mu \frac{\partial V}{\partial x} +\frac{1}{2} \sigma^2 \frac{\partial^2 V}{\partial x^2} \right) \dx t + \sigma \frac{\partial V}{\partial x} \dx W
+\end{align}
+Here we have dropped arguments for functions. Unlike in Black-Scholes model, we may not trade short rate $r(t)$ directly and it may not be used in hedging. But we may consider how to hedge a derivative using another contingent claim.
+
+We consider two contingent claims with value processes $V_1(t, r(t))$ and $V_2(t,r(t))$. It\'{o}'s lemma gives us that
+\begin{align}
+\dx V_i = M_i \dx t + N_i \dx W,
+\end{align}
+where
+\begin{align}
+M_i &= \frac{\partial V_i}{\partial t} + \mu \frac{\partial V_i}{\partial r} + \frac{1}{2} \sigma^2 \frac{\partial^2 V_i}{\partial r^2}, \\
+N_i &= \sigma \frac{\partial V_i}{\partial r} .
+\end{align}
+If $\Pi = V_1 + \delta V_2$ is a portfolio, then
+\begin{align}
+\dx \Pi = \left( M_1 + \delta M_2 \right) \dx t + \left( N_1 + \delta N_2 \right) \dx W .
+\end{align}
+By choosing $\delta = - \frac{N_1}{N_2}$, the Brownian motion disappears. In order to maintain absence of arbitrage, we have that 
+\begin{align}
+\dx \Pi &= r \Pi \dx t \\
+\left( M_1 - \frac{N_1}{N_2} M_2 \right) \dx t &= r \left( V_1 - \frac{N_1}{N_2} V_2 \right) \dx t .
+\end{align}
+Thus
+\begin{align}
+\frac{M_1 - r V_1}{N_1 } = \frac{M_2 - r V_2}{N_2}
+\end{align}
+Now $M_i, N_i$ and $V_i$ are functions of $t$ and $r(t)$. The left-hand side is independent of the portfolio $V_2$ and the right-hand size is independent of portfolio $V_1$. Hence there exist a function
+\begin{align}
+\lambda(t,r(t)) = \frac{M(t,r(t)) - r(t) V(t,r(t))}{N(t,r(t))}
+\end{align}
+called the market-price of risk, where $V$ is any interest-rate derivative with dynamics
+\begin{align}
+\dx V = M \dx t + N \dx W .
+\end{align}
+By combining this with earlier results, we get that the price process $V$ must satisfy partial differential equation
+\begin{align}
+\label{termstructureequation}
+0 &= M - rV - \lambda N \\
+&= \frac{\partial V}{\partial t} + \mu \frac{\partial V}{\partial r} + \frac{1}{2} \sigma^2 \frac{\partial^2 V}{\partial r^2} - rV - \lambda \sigma \frac{\partial V}{\partial r} \\
+&= \frac{\partial V}{\partial t} + \left( \mu - \lambda \sigma \right) \frac{\partial V}{\partial r} + \frac{1}{2} \sigma^2 \frac{\partial^2 V}{\partial r^2} - rV
+\end{align}
+with the boundary condition given by the value $V(T, r(T))$.
+
+\subsection{Fundamental models}
+
+Suppose that $\Pm^* = \Pf$ is the physical measure. Models that are defined under the physical measure, are often called as fundamental models. If we denote
+	\begin{align}
+		\theta(t,r(t)) = \mu(t,r(t)) - \lambda(t,r(t)) \sigma(t,r(t))
+	\end{align}
+and assume that
+	\begin{align}
+		\lambda(t,r(t)) = \frac{\theta(t,r(t)) - \mu(t,r(t))}{\sigma(t,r(t))}
+	\end{align}
+may be used as a Girsanov kernel, then we get a new measure $\Pm_{\theta}$ under which
+	\begin{align}
+		r(t) = \theta(t,r(t)) \dx t + \sigma(t,r(t)) \dx W_{\theta} (t)
+	\end{align}
+and $W_{\theta} (t)$ is a Brownian motion. Now Feynman-Kac theorem implies that
+	\begin{align}
+		V(t) = \E_{\Pm_{\theta}} \left( \e^{-\int_t^T r(s) \dx s} V(T) \ | \ \F_t \right) .
+	\end{align}
+Unlike in the Black-Scholes model, the market price of risk $\lambda$ is not uniquely determined endogenously within the model. Here, the market price of risk is endogenously determined. The equivalent martingale measure (if it exists), it is not unique and prices depend on the choice of the function $\lambda$. However, the $\lambda$ is uniquely determined by the price of any interest rate derivative. Since the dynamic of Equation \ref{short-ratedynamicsundersomemeasure} are under the physical measure, we could use econometric time-series to estimate model parameters and market price of risk. This approach is problematic since neither the short-rate nor the market price of risk are not directly observable. According to \cite{chapmanlongpearson1999usingproxies}, using proxies to estimate parameters of short-rate models for single-factor affine models does not cause economically significant problems, but for more complex models, proxies cause significant errors. Also, for estimation, we usually have to assume a functional form for the market price of risk, which may be misspecified. Fundamental models have no guarantee that they will fit the observed term or volatility structures. If these obstacles are overcome, then the model may be used to price any instrument and forecast interest rates.
+
+\subsection{Preference-free models}
+
+Another approach is to assume that the Equation \ref{short-ratedynamicsundersomemeasure} holds under the risk-free measure $\Pm_0$. This means choosing $\lambda = 0$ in the Equation \ref{termstructureequation}, which will now read
+\begin{align}
+\label{termstructureequation2}
+0 &= \frac{\partial V}{\partial t} + \mu \frac{\partial V}{\partial r} + \frac{1}{2} \sigma^2 \frac{\partial^2 V}{\partial r^2} - rV .
+\end{align}
+Therefore Feynman-Kac theorem implies that
+	\begin{align}
+		V(t) = \E_{\Pm_0} \left( \e^{-\int_t^T r(s) \dx s} V(T) \ | \ \F_t \right) .
+	\end{align}
+for all assets. Thus all discounted asset price process, where the num\'{e}raire is the bank account, are martingales under $\Pm_0$.
+
+Under this methodology, we may use calibrate the model parameters using observed market prices. We may take liquid instruments and then use their prices to calibrate the model. We may not use historical data in calibration, since the assumed process is under the risk-free measure. The physical measure will be different from the risk-free measure, unless we explicitly make the strong assumption that the market price of risk will be zero. However, as the volatility term does not change under measure changes, diffusion term may be estimated with data that is collected under the risk-free measure. Models under this methodology may or may not be guaranteed to fit the observed term and volatility structures. They could be useful for pricing. They may not be used to forecast prices or interest rates without further assumptions.
+
+\subsubsection{Preference-free +-models}
+
+Preference-free models which have constant parameters $k, \theta, \sigma$ are notated with single plus sign. They do not probably fit the observed term and volatility structures. Most of the early fundamental models can be also interpreted as preference-free $+$-models.
+
+\subsubsection{Preference-free ++-models}
+
+Preference-free models which have constant parameters $k, \sigma$ but time-varying $\theta(t)$ are notated with double plus sign. They can be made to fit  the observed term structure but they probably do not match the volatility surface. \textcite{hull1990pricing} is often the prototypical example of a $++$-model.
+
+When matched to term-structure and calibrated with cap or swaption prices, they can be useful in pricing of exotic interest-rate options.
+
+\subsubsection{Preference-free +++-models}
+
+Preference-free models which have time-varying $\theta(t), \sigma(t)$ (and sometimes $k$) are notated with triple plus sign. They can be made to fit both the observed term structure and some of the volatility surface. Variants of Hull-White models are sometimes $+++$-models. 
+
+Triple plus models can be useful in pricing but they could be prone to over-fitting.
+
+\section{One-factor short-rate models}
+
+One-factor short-rate model is model that has one underlying state variable that drives the evolution of the interest rates. This factor is often the short-rate itself. Often used form for one-factor short-rate process is
+\begin{align}
+\dx r (t) = k( \theta (t) - r (t) ) \dx t + \sigma (t) r (t)^{\gamma} \dx W (t) 
+\end{align}
+The following table gives a quick overview of some of the models of this form.
+\begin{center}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Model & $k(t)$ & $\theta (t)$ & $\sigma (t)$ & $\gamma$ \\
+		\hline
+		\hline
+		\cite{vasicek1977equilibrium} & $k$ & $\theta$ & $\sigma$ & $-$ \\
+		\hline
+		\cite{dothan1978term} & $-k(t)$ & $-$ & $\sigma$ & $-$ \\
+		\hline
+		\cite{coxingersollross1985theory} & $k$ & $\theta$ & $\sigma$ & $\frac{1}{2}$ \\
+		\hline
+		\cite{hull1990pricing} & $k$ & $\theta (t)$ & $\sigma (t)$ & $-$ \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\subsection{Affine one-factor term-structures models}
+
+\added{The derivation of the following theorem is based on } \textcite[pp. 329--331]{bjork2004arbitrage}.
+
+A one-factor short-rate model has affine term-structure if the zero-coupon bond price is
+\begin{align}
+\label{affinitytermstructureequation}
+\Bond(t,T) = \e^{A(t,T) - B(t,T)r(t)}
+\end{align}
+for all $0 \leq t \leq T$, where $A(t,T)$ and $B(t,T)$ deterministic and smooth functions. Since $\Bond(T,T) = 1$, we have that
+\begin{align}
+A(T,T) = B(T,T) = 0.
+\end{align}
+Under the assumption of affinity the instantaneous forward rate is
+\begin{align}
+f(t,T) &= - \frac{\partial \log \Bond(t,T)}{\partial T} \\
+&= \frac{\partial (B(t,T)r(t) - A(t,T))}{\partial T} \\
+&= \frac{\partial B(t,T)}{\partial T}r(t) - \frac{\partial A(t,T)}{\partial T}
+\end{align}
+for all $0 \leq t \leq T$.
+
+If we denote that $p(t,T) = F(t,T,r)$ to make clear that $\Bond(t,T)$ is also a function of $r$, then we have that
+\begin{align}
+\frac{\partial F}{\partial t} &= \left( \frac{\partial A}{\partial t} - \frac{\partial B}{\partial t} r \right) F \\
+\frac{\partial F}{\partial r} &= - B F \\
+\frac{\partial^2 F}{\partial r^2} &= B^2 F
+\end{align}
+as the derivative of $r$ with respect to $t$ vanishes. Since the price of a zero-coupon price must satisfy \ref{fundamentaltermstructure_equationinaffine}, we have that
+\begin{align}
+\frac{\partial F}{\partial t} + \mu^* \frac{\partial F}{\partial r} + \frac{1}{2} \sigma^2 \frac{\partial^2 F}{\partial r^2} - r F &= 0 \\
+F(T,T,r) = 1.
+\end{align}
+By combining these, we have that
+\begin{align}
+0 &= \left( \frac{\partial A}{\partial t} - \frac{\partial B}{\partial t} r \right) F - \mu^* B F + \frac{1}{2} \sigma^2 B^2 F - r F, \\
+0 &= \frac{\partial A}{\partial t} - \frac{\partial B}{\partial t} r - \mu^* B + \frac{1}{2} \sigma^2 B^2 - r \\
+&= \frac{\partial A}{\partial t} - ( 1 + \frac{\partial B}{\partial t} ) r - \mu^* B + \frac{1}{2} \sigma^2 B^2
+\end{align}
+
+
+If we suppose that$\mu^*(t)$ and $\sigma^2(t)$ are affine in short-rate $r(t)$, meaning that
+\begin{align}
+\mu^*(t) &= a(t)r(t) + b(t) \\
+\sigma^2(t) &= c(t)r(t) + d(t),
+\end{align}
+where $a,b,c$ and $d$ are deterministic functions. Thus
+\begin{align}
+0 	&= \frac{\partial A}{\partial t} - ( 1 + \frac{\partial B}{\partial t} ) r - \mu^* B + \frac{1}{2} \sigma^2 B^2 \\
+&= \frac{\partial A}{\partial t} - ( 1 + \frac{\partial B}{\partial t} ) r - \left( ar+b \right) B + \frac{1}{2} \left( cr+d \right) B^2 \\
+&= \left( \frac{\partial A}{\partial t} - bB + \frac{1}{2} d B^2 \right) +
+\left( \frac{1}{2} cB^2 - \frac{\partial B}{\partial t} -aB - 1 \right) r
+\end{align}
+and this must hold for all $t, T$ and $r(t)$. Thus the coefficients must equal zero and we have that
+\begin{align}
+\frac{\partial A}{\partial t} - bB + \frac{1}{2} d B^2 &= 0, \\
+A(T,T) &= 0, \\
+\frac{1}{2} cB^2 - \frac{\partial B}{\partial t} -aB - 1 &= 0, \\
+B(T,T) &= 0 .
+\end{align}
+
+Thus we have proved the following.
+
+\begin{thm}
+	\label{affineconfition}
+	If 
+	\begin{align}
+	\mu^*(t) &= a(t) r + b(t) \\
+	\sigma^2(t) &= c(t) r + d(t),
+	\end{align}
+	then the short-rate model has an affine term-structure model and the following equations holds:
+	\begin{align}
+	&\begin{cases}
+	\frac{\partial B}{\partial t} = \frac{1}{2} c B^2  -a B - 1 \\
+	B(T,T) = 0
+	\end{cases} \\
+	&\begin{cases}    
+	\frac{\partial A}{\partial t} - bB + \frac{1}{2} d B^2 &= 0 \\
+	A(T,T) = 0 .
+	\end{cases}
+	\end{align}
+\end{thm}
+
+Equations of this type are Riccati Equations and they are easy to solved efficiently.
+
+\subsection{Va\v{s}\'{i}\v{c}ek--model}
+
+The material from this section is from \textcite[pp. 58--62]{brigo2007interest}.
+
+\textcite{vasicek1977equilibrium} showed that under certain economic assumptions, the short-rate process is a Ornstein-Uhlenbeck process. This particular form was earlier suggest by \textcite{merton1971optimum}. Under the Va\v{s}\'{i}\v{c}ek--model, the short-rate process $r(t)$ is given by
+\begin{align}
+\dx r(t) = k ( \theta - r(t) ) \dx t + \sigma \dx W(t) ,
+\end{align}
+where $k, \theta, \sigma > 0$ and $r(0) = r_0$ are constants. Thus
+	\begin{align}
+		\mu(t,r(t)) &= k ( \theta - r(t) ) \\
+		\sigma(r,t(t)) &= \sigma .
+	\end{align}
+Equivalent parametrization is
+\begin{align}
+\dx r(t) = ( \theta^* - k r(t) ) \dx t + \sigma \dx W(t) ,
+\end{align}
+where $\theta^* = \theta k$. We could also write
+	\begin{align}
+		r(t) &= \theta + Y(t) \\
+		\dx Y(t) &= - k Y(t) \dx t + \sigma \dx W(t).
+	\end{align}
+Now $r(t) = g(t,Y(t))$, where $g(t,y) = m + y$ actually and It\^{o}'s lemma gives
+	\begin{align}
+		\dx r(t, Y(t)) &= - k Y(t) \dx t + \sigma \dx W(t) \\
+			&= k ( \theta - r(t) ) \dx t + \sigma \dx W(t) .
+	\end{align}
+
+We consider a process $X(t) = \int_0^t \e^{k s} \dx W(s)$ so that $\dx X(t) = \e^{k t} \dx W(t)$. Now we define the function
+\begin{align}
+g(x,t) &= r_0 \e^{-k t} + \theta (1 - \e^{-k t}) + \sigma \e^{-k t} x \\
+	&= \theta + \e^{-k t} \left( r_0 - \theta + \sigma x \right) 
+\end{align}
+and
+\begin{align}
+\frac{ \partial g(x,t)}{ \partial x} &= \sigma \e^{-k t}, \\
+\frac{ \partial^2 g(x,t)}{ \partial x^2} &= 0, \\
+\frac{ \partial g(x,t)}{ \partial t} &= - k \e^{- k t} (r_0 - \theta +\sigma x ) \\
+&= k (\theta -g(x,t) ). 
+\end{align}
+Since the drift term for $X$ is zero and diffusion factor is $\e^{k t}$, It\^{o}'s lemma for the process $X(t)$ yields
+\begin{align}
+\dx g (X(t),t) &= \frac{ \partial g(X(t),t) }{ \partial t} \dx t + \e^{k t} \frac{ \partial g(X(t),t)}{ \partial x} \dx W \\
+&= k (\theta -g(X(t),t) ) \dx t + \sigma W(t) .
+\end{align}
+As $X(0)=0$, we have that $g(X(0),0) = r_0$. Thus
+\begin{align}
+\label{vasiceksolution}
+r(t) = g(X(t),t) = r_0 \e^{-k t} + \theta (1 - \e^{-k t}) + \sigma \e^{-k t} \int_0^t \e^{k s} \dx W(s) .
+\end{align}
+By Theorem \ref{gaussiancalculation}, the expected value of the integral in the equation \ref{vasiceksolution} is zero and it has variance of
+\begin{align}
+\int_0^t \e^{2 k s} \dx s = \frac{1}{2 k} (\e^{2 k t} -1).
+\end{align}
+Hence
+\begin{align}
+r(t) \sim N \left( r_0 \e^{-k t} + \theta (1 - \e^{-k t}), \frac{\sigma^2}{2k } (1-\e^{2k t}) \right) .
+\end{align}
+Since $r(t)$ is normally distributed in the Va\v{s}\'{i}\v{c}ek--model, there is a positive change that short-rate will be negative in a given time frame. If $t \rightarrow \infty$, then 
+\begin{align}
+\E (r(t)) &\rightarrow \theta , \\
+\Var ( r(t) ) &\rightarrow \frac{\sigma^2}{2k} .
+\end{align}
+We see that the parameter $\theta$ can be seen as the long-term mean and the short-rate has a tendency to move toward it. The parameter $k$ signifies the speed of this mean-reversion while $\sigma$ controls the volatility.
+
+One of the features of the Va\v{s}\'{i}\v{c}ek--model is that there is a non-zero probability for negative rates. Earlier this was seen as a major drawback of the model.
+
+\subsubsection{Bond pricing in the Va\v{s}\'{i}\v{c}ek--model}
+
+If we assume that the short-rate process $r(t)$ is given by
+\begin{align}
+\dx r(t) = k ( \theta - r(t) ) \dx t + \sigma \dx W(t)^*
+\end{align}
+under the risk neutral measure. Now $\mu(t) = k \theta - k r(t)$ and $\sigma(t) = \sigma$ are affine in $r(t)$. By Theorem \ref{affineconfition}, Va\v{s}\'{i}\v{c}ek-model has affine term-structure and
+\begin{align}
+\label{vasicekaffine}
+\begin{cases}
+\frac{\partial B}{\partial t} = k B - 1 \\
+\frac{\partial A}{\partial t} = k \theta B - \frac{1}{2} \sigma^2 B^2 \\
+A(T,T) = B(T,T) = 0, 
+\end{cases}
+\end{align}
+Now
+\begin{align}
+B(t,T) = \frac{1}{k} \left( 1 - \e^{-k (T-t)} \right)
+\end{align}
+satisfies \ref{vasicekaffine} and therefore we might solve $A(t,T)$ by calculation the integral
+\begin{align}
+A(t,T) = A(t,T) - A(T,T) = - \int_t^T A(s,T) \dx s.
+\end{align}
+We note that $B^2 = \frac{B}{k} \left( \frac{\partial B}{\partial t} + 1 \right)$ and hence
+\begin{align}
+k \theta B - \frac{1}{2} \sigma^2 B^2 &= k \theta B - \frac{\sigma^2}{2k} B(1+\frac{\partial B}{\partial t}) \\
+&= \frac{k^2 \theta - \frac{1}{2}\sigma^2}{k} B  - \frac{\sigma^2}{2k} \frac{\partial B}{\partial t} B \\
+&= \frac{k^2 \theta - \frac{1}{2}\sigma^2}{k^2} (\frac{\partial B}{\partial t} + 1) - \frac{\sigma^2}{2k} B\frac{\partial B}{\partial t} .
+\end{align} 
+Now the conditions in Equation \ref{vasicekaffine} will be satisfied by
+\begin{align}
+A(t,T) = \frac{k^2 \theta - \frac{1}{2}\sigma^2}{k^2} (B(t,T) - (T - t)) - \frac{\sigma^2}{4 k} B^2(t,T) .
+\end{align}
+Therefore Va\v{s}\'{i}\v{c}ek-model has term-structure defined by
+\begin{align}
+P(t,T) = \e^{A(t,T) - B(t,T)r(t)},
+\end{align}
+where 
+\begin{align}
+B(t,T) &= \frac{1}{ k} \left( 1 - \e^{-k (T-t)} \right), \\
+A(t,T) &= \frac{k^2 \theta - \frac{1}{2}\sigma^2}{k^2} (B(t,T) - (T - t)) - \frac{\sigma^2}{4k} B^2(t,T).
+\end{align}
+
+\subsubsection{Option pricing in the Va\v{s}\'{i}\v{c}ek--model}
+
+Since the short-rate follows a Gaussian distribution, the price of a option on a zero-coupon bond can be calculated explicitly. We shall not do that. A European call option with maturity $S$ on a $T$-bond and exercise price $K$ has a price
+	\begin{align}
+		\ZBC(t, S, T, K) = \Bond(t,T) N(d_1) - K \Bond(t,S) N(d_2),
+	\end{align}
+at the time $t$, where
+	\begin{align}
+		d_1 &= \frac{ \log \frac{\Bond(t,T)}{K \Bond(t,S)} + \frac{V}{2} }{ \sqrt{V} } \\
+		d_2 &= \frac{ \log \frac{\Bond(t,T)}{K \Bond(t,S)} - \frac{V}{2} }{ \sqrt{V} } \\
+		V &= \sigma^2 \left( \frac{1 - \e^{-2k(T-S)}}{k} \right)^2 \frac{1 - \e^{-2k(S-t)}}{2k} .
+	\end{align}
+A European put option with maturity $S$ on a $T$-bond and exercise price $K$ has a price
+\begin{align}
+\ZBP(t, S, T, K) = K \Bond(t,S) N( - d_2) - \Bond(t,T) N(-d_1)
+\end{align}
+at the time $t$
+
+\subsection{Cox-Ingersol-Ross--model (CIR)}
+\label{sec:cir}
+
+The material from this section is mainly from \textcite[pp. 64--68]{brigo2007interest}.
+
+\textcite{coxingersollross1985theory} introduced the Cox-Ingersol-Ross--model (CIR) where the short-rate process $r_t$ is given by
+\begin{align}
+\dx r(t) = k( \theta - r(t) ) \dx t + \sigma \sqrt{r(t)} \dx W(t) ,
+\end{align}
+where $r_0, k, \theta$ and $\sigma$ are positive constants. Another widely used parametrization is
+\begin{align}
+\dx r(t) = ( \alpha - k r(t) ) \dx t + \sigma \sqrt{r(t)} \dx W(t) ,
+\end{align}
+where $\alpha = k \theta$. Like Va\v{s}\'{i}\v{c}ek--model, CIR features reversion toward the mean $\theta$ with $k$ as the strength of the reversion. But it also has non-constant volatility as the diffusion term is $\sigma \sqrt{r(t)}$. CIR model also has affine term-structure and therefore the bond prices can be efficiently solved. Unlike Va\v{s}\'{i}\v{c}ek--model, CIR--model can be specified so that the short-rate will be always positive.
+
+\subsubsection{Bond pricing in the CIR--model}
+
+By solving the Riccati equation, which we shall not do, we get that the bond price in CIR model is
+	\begin{align}
+		\Bond(t,T) = \e^{A(t,T) - B(t,T)r(t)} ,
+	\end{align}
+where
+	\begin{align}
+		A(t,T) &= \frac{2k\theta}{\sigma^2} \log \left( \frac{2 \beta \e^{ \frac{(\beta + k)(T-t)}{2} } }{(\beta + k)(\e^{\beta(T-t)} - 1) + 2\beta}  \right) \\
+		B(t,T) &= \frac{ 2(\e^{\beta(T-t)} - 1) }{ (\beta + k)(\e^{\beta(T-t)} - 1) + 2\beta } \\
+		\beta &= \sqrt{k^2+ 2\sigma^2}		
+	\end{align}
+
+\subsubsection{Option pricing in the CIR--model}
+
+A European call option with maturity $S$ on a $T$-bond and exercise price $K$ has a price
+\begin{align}
+\ZBC(t, S, T, K) = \Bond(t,T) \chi_1^2 - K \Bond(t,S) \chi_2^2,
+\end{align}
+at the time $t$, where
+\begin{align}
+	\chi_1^2 &= \chi^2 \left( v_1, \frac{4k\theta}{\sigma^2}, \frac{2\beta_3^2 r(t) \e^{\beta (S-t)} }{\beta_2 + \beta_3 + B(S,T)} \right) \\
+	\chi_2^2 &= \chi^2 \left( v_2, \frac{4k\theta}{\sigma^2}, \frac{2\beta_3^2 r(t) \e^{\beta (S-t)} }{\beta_2 + \beta_3} \right) \\
+	v_1 &= 2( \beta_2 + \beta_3 + B(S,T) ) \frac{A(S,T)-\log(K)}{B(S,T)} \\
+	v_2 &= 2( \beta_2 + \beta_3 ) \frac{A(S,T)-\log(K)}{B(S,T)} \\
+	\beta_2 &= \frac{k+\beta}{\sigma^2}\\
+	\beta_3 &= \frac{2\beta}{\sigma^2 (\e^{\beta(S-t)} - 1) }
+\end{align}
+and $\chi^2(v,a,b)$ is the cumulative non-central chi-squared distribution with $A$ degrees of freedom and non-centrality parameter $b$.
+
+\iffalse
+
+\subsubsection{Glasserman algorithm}
+
+Glasserman gives the following algorithm to generate a sampling of a path in a CIR-model on time grid $0 = t_0 < t_1 < \ldots < t_n$. We denote $d = \frac{k \theta}{\sigma^2}$.
+
+\begin{description}
+	\item[Case $d>1$]: For $i=0,1, \ldots, n$:
+	\begin{enumerate}
+		\item Set         
+		\begin{align}
+		c &= \sigma^2 \frac{ 1 - \exp^{ - k ( t_{i+1} - t_i ) } }{4 k}, \\
+		\lambda &= r(t_i) \frac{ \exp^{ - k ( t_{i+1} - t_i ) } }{ c }.
+		\end{align}
+		\item Generate
+		\begin{align}
+		Z &\sim N(0,1), \\
+		X &\sim \chi_{d-1}^2.
+		\end{align}
+		\item Set
+		\begin{align}
+		r(t_{i+1}) = \left( (Z + \sqrt{\lambda})^2 + X \right) .
+		\end{align}
+	\end{enumerate}
+	\item[Case $d \leq 1$]: For $i=0,1, \ldots, n$:
+	\begin{enumerate}
+		\item Set         
+		\begin{align}
+		c &= \sigma^2 \frac{ 1 - \exp^{ - k ( t_{i+1} - t_i ) } }{4 k}, \\
+		\lambda &= r(t_i) \frac{ \exp^{ - k ( t_{i+1} - t_i ) } }{ c }.
+		\end{align}
+		\item Generate
+		\begin{align}
+		Z &\sim \text{Poisson} ( \frac{\lambda}{2} ), \\
+		X &\sim \chi_{d+2Z}^2.
+		\end{align}
+		\item Set
+		\begin{align}
+		r(t_{i+1}) = cX .
+		\end{align}
+	\end{enumerate}
+\end{description}
+
+\fi
+
+\section{Multi-factor short-rate models}
+
+Multi-factor short-rate models have more than one state variables that drive the evolution of the short-rate. \textcite{litterman1991common} demonstrated that while the majority of the yield curve movements can be explained by a single factor, it can not explain it all. Usually it is considered that at least 3 factors are needed.
+
+One problem with one-factor affine one-factor term-structures models is that rates of different maturities are perfectly correlated. By Equation \ref{affinitytermstructureequation},
+\begin{align}
+\Bond(t,T) = \e^{A(t,T) - B(t,T)r(t)}
+\end{align}
+and the continuously compounded rate satisfies $\e^{R(t,T)(T-t)} \Bond(t,T) = 1$, we see that
+\begin{align}
+	R(t,T) = \frac{B(t,T)}{T-t} r(t) - \frac{A(t,T)}{T-t} .
+\end{align}
+This implies that rates are perfectly correlated. Thus multiple factors are needed to induce realistic correlations among the rates of different maturities.
+
+In this section we shall follow the presentation based on \textcite[pp. 425--435]{nawalkabeliaevasoto2007dynamic}.
+
+\subsection{Simple $A(M,N)$--models}
+\label{subsec-AMN-interestrate}
+
+We now define a class of models $A(M,N)$ with $N-M$ correlated Gaussian processes and $M$ uncorrelated square-root processes. The correlated gaussian processes are
+\begin{align}
+\dx Y_i(t) &= - k_i Y_i(t) \dx t + \nu_i \dx W_i (t),
+\end{align}
+where $W_i$ is a Wiener process and 
+\begin{align}
+\dx W_i (t) \dx W_j (t) &= \rho_{ij} \dx t    
+\end{align}
+for all $i,j = 1,2, \ldots, N-M$. Here $-1 < \rho_{ij} = \rho_{ji} < 1$ and $\rho_{ii} = 1$. The $M$ square-root processes are
+\begin{align}
+\dx X_m(t) = \alpha_m ( \theta_m - X_m(t) ) \dx t + \sigma_m \sqrt{ X_m(t) } \dx Z_m (t)
+\end{align}
+where $Z_m$ are independent Wiener process and
+\begin{align}
+\dx W_i (t) \dx Z_m (t) &= 0    
+\end{align}
+for all $i = 1,2, \ldots, N-M$ and $m = 1,2, \ldots, M$. The short-rate is defined by
+\begin{align}
+r(t) = \delta + \sum_{m=1}^{M} X_m(t) + \sum_{i=1}^{N-M} Y_i(t),
+\end{align}
+where $\delta$ is a constant. Thus
+\begin{align}
+\dx r(t) &= \left( \sum_{m=1}^{M} \alpha_m ( \theta_m - X_m(t) ) - \sum_{i=1}^{N-M} k_i Y_i(t) \right) \dx t \\
+&+ \sum_{m=1}^{M} \sigma_m \sqrt{ X_m(t) } \dx Z_m (t) + \sum_{i=1}^{N-M} \nu_i \dx W_i (t) .
+\end{align}
+
+If we define
+\begin{align}
+H(t,T) &= \int_t^T \delta \dx x = (T-t) \delta, \\
+\beta_m &= \sqrt{\alpha_m^2 + 2 \sigma_m^2} , \\
+C_i(x) &= \frac{1 - \e^{-k_i x}}{k_i}, \\
+B_m(x) &= \frac{ 2 ( \e^{\beta_m x} - 1 ) }{ (\beta_m + \alpha_m)( \e^{\beta_m x} - 1) + 2 \beta_m }, \\
+A(x) &= \sum_{m=1}^M \frac{2 \alpha_m \theta_m }{\sigma_m^2} \log \left( \frac{ 2 \beta_m \e^{ \frac{1}{2} (\beta_m + \alpha_m) x } }{ (\beta_m + \alpha_m)( \e^{\beta_m x -1} ) + 2 \beta_m } \right) \\
+&+ \frac{1}{2} \sum_{i=1}^{N-M} \sum_{j=1}^{N-M} \frac{\nu_i \nu_j \rho_{ij}}{k_i k_j} \left( x - C_i(x) - C_j(x) + \frac{1-\e^{(k_i+k_j)x}}{k_i + k_j} \right)
+\end{align}
+for all $i = 1,2, \ldots, N-M$ and $m=1,2, \ldots, M$, then the price of a zero coupon bond is given by
+\begin{align}
+\Bond (t,T) = \exp{ \left( A(\tau) - \sum_{m=1}^M B_m(\tau) X_m(t) - \sum_{i=1}^{N-M} C_i(\tau) Y_i(t) - H(t,T) \right) },
+\end{align}
+where $\tau = T-t$. This model also has a semi-explicit formula for options on zero-coupon bonds. The method to calculate this will introduced in Section \ref{chap:fourier}.
+
+We note that  Va\v{s}\'{i}\v{c}ek--model is $A(0,1)$ and CIR--model is $A(1,1)$ in this notation.
+
+These $A(M,N)$--models can be made into $A(M,N)++$ models by using the following dynamic extension.
+
+\section{Dynamic extension to match the given term-structure}
+\label{sec:dynamicextension}
+
+This section follows the paper by \textcite{brigomercurio2001deterministic}.
+
+Let $(\Omega^x, \Pm^x, \F^x)$ be a probability space. We first assume the process $(x_{\alpha}(t))$ follows
+	\begin{align}
+		\dx x_{\alpha}(t) &= \mu(x_{\alpha}(t); \alpha) \dx t + \sigma(x_{\alpha}(t)); \alpha) \dx W_x(t) , \\
+		x_{\alpha}(0) &= x_0
+	\end{align}
+under the measure $\Pm^x$, where $\alpha$ is a parameter vector. Let $\F_t^x$ be the member of a filtration generated by $x_{\alpha}$ up to time $t$. Suppose that the process $(x_{\alpha}(t))$ is the short-rate process under the risk-free measure $\Pm_x$ and the price of a zero-coupon bond is 
+	\begin{align}
+		\Bond^x(t,T) &= \E_{\Pm_x} \left( \e^{ - \int_t^T x_{\alpha}(s) \ \dx s} \ | \ \F_t^{x_{\alpha}} \right) ,
+	\end{align}
+which is a function of $(t,T,x_{\alpha}, \alpha)$. \textcite{brigomercurio2001deterministic} calls this as a reference model. It is not guaranteed that the implied zero-curve structure by this model will match the observed market data.
+
+Let $\varphi(t; \alpha, x_0) = \varphi(t; \alpha^*)$ be a deterministic real-valued function that it is at least integrable under any closed interval. Suppose that the short-rate follows
+	\begin{align}
+		r(t) = x(t) + \varphi(t; \alpha^*)
+	\end{align}
+and $(x(t))$ follows that same process under the risk-free measure $\Pm_0$ as $(x_{\alpha}(t))$ does under the measure $\Pm^x$. This model is the shifted model. This implies that
+	\begin{align}
+		\Bond(t,T) &= \E_{\Pm_0} \left( \e^{ - \int_t^T r(s) \ \dx s} \ | \ \F_t \right) \\
+			&= \E_{\Pm_0} \left( \e^{ - \int_t^T (x(s) + \varphi(s; \alpha^*)) \ \dx s} \ | \ \F_t \right) \\
+			&=  \E_{\Pm_0} \left( \e^{ - \int_t^T x(s)  \ \dx s} \ | \ \F_t \right) \e^{ - \int_t^T \varphi(s; \alpha^*) \ \dx s} \\
+			&=  \E_{\Pm^x} \left( \e^{ - \int_t^T x_{\alpha}(s)  \ \dx s} \ | \ \F_t^{x_{\alpha}} \right) \e^{ - \int_t^T \varphi(s; \alpha^*) \ \dx s} \\
+			&= \Bond^x(t,T) \e^{ - \int_t^T \varphi(s; \alpha^*) \ \dx s} .
+	\end{align}
+If we have a method to calculate the bond price under the reference model, then bond prices under the shifted can be calculated by a making a deterministic discounting based on the function $\varphi(t, \alpha^*)$.
+
+In order to shorten the notations, we denote
+	\begin{align}
+		I(t,T,f) = \e^{ \int_t^T f(s) \ \dx s } ,
+	\end{align}
+where $f$ is a real valued function. If there is also a function
+\begin{align}
+\ZBC^x (t,S,T,K) = \E_{\Pm_x} \left( \e^{ - \int_t^S x_{\alpha}(s) \ \dx s} \left( \Bond^x(t,T) - K \right)^+ \ | \ \F_t^{x_{\alpha}} \right) 
+\end{align}
+for the price at time $t$ of a call option maturing at $S$ for a $T$-bond under the reference model. Now the price under the shifted model is
+	\begin{align}
+	&\ZBC(t,S,T,K) \\ = &\E_{\Pm_0} \left( \e^{ - \int_t^S r(s) \ \dx s} \left( \Bond(S,T) - K \right)^+ \ | \ \F_t \right) \\
+		= &\e^{ - \int_t^S \varphi(s; \alpha^*) \ \dx s} \E_{\Pm_0} \left( \e^{ - \int_t^S x(s) \ \dx s} \left( \Bond(S,T) - K \right)^+ \ | \ \F_t \right) \\
+		= &I(t,S, -\varphi) \E_{\Pm_0} \left( I(t,S,-x) \left( \Bond(S,T) - K \right)^+ \ | \ \F_t \right)
+	\end{align}
+As
+	\begin{align}
+		&\E_{\Pm_0} \left( I(t,S,-x) \left( \Bond(S,T) - K \right)^+ \ | \ \F_t \right) \\
+		= &\E_{\Pm_0} \left( I(t,S,-x) \left( \Bond^x(S,T) I(S,T,-\varphi) - K \right)^+ \ | \ \F_t \right) \\
+		= &\E_{\Pm_0} \left( I(t,S,-x) \left( \Bond^x(S,T) - I(S,T,\varphi) K \right)^+ \ | \ \F_t \right) I(S,T,-\varphi) \\
+		= &\ZBC^x(t,S,T,K\e^{ \int_S^T \varphi(s; \alpha^*) \ \dx s}) \e^{ - \int_S^T \varphi(s; \alpha^*) \ \dx s} .
+	\end{align}
+Here we have used again the equivalence on processes $x(t)$ and $x_{\alpha(t)}$. Hence
+	\begin{align}
+		&\ZBC(t,S,T,K) \\ = &\e^{ - \int_t^S \varphi(s; \alpha^*) \ \dx s} \ZBC^x(t,S,T,K\e^{ \int_S^T \varphi(s; \alpha^*) \ \dx s}) \e^{ - \int_S^T \varphi(s; \alpha) \ \dx s} \\
+		= & \ZBC^x(t,S,T,K\e^{ \int_S^T \varphi(s; \alpha^*) \ \dx s}) \e^{ - \int_t^T \varphi(s; \alpha^*) \ \dx s}
+	\end{align}
+We see that the options prices for the shifted model can be computed easily, if the options prices can be calculated efficiently under the reference model. But not pure discounting is not enough, as we also have to shift probabilities by shifting the target strike.  
+
+Thus the following holds.
+
+\begin{thm}
+\label{bondandoptionpricesinextension}
+	Under the earlier assumptions, the $T$-bond has a price
+	\begin{align}
+	\Bond(t,T) =  \Bond^x(t,T) \e^{ - \int_t^T \varphi(s; \alpha^*) \ \dx s}
+	\end{align}
+	and a call option with maturity $S$ on this bond has price
+	\begin{align}
+	\ZBC(t,S,T,K) =  \ZBC^x(t,S,T,K\e^{ \int_S^T \varphi(s; \alpha^*) \ \dx s}) \e^{ - \int_t^S \varphi(s; \alpha^*) \ \dx s}
+	\end{align}
+	at the time $t$. 	
+\end{thm}
+
+This model can achieve a perfect fit to the initial interest-rate term structure.
+
+\begin{thm}
+\label{extensionequivalentandfactor}
+	Under the earlier assumptions, the following are equivalent:
+\begin{itemize} 
+	\item The model
+		\begin{align}
+			r(t) = x(t) + \varphi(t; \alpha^*)
+		\end{align}
+	has a perfect fit to the given interest-rate term structure,
+	\item for all $t \geq 0$
+		\begin{align}
+			\e^{-\int_t^T \varphi(s; \alpha^*) \dx s} = \frac{\Bond^M(0,T) \Bond^x(0,t)}{\Bond^M(0,t) \Bond^x(0,T)}, 
+		\end{align}
+	\item for all $t \geq 0$
+	\begin{align}
+		\varphi( t, \alpha^*) = \Forwardrate^M(0,t) - \Forwardrate^x(0,t)
+	\end{align}
+\end{itemize}
+where $\Bond^M$ are observed market prices of zero-coupon bonds, $\Forwardrate^M(0,t)$ is the market implied forward-rate and $\Forwardrate^x(0,t)$ is the forward-rate implied by the reference model.
+\end{thm}
+
+\begin{proof}
+We note that the perfect fit to market rates is equivalent to
+	\begin{align}
+		\label{perfectfitequationindynamicextension}
+		\Bond^M(0,t) = \Bond(0,t) = \e^{ - \int_0^t \varphi(s; \alpha^*) \ \dx s} \Bond^x(0,t) .
+	\end{align}
+That is equivalent to
+	\begin{align}
+\e^{ - \int_t^T \varphi(s; \alpha^*) \ \dx s} &= \e^{ - \int_0^T \varphi(s; \alpha^*) \ \dx s} \e^{ \int_0^t \varphi(s; \alpha^*) \ \dx s} \\
+	&= \frac{\Bond^M(0,T) }{ \Bond^x(0,T)} \frac{ \Bond^x(0,t)}{\Bond^M(0,t) }
+\end{align}
+Equation \ref{perfectfitequationindynamicextension} is also equivalent to 
+	\begin{align}
+		\log \Bond^M(0,t) = \log \Bond^x(0,t) - \int_0^t \varphi(s; \alpha^*) \ \dx s
+	\end{align}
+for all $t \geq 0$ and this implies that the $-f^M(0,t) = - f^x(0,t) -  \varphi(t; \alpha^*)$. 
+\end{proof}
+
+Theorem \ref{extensionequivalentandfactor} guarantees that no matter how the term-structure is shaped, we can fit it exactly with a suitable function. If we want to price bonds and options on bonds in the shifted model, then the calculation of the whole function $\varphi$ is unnecessary as we need only the values
+		\begin{align}
+\e^{-\int_t^T \varphi(s; \alpha^*) \dx s} = \frac{\Bond^M(0,T) \Bond^x(0,t)}{\Bond^M(0,t) \Bond^x(0,T)} .
+\end{align}	
+Using the market values is preferable to estimating the forward curve, as the curve fitting may cause errors.
+
+We note that if $\varphi(t) = \varphi(t; \alpha^*)$ is differentiable, then
+	\begin{align}
+		\dx r(t) &= \dx x(t) + \frac{\partial}{\partial t} \varphi(t; \alpha, x_0) \dx t \\
+			&= \mu(x_{\alpha}(t); \alpha) \dx t + \sigma(x_{\alpha}(t)); \alpha) \dx W_x(t) + \frac{\partial}{\partial t} \varphi(t) \dx t \\
+			&= \left( \mu(r(t) - \varphi(t); \alpha) + \frac{\partial}{\partial t} \varphi(t) \right) \dx t + \sigma(r(t) - \varphi(t)); \alpha) \dx W_x(t) .
+	\end{align}
+	
+We also note that if $t=0$, then
+	\begin{align}
+		\Bond(0,T) &= \Bond^M(0,T) \\ &=  \Bond^x(0,T) \e^{ - \int_0^T \varphi(s; \alpha^*) \ \dx s}
+	\end{align}
+and
+	\begin{align}
+		\ZBC(0,S,T,K) &=  \ZBC^x(0,S,T,K\e^{ \int_S^T \varphi(s; \alpha^*) \ \dx s}) \e^{ - \int_0^S \varphi(s; \alpha^*) \ \dx s}
+	\end{align}
+
+
+\subsection{Va\v{s}\'{i}\v{c}ek++--model}
+\label{sex:vasicek++}
+
+By dynamically extending Va\v{s}\'{i}\v{c}ek--model, we get a model that is equivalent to a variant of Hull-White--model (\cite{hull1990pricing}, \cite{brigomercurio2001deterministic}). \added{This section follows } \textcite[pp. 100--102]{brigo2007interest}.
+
+Suppose that we bootstrap the prices of $T_i$-bonds from the market for some $i=1,2, \ldots, n$. Let them be $\Bond^M(0,T_1), \Bond^M(0,T_2), \ldots , \Bond^M(0,T_n)$.
+
+We assume that the evolution of $x(t)$ is given by
+\begin{align}
+\dx x(t) = k ( \theta - x(t) ) \dx t + \sigma \dx W(t) ,
+\end{align}
+where $k, \theta, \sigma > 0$ and $x(0) = x_0$ are constants and $W(t)$ is a brownian motion under the risk-free measure. We make the explicit assumption that $\theta = 0$, hence
+\begin{align}
+\dx x(t) = - k x(t) ) \dx t + \sigma \dx W(t) .
+\end{align}
+This assumption does not actually restrict the model at all. It only changes the center of the distribution, which does not matter as dynamic shift will be shifted similarly.
+
+Now we know that
+\begin{align}
+\Bond^x(t,T) = \e^{- B(t,T)x(t)} ,
+\end{align}
+where
+\begin{align}
+B(t,T) &= \frac{ 2(\e^{\beta(T-t)} - 1) }{ (\beta + k)(\e^{\beta(T-t)} - 1) + 2\beta }, \\
+\beta &= \sqrt{k^2+ 2\sigma^2}	.	
+\end{align}
+We now define the short-rate by
+	\begin{align}
+		r(t) = x(t) + \varphi(t),
+	\end{align}
+where the function $\varphi$ is taken as in the Theorem \ref{extensionequivalentandfactor}. Now
+	\begin{align}
+		\dx r(t) &= \left( -kx(t) + \frac{\partial}{\partial t} \varphi(t) \right) \dx t + \sigma \dx W(t) \\
+			&= \left( k( \varphi(t) -r(t) ) + \frac{\partial}{\partial t} \varphi(t) \right) \dx t + \sigma \dx W(t) .
+	\end{align}
+	
+By Theorems \ref{bondandoptionpricesinextension} and \ref{extensionequivalentandfactor}, we have that
+	\begin{align}
+		\Bond(t,T) &= \Bond^x(t,T) \e^{ - \int_t^T \varphi(s; \alpha^*) \ \dx s} \\
+			&= \Bond^x(t,T) \frac{\Bond^M(0,T) \Bond^x(0,t)}{\Bond^M(0,t \Bond^x(0,T)} \\
+			&= \frac{\Bond^M(0,T) }{\Bond^M(0,t)} \e^{ -B(t,T)x(t) -B(0,t)x(0) + B(0,T)x(0) }
+	\end{align}
+if $t = T_i$ and $T = T_j$ for some $i < j$. If $t=0$, then $\Bond(0,T) = \Bond^M(0,T)$, as was expected.
+
+A European call option with maturity $S$ on a $T$-bond and exercise price $K$ has a price
+\begin{align}
+\ZBC^x(t, S, T, K) = \Bond^x(t,T) N(d_1) - K \Bond^x(t,S) N(d_2),
+\end{align}
+at the time $t$ under the dynamics of $x(t)$, where
+\begin{align}
+d_1 &= \frac{ \log \frac{\Bond^x(t,T)}{K \Bond^x(t,S)} + \frac{V}{2} }{ \sqrt{V} } \\
+d_2 &= \frac{ \log \frac{\Bond^x(t,T)}{K \Bond^x(t,S)} - \frac{V}{2} }{ \sqrt{V} } \\
+V &= \sigma^2 \left( \frac{1 - \e^{-2k(T-S)}}{k} \right)^2 \frac{1 - \e^{-2k(S-t)}}{2k} .
+\end{align}
+Now, by Theorems \ref{bondandoptionpricesinextension} and \ref{extensionequivalentandfactor}, we have that
+	\begin{align}
+	\ZBC(t,S,T,K) &=  \ZBC^x(t,S,T,K\e^{ \int_S^T \varphi(s; \alpha^*) \ \dx s}) \e^{ - \int_t^S \varphi(s; \alpha^*) \ \dx s} \\
+		&= \ZBC^x(t,S,T,K/I(S,T)) I(t,S),
+	\end{align}
+where
+	\begin{align}
+		I(t,S) &= \frac{\Bond^M(0,S) \Bond^x(0,t)}{\Bond^M(0,t) \Bond^x(0,S)} \\
+				&= \frac{\Bond^M(0,S) }{\Bond^M(0,t)} \e^{ -B(0,t)x(0) + B(0,S)x(0) } \end{align}
+and
+	\begin{align}
+		I(S,T) &= \frac{\Bond^M(0,T) \Bond^x(0,S)}{\Bond^M(0,S) \Bond^x(0,T)} \\
+			&= \frac{\Bond^M(0,T) }{\Bond^M(0,S)} \e^{ -B(0,S)x(0) + B(0,T)x(0) } .
+	\end{align}
+	
+\subsection{CIR++--model}
+
+Extended CIR--model, or CIR++--model, can be constructed by combining the formulas in section \ref{sec:cir} with the results from section \ref{sec:dynamicextension} as was done in section \ref{sex:vasicek++}. As this is trivial, we shall writing the formulas again.
+
+\subsection{G2++--model}
+
+$A(2,2)++$--model is achieved by extending $A(2,2)$--model as above. Thus model is equivalent to model by \textcite{hull1994numerical} and it is called as  $G2++$--model by \textcite{brigo2007interest}. 
+
+\textcite[pp. 153--156, 172--173]{brigo2007interest} contains the proof for the following.
+
+\begin{thm}
+A European call option with maturity $S$ on a $T$-bond and exercise price $K$ has a price
+\begin{align}
+\ZBC^x(t, S, T, K) &= \Bond(t, T) \Phi \left( K^* + \frac{1}{2} S(t,S,T) \right) \\ 
+&- \Bond(t, S) K \Phi \left( K^* - \frac{1}{2} S(t,S,T) \right)
+\end{align}
+where
+\begin{align}
+K^* & = \frac{\log \frac{\Bond(t,T)}{K\Bond(t,S)}}{S(t,S,T)} \\
+S(t,S,T)^2 &= \sum_{i=1}^2 \frac{\nu_i^2}{2 k_i^3} \left( 1 - \e^{ -k_i(T-S) } \right)^2 \left( 1 - \e^{-2k_i(S-t)} \right) \\
+&+ 2 \rho \frac{\nu_1 \nu_2}{ k_1 k_2 (k_1 + k_2) }  \left( 1 - \e^{ -k_1(T-S) } \right)  \left( 1 - \e^{ -k_2(T-S) } \right)  \left( 1 - \e^{ -(k_1 + k_2)(S-t) } \right)
+\end{align}
+\end{thm}

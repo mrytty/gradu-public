@@ -1,0 +1,805 @@
+\chapter{Mathematical appendix}
+\label{chap:math}
+
+In this chapter, we shall review the intuition behind basic results in probability theory and stochastic calculus. We shall omit most of the measure theory needed and be pretty vague of the technical arguments.
+
+In the following we let $(\Omega, \F)$ be a probability space with a measure $\Pf$ be a probability measure. Here $\Omega$ is the state space, $\F$ is the $\sigma$-algebra of $\Omega$. Let $\Pm$ be also a probability measure on the space $(\Omega, \F)$. If for all $A \in \F$, it holds that $\Pf (A) = 0$ implies $\Pm (A) = 0$, then we say that $\Pm$ is absolutely continous with respect to $\Pf$ on $\F$ and we write $\Pm \ll \Pf$. If $\Pm \ll \Pf$ and $\Pf \ll \Pm$, then the measures are said to be equivalent on $\F$. Thus measures are equivalent if and only if their null sets are the same.
+
+\section{Characteristic function and Fourier transformation}
+
+A probability distribution function of random variable $X$ is any measurable function $f_X$ that satisfies
+	\begin{align}
+		\Pf ( X \in A ) = \int_A f_X \ \dx \mu
+	\end{align}
+for all $A \in \F$, where $\mu$ is the Lebesgue measure. The characteristic function $g_X$ is the function
+	\begin{align}
+		g_X (\omega) &= \E_{\Pf} \left( \e^{i \omega X} \right) \\
+			&= \int_{-\infty}^{\infty} \e^{i \omega x} f_X(x) \ \dx x
+	\end{align}
+if the expectation exists. This is just the Fourier transformation of the probability distribution function. If the characteristic function $g_X$ is integrable, then the inverse Fourier transformation gives
+	\begin{align}
+		f_X = \frac{1}{2 \pi} \int_{-\infty}^{\infty} \e^{- i \omega x} g_X x \ \dx x .
+	\end{align}
+According to \cite{carrmadan1999optionvaluation}, Gil-Pelaez' Inversion gives that
+	\begin{align}
+		\Pf( x < X ) = \frac{1}{2} - \frac{1}{\pi} \int_0^{\infty} \frac{\im \left( \e^{-i \omega x} g_X( \omega) \right)}{ \omega} \ \dx  \omega
+	\end{align}
+and 
+	\begin{align}
+		\Pf( x \geq X ) = \frac{1}{2} + \frac{1}{\pi} \int_0^{\infty} \re \left( \frac{\e^{-i  \omega x} g_X( \omega)}{ i  \omega} \right) \ \dx  \omega .
+	\end{align}	
+
+\section{Radon-Nikod\'{y}m-theorem and the change of measure}
+\label{sec:radonnikodymtheorem}
+
+One of the basic tool of the probability measures is the Radon-Nikod\'{y}m-theorem. For the proof, see any basic text on the measure theory (for example, \textcite[pp. 449-450]{billingsley2012probabilityandmeasure}). We recall that a function $f$ is $\F$-measurable if $\{ \omega \in \Omega \ | \ f(\omega) \leq x \} \in \F$ for any $x \in \R$.
+
+\begin{thm}[Radon-Nikod\'{y}m-theorem]
+	If $\Pf$ and $\Pm$ be probability measures on measurable space $(\Omega, \F)$ and $\Pm \ll \Pf$, then there exists a non-negative $\F$-measurable function $\xi$ such that
+	\begin{align}
+	&\int_{\Omega} \xi \ \dx \Pf < \infty \text{ and } \\
+	\Pm (A) = &\int_A \xi \ \dx \Pf
+	\end{align}
+	for all $A \in \F$. The function $\xi$ is $\Pf$-unique and it is called as the Radon-Nikod\'{y}m-derivate of $\Pf$ with respect to measure $\Pm$ and filtration $\F$.
+\end{thm}
+
+The Radon-Nikod\'{y}m-derivate of $\Pf$ with respect to $\Pm$ is denoted by
+\begin{align}
+\xi = \frac{\dx \Pm}{\dx \Pf}
+\end{align}
+and alternatively we may write
+\begin{align}
+\dx \Pm = \xi \dx \Pf .
+\end{align}
+Since $\Pm$ is a probability measure, it is clear that $\E_{\Pf} (\xi) = 1$. 
+
+If $X = \1_A$ for some $A \in \F$, then
+\begin{align}
+\E_{\Pm} (X) = \Pm (A) = \int_A \xi \dx \Pf = \E_{\Pf} ( \1_A \xi ) = \E_{\Pf} (\xi X) .
+\end{align}
+If $X$ is integrable and $\F$-measurable random variable, then we may approximate it with simple functions and we may conclude the following important consequence of the Radon-Nikod\'{y}m-derivate.
+
+\begin{lemma}
+	\label{radonnikodymconsequence}
+	Suppose that the function $\xi$ is the Radon-Nikod\'{y}m-derivate of $\Pf$ with respect to $\Pm$. If $X$ is integrable and $\F$-measurable random variable, then
+	\begin{align}
+	\E_{\Pm} (X) = \E_{\Pf} ( \xi X).
+	\end{align}
+\end{lemma}
+
+Conversely, if $\xi$ is $\F$-measurable, integrable and non-negative function with $\E_{\Pf} (\xi) = 1$, then we may define a function $\Pm : \F \rightarrow [0,1]$ by
+\begin{align}
+\label{RadonNikodymbyrandomvariable}
+\Pm ( A ) = &\int_A \xi \dx \Pf = \E_{\Pf} ( \1_A \xi )
+\end{align}
+for all $A \in \F$. It is easy to see that $\Pm$ is a probability measure on measurable space $(\Omega, \F)$ and $\Pm \ll \Pf$. Also
+\begin{align}
+\xi = \frac{\dx \Pm}{\dx \Pf} .
+\end{align}
+By Equation \ref{RadonNikodymbyrandomvariable},
+	\begin{align}
+		\E_{\Pm} (X) = \E_{\Pf} (X \frac{\dx \Pm}{\dx \Pf} )
+	\end{align}
+holds for simple functions and, by limit argumentation, it holds for any integrable random variable. Heuristically
+	\begin{align}
+		 \int_A X \ \dx \Pm &= \int_A X \ \dx \Pf \ \frac{\dx \Pm}{\dx \Pf} \\
+		 	&= \int_A X \ \dx \Pf 
+	\end{align}
+for all $A \in \F$.
+
+\section{Conditional expectation}
+
+The associated $\sigma$-algebra $\F$ can be seen as the known information structure. Random variables are $\F$-measurable functions which means that the sets\footnote{These sets generate the Borel algebra of the reals.} $\{ \ \omega \ | \ X(\omega) \leq a \ \} \in \F$ for all $a \in \R$. This may be interpreted as that $\F$-measurable functions are those functions whose outcome is known based on the information $\F$.
+
+If $\F = \{ \emptyset, \Omega \}$, then only constant functions are $\F$-measurable and knowning the value of random variable gives no information about the true state of the system $\omega$. If $\emptyset \not = A \subset \Omega$ and $A \in \F$, then $\1_A$ is $\F$-measurable function. So if we know the value of $\1_A$, we may deduce either $\omega \in A$ or $\omega \not \in A$ although we may not have exact information about the true state $\omega$ of the random system $\Omega$. So if $\G$ is a $\sigma$-sub-algebra of $\F$, then $\F$ carries more information than $\G$.
+
+Let $X$ be a $\F$-measurable random variable and $\G$ a $\sigma$-sub-algebra of $\F$ generated by partion $B_1, B_2, \ldots, B_m$ of $\Omega$. For simplicity, we assume that $X$ is simple, meaning that
+  \begin{align}
+    X &= \sum_{i=1}^n x_i \1_{A_i}
+  \end{align}
+where $x_i \in \R$ and $A_i \in \F$ for $i=1,2, \ldots, n$ and the collection $A_1, A_2, \ldots A_n$ is a partition of $\Omega$. We denote $C_{ij} = A_i \cap B_j$.
+
+If we know that the event $B_j$ is true, then $X = x_i$ only if $C_{ij} \not = \emptyset$ and, in a sense, the average value of $X$ will be
+  \begin{align}
+    y_j = \sum_{i=1}^n x_i \frac{\Pf( C_{ij} )}{ \Pf( B_j ) }
+  \end{align}
+assuming that $\Pf (B_j ) \not = 0$. If $\Pf (B_j ) = 0$, then
+  \begin{align}
+    \E (X \1_{B_j} ) = 0
+  \end{align}
+and we set $y_j = 0$. Now we may define a new random variable
+  \begin{align}
+    Y = \sum_{j=1}^m y_j \1_{B_j} .
+  \end{align}
+Now $Y$ is $\G$-measurable and integrable. Furthermore,
+  \begin{align}
+    \E (X \1_{B_j} ) &= \sum_{i=1}^n \E ( x_i \1_{A_i} \1_{B_j} ) \\
+      &= \sum_{i=1}^n x_i \Pf ( C_{ij} ) \\
+      &= y_j \Pf ( B_j ) \\
+      &= \E (Y \1_{B_j} )
+  \end{align}
+for all $j = 1,2, \ldots, m$. This motivates us to define the conditional expectation given a $\sigma$-sub-algebra $\G$.
+
+For a fixed $\F$-measurable and integrable random variable $X$, the conditional expectation of $X$ given $\G$ is the random variable $\E (X | \G)$ with the following properties:
+  \begin{enumerate}[label=\roman*)]
+    \item $\E (X | \G)$ is $\G$-measurable and integrable,
+    \item for every $G \in \G$,
+      \begin{align}
+        \label{conditionalsecondcond}
+        \int_G X \dx \Pf = \int_G \E (X | \G) \dx \Pf.
+      \end{align}
+  \end{enumerate}
+  
+Thus conditional expectation is a random variable and 
+\begin{align}
+	\E (X) = \E (\E (X | \G)).
+\end{align} 
+We may use Radon-Nikod\'{y}m-theorem or orthogonal projections in $\Le^2$-space to prove the existance of a conditional expectations and it is unique $\Pf$-surely. In the following, we shall not always make the distinction between sets or random variables that match everywhere or just $\Pf$-everywhere. 
+
+Let $X_i$ be the throw of a fair coin at the time $i$. So $X_i (\omega) \in \{ 0, 1\}$ with equal probabilities. For simplicity, we consider only two time periods $i=1,2$ and we code 
+	\begin{align}
+		\Omega = \{ \ X_iX_j \ | \ i,j \in \{0,1\} \ \} = \{ \ 00, 01, 10, 11 \ \},
+	\end{align} 
+with $\Pf( \omega ) = 1/4$ for all $\omega \in \Omega$. Let $\F = \{ \emptyset, \Omega \}$ and $X(ij)= X_1(i)+X_2(j)$. Now
+\begin{align}
+\E_{\Pf} \left( X \ | \ \F \right) = 1
+\end{align}
+since
+	\begin{align}
+		\int_\emptyset X \ \dx \Pf &= 0, \\
+		\int_\Omega X \ \dx \Pf &= 1 \\
+	\end{align}
+If we know the result of the first throw, then we may pick 
+	\begin{align}
+		\G = \F \ \cup \ \{ 00, 01 \} \ \cup \ \{ 10, 11 \}
+	\end{align} 
+Now
+	\begin{align}
+		\int_{ \{ 00, 01 \} } X \ \dx \Pf &= \frac{X_1(0) + X_1(0) + X_2(0) + X_2(1)}{4} = \frac{1}{4}, \\
+		\int_{ \{ 10, 11 \} } X \ \dx \Pf &= \frac{X_1(1) + X_1(1) + X_2(0) + X_2(1)}{4} = \frac{3}{4}, \\
+		\int_{ \{ 00, 01 \} } \alpha \ \dx \Pf &= \frac{\alpha}{2}, \\
+		\int_{ \{ 10, 11 \} } \beta \ \dx \Pf &= \frac{\beta}{2}, \\
+	\end{align}
+implies that  $Y$ defined by $Y(00) = Y(01) = \frac{1}{2}$ and $Y(10) = Y(11) = \frac{3}{2}$ is the conditional expectation of $X$ over $\G$ as now
+	\begin{align}
+		\int_G Y \ \dx \Pf = \int_G X \ \dx \Pf
+	\end{align}
+for all $G \in \G$.
+
+If $\G = \{ \emptyset, \Omega \}$, then $\G$-measurable functions are constant functions. The integral over the empty set is zero for all integrable randon variables and 
+      \begin{align}
+        \int_{\Omega} X \dx \Pf = \E (X) = \int_{\Omega} \E (X) \dx \Pf.
+      \end{align}
+We see that $\E (X | \{ \emptyset, \Omega \}) = \E (X)$ and the conditional expectation gives no further information. If $X$ is $\G$-measurable, then the equation \ref{conditionalsecondcond} is trivially satisfied and we see that $X = \E (X | \G)$. In particular, $X = \E (X | \F)$ as $X$ is $\F$-measurable.
+
+We present some of the basic properties of conditional expectations.
+
+\begin{thm}
+Suppose that $\G$ and $\Ho$ are sub-$\sigma$-fields of $\F$ and $X$ and $Y$ are integrable random variables. Then
+  \begin{enumerate}[label=\roman*)]
+    \item $\E \left| \E ( X | \G ) \right| \leq \E \left| X \right|$,
+    \item $\E (aX+bY | \G ) = a\E (X | \G ) + b\E (Y | \G )$ for all $a,b \in \R$,
+    \item if $X \leq Y$, then $\E (X| \G) \leq \E (Y| \G)$,
+    \item $\left| \E (X | \G) \right| \leq \E (\left| X \right| | \G)$,
+    \item if $XY \in \Le^1 (\Omega, P)$ and $Y$ if $G$-measurable, then $\E (XY | \G) = Y \E (X | \G)$,
+    \item if $\Ho \subseteq \G$, then $\E ( \E (X | \G ) | \Ho ) = \E ( \E (X | \Ho ) | \G ) =  \E (X | \Ho )$,
+    \item if $\sigma (X)$ and $\G$ are independent, then $\E (X | \G) = \E (X)$,
+    \item if $P(G) \in \{ 0,1 \}$ for all $G \in \G$, then $\E (X | \G) = \E (X)$,
+  \end{enumerate}
+\end{thm}
+
+See \textcite[pp. 472--477]{billingsley2012probabilityandmeasure}
+
+\section{Filtrations and martingales}
+
+A collection $(\F_t)$  of $\sigma$-sub-algebras of $\F$ is called a filtration if $\F_t \subseteq F_s$ for all $0 \leq t \leq s$. Informally a filtration presents the flow of information. We assume some standard technical conditions for the filtrations. Every $\Pf$-null set must be a member of $\F_0$ and
+  \begin{align}
+    \F_t = \bigcap_{t < s} \F_s
+  \end{align}
+for all $t \geq 0$.
+
+A stochastic process $X$ is a function $X : (\R_+ \cup \{ 0 \}) \times \Omega \rightarrow \R$. It is often written as $X = (X(t))$, where the argument $\omega \in \Omega$ is dropped. It is then a collection of random variables with index set $\{t \geq 0\}$. We say that the process $(X(t))$ is adapted to the filtration $(\F_t)$ if $X(t)$ is $\F_t$-measurable for each $t$. Thus the variable $X(t)$ of an adapted process contains the information of the process that has been accumulated so far.
+
+A $(\F_t)$-adapted stochastic process is a martingale if $\E_{\Pf} \left( \left| X(t) \right| \right) < \infty$ and
+  \begin{align}
+    \E_{\Pf} ( X(s) \ | \ \F_t ) = X(t)
+  \end{align} 
+for all $0 \leq t < s < \infty$. Thus a martingale is a process, where the present value is the best estimate for the all future expected values given the past information contained in the process.
+
+\section{A stopping time and localization}
+\label{sec:stoppingtime}
+
+A random variable $\tau : \Omega \rightarrow \R_+ \cup \{ 0 \}$ is a stopping time with respect to the filtration $\F_t$ if
+	\begin{align}
+		\label{stoppingtimedefinition}
+		\{ \ \tau \leq t \ \} = \{ \omega \in \Omega \ | \ \tau(\omega) \leq t \} \in \F_t
+	\end{align}
+holds for all $t \geq 0$. This is equivalent to the existence of $(\F_t)$-adapted random process $(X(t))$ that
+	\begin{align}
+		X(t) = \begin{cases} 0, \ &t \leq \tau, \\ 1, \ &t > \tau . \end{cases}
+	\end{align}
+If $\tau$ is time of a default, then the condition of the Equation \ref{stoppingtimedefinition} means that at the time $t$ the information in the filtration will tell if the default has occured or not, that is $\tau \leq t$ or not.
+
+Stopping times are used to localized behavior. For example, a local martingale is a $(\F_t)$-adapted process 
+if there is such a sequence $(\tau_n)$ of stopping times that
+	\begin{align}
+		\Pf ( \tau_n < \tau_{n+1} ) &= 1,
+		\Pf ( \lim\limits_{n \rightarrow \infty} \tau_n = \infty ) &= 1,
+	\end{align}
+and the stopped process defined by
+	\begin{align}
+		X_{\tau_n}(t) = X( \min(t, \tau_n) )
+	\end{align}
+is a $(\F_t)$-martingale for all $n \geq 1$.
+
+\section{Brownian motion}
+
+For reference, see \textcite[pp. 530--545]{billingsley2012probabilityandmeasure}
+
+In order to keep notation efficient, we denote in this section
+	\begin{align}
+		\E_t( \cdot ) = \E_t( \ \cdot \ | \ \F_t ) .
+	\end{align}
+We also write $W(t, \omega) = W(t)$.
+
+Let $(\F_t)$ be a filtration of the probability space. A Brownian motion (or a Wiener process) $W(t), t \geq 0$ with respect to filtration $(\F_t)$ is a stochastic process satisfying the following
+  \begin{enumerate}
+    \item $W(0) = 0$ almost surely,
+    \item $W(t)$ is $\F_t$-measurable for each $ t\geq 0$,
+    \item $t \mapsto W(t)$ is $\Pf$-surely continuous,
+    \item for any finite set of times $0 \leq t_1 < t_2 < \ldots < t_n \leq T$, the random variables
+      \begin{align}
+        W(t_2) - W(t_1), W(t_3) - W(t_2), \ldots , W(t_n) - W(t_{n-1})
+      \end{align}
+      are independent,
+    \item $W(s) - W(t) \sim N(0, s-t)$ for all $0 < t < s$.
+  \end{enumerate}
+These imply that $W(t) = W(t) - W(0) \sim N(0,t)$ and
+  \begin{align}
+    \Var (W(s) - W(t) = \E \left( (W(s) - W(t)^2 \right) = s - t
+  \end{align}
+for all $0 < t < s$.
+
+A Brownian motion $W(t)$ is indeed a martingale in respect to the natural filtration since $\E_t ( W(s) - W(0 ) = 0$ and
+  \begin{align}
+    \E_t ( W(s) ) = \E_t ( W(s) - W(t) + W(t) ) = \E_t ( W(s) - W(t ) + W(t) = W(t) .
+  \end{align}
+Similarly $W(s)^2 = (W(s) - W(t)^2 + 2W(s)W(t) - W(t)^2$ implies that
+  \begin{align}
+    \E_t ( W(s)^2 -s ) &= \E_t \left( (W(s) - W(t)^2 + 2W(s)W(t) - W(t)^2 \right) -s \\
+      &= \Var_t (W(s) - W(t)) + 2 \E_t (W(s)) W(t) - W(t)^2 - s \\
+      &= s-t + W(t)^2 - s \\ &= W(t)^2 -t
+  \end{align}
+meaning that $W(t)^2 - t$ is also a martingale.
+
+If $f,g : [0,T] \rightarrow \R$ are functions, then the covariation of $f$ and $g$ up to time $T$ is
+  \begin{align}
+    \langle f,g \rangle (T) = \lim_{ \left| \Pi \right| \rightarrow 0} \sum_{i=0}^{n-1} (f( t_{i+1} ) - f (t_i) )(g( t_{i+1} ) - g (t_i) ),
+  \end{align}
+where $\Pi = \{ t_0, t_1, \ldots , t_n \}$, $0 = t_0 < t_1 < \ldots < t_n = T$ is a partition with mesh $\left| \Pi \right| = \max_i ( t_{i+1} - t_{i} ) $. The quadratic variation of a function $f$ up to time $T$ is
+  \begin{align}
+    \langle f \rangle_T = \langle f,f \rangle (T) = \lim_{ \left| \Pi \right| \rightarrow 0} \sum_{i=0}^{n-1} (f( t_{i+1} ) - f (t_i) )^2.
+  \end{align}
+  
+If the function $f$ has continuous derivate, then we may use intermediate value theorem to conclude that 
+  \begin{align}
+    \sum_{i=0}^{n-1} (f( t_{i+1} ) - f (t_i) )^2 &= \sum_{i=0}^{n-1} (f'(s_i))^2 (t_{i+1} - t_i)^2 \\
+      & \leq \left| \Pi \right| \sum_{i=0}^{n-1} (f'(s_i))^2 (t_{i+1} - t_i),
+  \end{align}
+for some $t_i \leq s_i \leq t_{i+1}$ and where
+  \begin{align}
+     \sum_{i=0}^{n-1} (f'(s_i))^2 (t_{i+1} - t_i) \rightarrow \int_0^T (f'(t))^2 \dx t < \infty
+  \end{align}
+as $\left| \Pi \right| \rightarrow 0$. Here we also used the continuity of $f'$ to keep the integral finite. This implies that $\langle f \rangle_T = 0$ for a smooth function $f$.
+
+For random processes the quadratic variation is defined when the limit in probability exists for any sequence of partitions. 
+
+\begin{thm}
+If $W= (W(t))$ is a Brownian motion, then $\langle W \rangle_T = T$ for all $T \geq 0$.
+\end{thm}
+
+\begin{proof}
+First $\E \left( (W(t_{i+1}) - W(t_i) )^2 \right) = t_{i+1} - t_i$. We recall the fact that for a random variable $ X \sim N(0, \sigma^2)$ we have $\Var (X^2) = 2 \sigma^4$. Thus 
+  \begin{align}
+    \Var \left( (W(t_{i+1}) - W(t_i) )^2 \right) =  2 (t_{i+1} - t_i)^2. 
+  \end{align}
+These and the independence of increments implies that
+  \begin{align}
+    \E \left( \sum_{i=0}^{n-1} (W(t_{i+1}) - W(t_i) )^2 \right) = T
+  \end{align}
+and
+  \begin{align}
+    \Var \left( \sum_{i=0}^{n-1} (W(t_{i+1}) - W(t_i) )^2 \right) = 2 \sum_{i=0}^{n-1} (t_{i+1} - t_i)^2 \leq 2 \left| \Pi \right| T .
+  \end{align}
+This means that $\langle W \rangle_T$ $\Le^2$-converges to $T$.
+\end{proof}
+
+The Brownian motion accumulates one unit of quadratic variation per unit of time. The previous result is often written informally as $\dx W(t) \dx W(t) = dt$. Similarly we may calculate the covariation $\langle W, t \rangle_T = 0$. It is enough to note that
+  \begin{align}
+    \left| \sum_{i=0}^{n-1} (W(t_{i+1}) - W(t_i) )( t_{i+1} - t_i ) \right| \leq T \max_i \left| W(t_{i+1}) - W(t_i) \right| 
+  \end{align}
+and by continuity of the paths we may force $\max_i \left| W(t_{i+1}) - W(t_i) \right|$ converge to zero. This we will use informally as $\dx W(t) \dx t = 0$. Since $f(t) = t$ is a smooth function, we have that $\langle t, t \rangle (T) = 0$ and thus $\dx t \dx t = 0$. Hence
+  \begin{align}
+    \dx W(t) \ \dx W(t) &= dt, \\
+    \dx W(t) \ \dx t &= 0, \\
+    \dx t \ \dx t &= 0.
+  \end{align}
+  
+\section{It\^{o}-integral}
+
+For reference, see \textcite[pp. 21--55]{oksendal2003stochastic}.
+
+We would like to calculate the integral of a stochastic function $h$ with respect to a Brownian motion $W$ over the time interval $[0,T]$. Let $(\F_t)$ be the filtration induced by the Brownian motion $W$. Since $h$ and $W$ are random and $W$ is $\Pf$-nowhere differentiable, we need to tread carefully. If a $(\F_t)$ adapted function $h(\omega,t)$ is constant on each subinterval $[t_i, t_{i+1}]$ given a partition $0 = t_0 < t_1 < \ldots < t_n = T$ of $[0,T]$, then $h$ is called simple. For a simple function we may write
+  \begin{align}
+    I(h) (\omega) = \sum_{i=0}^{n-1} h(\omega,t_i) ( W(t_{i+1}, \omega) - W(t_i, \omega) ) .
+  \end{align}
+The key here is that the function $h(\omega,t_i)$ is at the earliest moment and therefore It\^{o}-integral is not forward looking. Now $I(h)$ itself is a random variable. If $h$ is structured enough, then we may approximate it with simple function and define It\^{o}-integral as the limit of this process, if it is exists. Without going into details, we note that if $(\F_t)$-adapted process satisfies\footnote{Unless otherwise noted, we shall always assume that this condition will be satisfies.} that
+  	\begin{align}
+	\label{H-ito-restriction}
+	\E \left( \int_0^T h^2 (\omega,u) \dx u \right) < \infty
+	\end{align}
+then the limit 
+	\begin{align}
+		I(t, \omega) = \int_0^t  h (\omega,u) \ \dx W(u, \omega)
+	\end{align}
+exists and is called the It\^{o}-integral of $h$ from $0$ to $t$.
+
+Under these common assumptions, the It\^{o}-integral $I(t)$ satifies the following
+	\begin{enumerate}
+		\item $I(t)$ is $(\F_t)$-adapted,
+		\item $I(t)$ is continuous,
+		\item $I(t)$ is a martingale and $\E( I(t) \ | \ \F_0 ) = 0$ for all $t \geq 0$ and
+		\item $I(t)$ satisfies the It\^{o}-isometry
+		\begin{align}
+		\E \left( I(h)^2 \right) = \E \left( \int_0^T h^2 (\omega,u) \dx u \right) < \infty .
+		\end{align}
+	\end{enumerate}
+
+The  quadratic variation of It\^{o}-integral up to time $t$ is
+  \begin{align}
+    \int_0^t h^2 \dx s .
+  \end{align}
+  
+Nothing restricts It\^{o}-integral to be one dimensional. If $W(t)$ is $d$-dimensional Wiener process and $h(t, \omega) : \R \times \Omega \rightarrow \R^{p \times d}$, then we demand that
+	\begin{align}
+		\E \left( \int_0^t \left| h(s, \omega) \right|^2 \ \dx s \right) < \infty 
+	\end{align}
+where
+	\begin{align}
+		\left| h(s, \omega) \right|^2 = \mathrm{tr} ( h(s, \omega)^{\top} h(s, \omega) ) .
+	\end{align}
+If we relax the condition above, then we may not guarantee that the It\^{o}-integral will be martingale even if the integral exists.
+  
+\section{It\^{o} processes and It\^{o}'s lemma}
+\label{sec:itoprocess}
+
+For reference, see \textcite[pp. 21--55]{oksendal2003stochastic}.
+
+An adapted process $X$ is called an It\^{o}-process if it can be written as
+  \begin{align}
+    X(t) = X(0) + \int_0^t \mu(s) \dx s + \int_0^t \sigma(s) \dx W(s) ,
+  \end{align}
+where $\mu(t, \omega), \sigma(t, \omega)$ are adapted and integrable processes. This is usually written in more informal differential notation as
+  \begin{align}
+    \dx X(t) = \mu(t) \dx t + \sigma(t) \dx W(t) .
+  \end{align}
+The function $\mu(t)$ is called as the drift and the function $\sigma(t)$ is called as the volatility. The quadratic variation of the It\^{o} process is
+  \begin{align}
+    \langle X \rangle_t = \int_0^t \sigma^2(u) \dx u .
+  \end{align}
+This is consistent with the heurestic calculation
+  \begin{align}
+    \dx X(t) \ \dx X(t) &= ( \mu(t) \dx t )^2 + 2 \mu(t) \sigma(t) \dx t \dx W(t) + ( \sigma(t) \dx W(t )^2 \\
+      &= \sigma^2 (t) \dx t .
+  \end{align}
+
+\begin{thm}[It\^{o}'s lemma]
+If a function $g : \R \times [0,T] \rightarrow \R$ is in the class $C^{2,1}$ and $Y(t) = g(t, X(t))$, where $X(t)$ is an It\^{o}-process, then $Y(t)$ is also an It\^{o}-process with the presentation
+  \begin{align}
+    \dx Y(t) = \left( \frac{\partial g}{\partial t} + \frac{\partial g}{\partial x} \mu(t) + \frac{1}{2} \frac{\partial^2 g}{\partial x^2} \sigma^2(t) \right) \dx t + \frac{\partial g}{\partial t} \sigma(t) \dx W(t) .
+  \end{align}
+\end{thm}
+
+The formula itself is a short-hand for
+  \begin{align}
+    Y_t = Y_0 + \int_0^t g_t (u) \dx u + \int_0^t g_x (u) \dx X_u + \frac{1}{2} \int_0^t g_{xx} (u) \dx \langle X \rangle_u ,
+  \end{align}
+where, for example, $g_x$ is the partial differential of $g$ with respect to first variable.
+
+If It\^{o}-process
+	\begin{align}
+		\dx X(t) = \mu(t) \dx t + \sigma(t) \dx W(t) .
+	\end{align}
+has $\mu: \R \times \Omega \rightarrow \R^d$, $\mu: \R \times \Omega \rightarrow \R^{p \times d}$ and $W(t)$ is $d$-dimensional Wiener process, then the equation in It\^{o}'s lemma can be written as
+	\begin{align}
+		\dx Y = g_t \dx t + g_x \mu \dx t + g_x \sigma \dx W + \frac{1}{2} \sum_{i=1}^p \sum_{j=1}^p g_{x_i, x_j} (\sigma^{\top} \sigma)_{i,j} \dx t ,
+	\end{align}
+where $g_x = \left( g_{x_1} g_{x_2} \cdots g_{x_p}  \right)$.
+
+It\^{o}'s lemma can be used to calculate integrals. If $g(x,t) = x^2$ and $X_t = W_t$, then 
+  \begin{align}
+    \dx g(W_t,t) = \dx t + 2 W(t) \dx W(t),
+  \end{align}
+which is the short-hand for
+  \begin{align}
+    W(t)^2 = t + 2 \int_0^t W(s) \dx W(s) .
+  \end{align}
+This means that 
+  \begin{align}
+    \int_0^t W(s) \dx W(s) = \frac{1}{2} \left( W(t)^2 - t \right).
+  \end{align}
+  
+\section{Geometric Brownian motion}
+
+A stochastic process $X$ is a geometric Brownian motion if it satisfies the stochastic differential equation
+  \begin{align}
+    \dx X(t) = \mu X(t) \dx t + \sigma X(t) \dx W(t),
+  \end{align}
+where $\mu$ and $\sigma > 0$ are constants and $W$ is a Brownian motion. The constant $\mu$ is the drift and $\sigma$ is the diffusion (or volatility). The solution of this SDE can be calculated by using It\^{o}'s lemma with the function $g(x, t) = \log(x)$. Now $\frac{\partial g}{\partial x} = 1/x$ and $\frac{\partial^2 g}{\partial x^2} = -1/x^2$. Thus
+   \begin{align}
+    \dx \log X(t) &= \left( 0+ \mu X(t) / X(t) - \frac{1}{2} \sigma^2 X^2 (t) / X^2 (t) \right) \dx t + \sigma X(t) / X(t) \dx W(t) \\
+      &= \left( \mu  - \frac{1}{2} \sigma^2 \right) \dx t + \sigma \dx W(t)
+  \end{align}
+and integrating from $0$ to $t$ gives us
+  \begin{align}
+    \log (X(t) / X(0) ) = \left( \mu  - \frac{1}{2} \sigma^2 \right) t + \sigma W(t) . 
+  \end{align}
+Thus
+  \begin{align}
+    X(t) = X(0) \e^{ (\mu  - \frac{1}{2} \sigma^2 ) t + \sigma W(t) } .
+  \end{align}
+This means that for given $X(0)$, the variable $X(t)$ is log-normally distributed with parameters $( \mu  - \frac{1}{2} \sigma^2 ) t$ and $\sqrt{t}\sigma$. Now the mean of $X(t)$ is
+  \begin{align}
+    \exp \left( ( \mu  - \frac{1}{2} \sigma^2 ) t + \frac{1}{2} ( \sqrt{t} \sigma )^2 \right) = \exp \left( \mu t \right)
+  \end{align}
+and the variance is
+  \begin{align}
+    ( \exp ( \sigma^2 t ) - 1 ) \exp ( )
+  \end{align}
+  
+\section{Girsanov's theorem}
+\label{sec:girsanov}
+
+For reference, see \textcite[pp. 161--171]{oksendal2003stochastic}.
+
+As a converse of Radon-Nikod\'{y}m-theorem, if $L$ almost surely positive and $\E_{\Pf} (L) = 1$, then we may define a new measure
+	\begin{align}
+    \label{radonnikodymgirsanovconnection}
+		\Pm(A) = \E_{\Pf} (L \1_A)
+	\end{align}
+for all $A \in \F$ and now 
+	\begin{align}
+		L = \frac{\dx \Pm}{\dx \Pf}
+	\end{align}
+is the Radon-Nikod\'{y}m-derivate with respect to $\Pf$ and $\Pm$. 
+
+\begin{thm}[Girsanov's theorem]
+	Let $W(t)$ be a Brownian motion in the probability space $(\Omega, \F, \Pf)$ with respect to filtration $(\F_t)$ and assume that the process $\kappa(t)$ is an $(\F_t)$-adapted process. We define
+	\begin{align}
+	\label{doleansexponential}
+	L(t) &= \exp \left( \int_0^t \kappa(s) \dx W(s) - \frac{1}{2} \int_0^t \kappa^2 (s) \dx s \right) \\
+	&= \exp \left( \int_0^t \kappa(s) \dx W(s - \frac{1}{2} \langle \kappa(s) \rangle_t \right), 
+	\end{align}
+	If we assume that $\E_{\Pf} (L_T) = 1$, then the process
+	\begin{align}
+	W^*(t) &= W(t) - \int_0^t \kappa(s) \dx s.
+	\end{align}
+	is a Brownian motion under the equivalent probability measure $\Pm$ defined by the Equation \ref{radonnikodymgirsanovconnection}.
+\end{thm}
+
+The process $\kappa$ is called as the Girsanov kernel of the probability transformation. If we assume that the Girsanov kernel satisfies the Novikov Condition
+  \begin{align}
+    \E_{\Pf} \exp \left( \frac{1}{2} \int_0^T \kappa^2 (s) \dx s \right) < \infty ,
+  \end{align}
+then the condition $\E_{\Pf} (L(T)) = 1$ is satisfied.
+
+The process $L(t)$ defined in the equation \ref{doleansexponential} is the solution to the stochastic differential equation
+  \begin{align}
+    \dx L(t) = \kappa(t) L(t) \dx W(t)
+  \end{align}
+with the condition $L(0) = 1$.
+
+The significant consequence of the theorem is the fact that the drift of stochastic process is very malleable. If   
+  \begin{align}
+    \dx X(t) = \mu(t) \dx t + \sigma(t) \dx W(t),
+  \end{align}
+where $\sigma(t) > 0$, then we choose $\kappa(t) = - (\mu(t) - a(t)) / \sigma(t)$. If the Girsanov kernel satisfies assumptions of the Girsanov's theorem, then we have a equivalent measure $\Pm$ under which
+  \begin{align}
+    W^*(t) = W(t) - \int_0^t \kappa(s) \dx s
+  \end{align}
+is a Brownian motion. Thus $\dx W(t) = \dx W^*(t) + \kappa(t) \dx t$ and
+  \begin{align}
+    \dx X(t) = \mu(t) \dx t + \sigma(t) (\dx W^*(t) + \kappa(t) \dx t) = a(t) \dx t + \sigma(t) \dx W^* (t)
+  \end{align}
+under the measure $\Pm$. We see that the measure change leaves diffusion unchanged, but the measure may be changed almost at the will. The Brownian motions $W(t)$ and $W^*(t)$ are not the same, but a priori their statistical properties are the same. Especially if $a(t) \equiv 0$, then the process $X(t)$ is driftless under the measure $\Pm$. Thus
+  \begin{align}
+    \E_{\Pm} (X(T) | \F_t) = X(t)
+  \end{align}
+and it is a martingale.
+
+\section{Martingale representation theorem}
+
+Suppose that the filtration $(\F_t)$ is generated by a Brownian motion $W(t)$. One of the properties of the It\^{o}-integral was that
+	\begin{align}
+		I(t) = \int_0^t h(s) \dx W(s)
+	\end{align}
+was a martingale, when $h(t)$ satisfies Equation \ref{H-ito-restriction}. Martingale representation states that if $M$ is a square integrable martingale, that is
+	\begin{align}
+		\E_{\Pf} (M^2) < \infty ,
+	\end{align}
+then
+	\begin{align}
+		M(t) = \int_0^t h(s) \dx W(s),
+	\end{align}
+where $h(t)$ is $(\F_t)$-adapted and it satisfies Equation \ref{H-ito-restriction}. Thus
+	\begin{align}
+		\dx M(t) =  h(t) \dx W(t),
+	\end{align}
+  
+\section{Feynman-Kac theorem}
+\label{sec:faynmankac}
+
+For reference, see \textcite[pp. 145--147]{oksendal2003stochastic}.
+
+The Feynman-Kac theorem states that the solution of the partial differential equation
+	\begin{align}
+		\frac{\partial V(t,x)}{\partial t} + \frac{\partial V(t,x)}{\partial x} f(x) + \frac{1}{2} \frac{\partial^2 V(t,x)}{\partial x^2} \sigma^2 (x) = r V(t,x)
+	\end{align}
+with the terminal boundary condition $V(T,x) = g(x)$ is 
+	\begin{align}
+		V(t,x) = \e^{-r(T-t)} \E_{\Pm} \left( g(X_T) \ | \ X(t) = x \right) ,
+	\end{align}
+where the process $X(t) = x$ satisfies
+	\begin{align}
+		\dx X(s) = f(X(s)) \dx s + \sigma( X(s) ) \dx W(s)
+	\end{align}
+under the probability measure $\Pm$, where $W(s)$ is a Brownian motion under the measure $\Pm$.
+
+\section{Partial information}
+
+We assume that the $\sigma$-algebra $(\F_t)$ presents partial market information without default and 
+\begin{align}
+\Hf_t = \sigma( \1_{ \{\default \leq s \} } | s \leq t ) = \sigma( H(s) | s \leq t ) 
+\end{align}
+is the knowledge of the default up to time $t$. By
+\begin{align}
+\F_t \vee \Hf_t
+\end{align}
+we denote the smallest $\sigma$-algebra containing $\F_t$ and $\Hf_t$. Also
+\begin{align}
+\F_{\infty} = \bigvee_t \F_t
+\end{align}
+the smallest $\sigma$-algebra containing all algebras $\F_t$.
+
+\begin{lemma}
+	\label{lemma-weaksigmasameness}
+	For every $A \in \F_t \vee \Hf_t$, there exists such $B \in \F_t$ that
+	\begin{align}
+	\label{eq-weaksigmasameness}
+	A \cap \{ \default > t \} = B \cap \{ \default > t \},
+	\end{align}
+	where $t \in \R_+$.
+\end{lemma}
+
+\begin{proof}
+	We consider the filtration given by
+	\begin{align}
+	\G_t = \{ A \in \F_t \vee \Hf_t \ | \ A \cap \{ \default > t \} = B \cap \{ \default > t \} \textup{ for some } B \in \F_t \}
+	\end{align}
+	and it is sufficient to show that $\F_t \vee \Hf_t \subseteq \G_t$. It is clear that $\F_t \subseteq \G_t$. If $A \in \Hf_t$, then $A \cap \{ \default > t \}$ is either $\emptyset$ or $\{ \default > t \}$ and it follows that $\Hf_t \subseteq \G_t$.
+	
+	Trivially $\Omega \in \G_t$ and it is also easy to see that $\G_t$ is closed under countable unions. If $A \in \G_t$ and $B \in \F_t$ satisfies the equation (\ref{eq-weaksigmasameness}), then 
+	\begin{align}
+	\kom{A} \cup \{ \default \leq t \} = \kom{B} \cup \{ \default \leq t \}
+	\end{align}
+	and 
+	\begin{align}
+	\kom{A} \cap \{ \default > t \} &= ( \kom{A} \cup \{ \default \leq t \} ) \cap \{ \default > t \} \\ 
+	&= ( \kom{B} \cup \{ \default \leq t \} ) \cap \{ \default > t \} \\
+	&= \kom{B} \cap \{ \default > t \}
+	\end{align} 
+	which implies that $\kom{A} \in \G_t$. Hence, $\G_t$ is a $\sigma$-algebra and $\F_t \vee \Hf_t \subseteq \G_t$.
+\end{proof}
+
+This can be used to show the following important result.
+
+\begin{lemma}
+\label{lemma_takingthedefaultinformationout}
+If $X$ is non-negative integrable random variable, then
+	\begin{align}
+	\E_{\Pm} \left( \1_{ \{ \default > t \} } X | \F_t \vee \Hf_t \right) = \frac{\1_{ \{ \default > t \} }}{\Pm (\default > t | \F_t )} \E_{\Pm}  \left( \1_{ \{ \default > t \} } X | \F_t \right) .
+	\end{align}
+\end{lemma}
+
+\begin{proof}
+	Let $A \in \F_t \vee \Hf_t$. By Lemma \ref{lemma-weaksigmasameness}, there is $B \in \F_t$ such that
+	\begin{align}
+	\1_A \1_{ \{ \default > t \} } = \1_B \1_{ \{ \default > t \} } .
+	\end{align}
+	By this and the definition of conditional expectation we have
+	\begin{align}
+	\int_A \1_{ \{ \default > t \} } X \Pm( \default > t | \F_t ) \ \dx \Pm & = \int_B \1_{ \{ \default > t \} } X \Pm( \default > t | \F_t ) \ \dx \Pm \\
+	&= \int_B \E_{\Pm} \left( \1_{ \{ \default > t \} } X | \F_t \right) \Pm( \default > t | \F_t ) \ \dx \Pm \\
+	&= \int_B \1_{ \{ \default > t \} } \E_{\Pm} \left( \1_{ \{ \default > t \} } X | \F_t \right) \ \dx \Pm \\
+	&= \int_A \1_{ \{ \default > t \} } \E_{\Pm} \left( \1_{ \{ \default > t \} } X | \F_t \right) \ \dx \Pm .
+	\end{align}
+	Since $A \in \F_t \vee \Hf_t$ is arbitrary, we have that
+	\begin{align}
+	\E_{\Pm} \left( \1_{ \{ \default > t \} } X \Pm( \default > t | \F_t ) | \F_t \vee \Hf_t \right) 
+	&= \1_{ \{ \default > t \} } \E_{\Pm} \left( \1_{ \{ \default > t \} } X | \F_t \right),
+	\end{align}
+	where we have used facts $\1_{ \{ \default > t \} } \in \Hf_t$ and $\E_{\Pm} \left( \1_{ \{ \default > t \} } X | \F_t \right) \in \F_t$. As $\Pm( \default > t | \F_t )$ is $\F_t \vee \Hf_t$-measurable, it can be taken out of the expectations. Since it is non-zero, we have the claim.
+\end{proof}
+
+\begin{thm}
+\label{eq_takingthedefaultinformationout}
+Let $T > t$. If $X$ is non-negative integrable $\F_T$-measurable random variable, then
+	\begin{align}
+	\E_{\Pm} \left( \1_{ \{ \default > T \} } X | \F_t \vee \Hf_t \right) = \frac{\1_{ \{ \default > t \} }}{\Pm (\default > t | \F_t )} \E_{\Pm}  \left( \1_{ \{ \default > T \} } X | \F_t \right) .
+	\end{align}
+\end{thm}
+
+\begin{proof}
+We will consider variable $Y = \1_{ \{T> \default \} } X$. If $T > t$, then
+	\begin{align}
+		\1_{ \{T> \default \} } X = Y = \1_{ \{t> \default \} } Y,
+	\end{align}
+and by the assumptions we may use Lemma \ref{lemma_takingthedefaultinformationout}. Hence
+	\begin{align}
+		\E_{\Pm} \left( \1_{ \{ \default > T \} } X | \F_t \vee \Hf_t \right) 
+		&= \E_{\Pm} \left( \1_{ \{t> \default \} } Y  | \F_t \vee \Hf_t \right) \\
+		&= \frac{\1_{ \{ \default > t \} }}{\Pm (\default > t | \F_t )} \E_{\Pm}  \left( \1_{ \{ \default > t \} } Y | \F_t \right) \\
+		&= \frac{\1_{ \{ \default > t \} }}{\Pm (\default > t | \F_t )} \E_{\Pm}  \left( \1_{ \{ \default > T \} } X | \F_t \right)
+	\end{align}
+as required.
+\end{proof}
+
+\section{Doubly stochastic default time}
+\label{sec:doublystochastic}
+
+The introduce the following technical assumptions:
+\begin{DS}
+	\item\label{DS1} There exists a non-negative $\F_t$-progressive process $\lambda (t)$ such that 
+	\begin{align}
+	\Pm (\default > t | \F_t ) = \e^{ - \int_0^t \lambda(s) \dx s }
+	\end{align}
+	\item\label{DS2} For all $t \geq 0$, it holds that 
+	\begin{align}
+	\Pm (\default > t | \F_t ) = \Pm (\default > t | \F_{\infty} ),
+	\end{align}
+	where
+	\begin{align}
+	\F_{\infty} = \bigvee_{t \geq 0} F_t .
+	\end{align}
+\end{DS}
+The stopping times satisfying both \ref{DS1} and \ref{DS2} are doubly stochastic stopping times.
+
+The condition \ref{DS1} means that with only partial market information $\F_t$, the exact default time is never known as
+\begin{align}
+0 < \Pm (\default > t | \F_t ) < 1
+\end{align}
+for all $t \geq 0$. Hence $\F_t \not = \F_t \vee \G_t$ and $\default$ is not a stopping time under the filtration $(\F_t)$.
+
+Now the Theorem \ref{eq_takingthedefaultinformationout} directly implies the following.
+
+\begin{thm}
+	\label{eq_takingthedefaultinformationoutdoubly}
+	If we assume \ref{DS1} and $T > t$, then 
+	\begin{align}
+	\E_{\Pm} \left( \1_{ \{ \default > T \} } X | \F_t \vee \Hf_t \right) = \1_{ \{ \default > t \} } \e^{ \int_0^t \lambda(s) \dx s }  \left( \1_{ \{ \default > T \} } X | \F_t \right)
+	\end{align}
+holds for every  non-negative integrable $\F_T$-measurable random variable $X$.
+\end{thm}
+
+The previous Theorem is important, because we usually assume that the short rate $r(t)$ is adapted to partial information $(\F_t)$. In pricing instruments that are sensitive to credit risk, we have to start with full market information but the Theorem shows how we may switch back to partial information set.
+
+Since 
+\begin{align}
+\E_{\Pm} \left( \1_{ \{ \default > t \} } (1 - \1_{ \{ \default > T \} } ) | \F_t  \right) &= \E_{\Pm} \left( \1_{ \{ \default > t \} } - \1_{ \{ \default > T \} } | \F_t  \right) \\
+&= \E_{\Pm} \left( \E_{\Pm} \left( \1_{ \{ \default > t \} } - \1_{ \{ \default > T \} } | \F_T \right) | \F_t  \right) \\
+&= \E_{\Pm} \left( \1_{ \{ \default > t \} } - \Pm (\default > T | \F_T ) | \F_t  \right)  
+\end{align}
+we know now that if \ref{DS1} holds, then
+\begin{align}
+\Pm ( t <\default \leq T | \F_t \vee \Hf_t ) &= \E_{\Pm} \left( \1_{ \{ \default > t \} } - \1_{ \{ \default > T \} } | \F_t \vee \Hf_t \right) \\
+&= \E_{\Pm} \left( \1_{ \{ \default > t \} } (1 - \1_{ \{ \default > T \} } ) | \F_t \vee \Hf_t \right) \\
+&= \frac{\1_{ \{ \default > t \} }}{\Pm (\default > t | \F_t )} \E_{\Pm} \left( \1_{ \{ \default > t \} } (1 - \1_{ \{ \default > T \} } ) | \F_t  \right) \\
+&= \1_{ \{ \default > t \} } \E_{\Pm} \left( 1 - \e^{ - \int_t^T \lambda (s) \dx s } | \F_t  \right)
+\end{align}
+Thus we may approximate that
+\begin{align}
+\Pm ( t <\default \leq t+ \dx t | \F_t \vee \Hf_t ) \approx \1_{ \{ \default > t \} } \lambda (t) \dx t .
+\end{align}
+
+The condition \ref{DS2} is equivalent to the condition that every $(\F_t)$-martingale is also a $(\F_t \vee \Hf_t)$-martingale. See, for example, \cite{filipovic2009term}.
+
+\section{Characteristic functions and Fourier inversion method}
+
+This following method is based on work of \textcite{heston1993closed} and the presentation is based on \textcite[pp. 222--233]{nawalkabeliaevasoto2007dynamic}.
+
+Given a probability density function $f(x)$ under a measure $\Pm$, the characteristic function associated with the density function is
+  \begin{align}
+    g(t) = \E_{\Pm} \left( \exp^{\boldsymbol{i}tx} \right) = \int_{-\infty}^{\infty} \exp^{\boldsymbol{i}tx} f(x) \dx x .
+  \end{align}
+It can be shown that there is a one-to-one correspondence between probability density function and characteristic functions and we can calculate
+  \begin{align}
+    \int_k^{\infty} f(x) \dx x = \frac{1}{2} + \frac{1}{\pi} \int_0^{\infty} \Re \left( \frac{\exp^{-\boldsymbol{i}sk} g(s)}{\boldsymbol{i} s} \right) \dx s
+  \end{align}
+
+In order to calculate certain derivative prices, we have to evaluate expectations in the form of
+  \begin{align}
+    \Pi_{1t} &= \E_{\Pm} \left( \frac{\exp^{-\int_t^S r(u) \dx u}Z(S,T) \1_{ \{ Z(S,T) \geq K \} } }{Z(t,T)} \right) \\
+     Z(t,T) &= \E_{\Pm} \left( \exp^{-\int_t^S r(u) \dx u} \right)
+  \end{align}
+a
+  \begin{align}
+    \Pi_{1t} &= \int_k^{\infty} f_{1t} (y) \dx y \\
+    &= \frac{1}{2} + \frac{1}{\pi} \int_0^{\infty} \Re \left( \frac{\exp^{-\boldsymbol{i}sk} g_{1t}(s)}{\boldsymbol{i} s} \right) \dx s
+  \end{align}
+
+\section{A Gaussian calculation}
+
+For a continuous function $g$, we may approximate $\int_0^t g(s) \dx s$ by the sequence
+  \begin{align}
+    \frac{t}{n} \sum_{k=1}^n g \left( \frac{kt}{n} \right)
+  \end{align}
+
+\begin{thm}
+	\label{gaussiancalculation}
+If $X$ is continuous and Gaussian stochastic process, then the stochastic process
+  \begin{align}
+    Y = \int_0^t X_s \dx s
+  \end{align}
+also has Gaussian distribution with
+  \begin{align}
+    \E Y &= \int_0^t \E X_s \dx s, \\
+    \Var Y &= \int_0^t \int_0^t \Cov (X_s, X_u) \dx s \dx u .
+  \end{align}  
+\end{thm}
+
+\begin{proof}
+By using the idea above, we may approximate the distribution of $Y$ by the distributions of
+  \begin{align}
+    Y_n = \frac{t}{n} \sum_{k=1}^n X \left( \frac{kt}{n} \right),
+  \end{align}
+which are gaussian as they are linear combinations of gaussian variables. Since the expectation is a linear operation, we have
+  \begin{align}
+    \E Y_n = \frac{t}{n} \sum_{k=1}^n \E X \left( \frac{kt}{n} \right) \rightarrow \int_0^t \E X_s \dx s
+  \end{align}
+and
+  \begin{align}
+    \Var Y_n = \frac{t}{n} \sum_{k=1}^n \sum_{j=1}^n \Cov \left( X \left( \frac{kt}{n} \right), X \left( \frac{jt}{n} \right) \right) \rightarrow \int_0^t \int_0^t \Cov (X_s,X_u) \dx s \dx u .
+  \end{align}
+\end{proof}
+
+\section{Differential evolution}
+
+Differential evolution (DE) is a class of optimization methods based on evolutionary algorithms. It was introduced by \cite{storn1996usage} and \cite{storn1997differential}. DE requires no prior knowledge about the optimization problem. On the other hand, this means that after the algorithm has ran its course, we have no guarantees that the result is actually an optimal. It can be used to canvas large areas of the solution space. Therefore it can be useful to find the initial guess for other optimization algorithms that are sensitive to the precision of the initial value.
+
+Suppose that $f: D \rightarrow \R$ is the fitness function that is to be minimized. Here $D$ is a hypercube in real space $\R^n$.
+
+The basic algorithm starts be selection of the initial population $I_0 \subset D$. Let $I_k$ be the the population of $k$:th generation. The for every $x \in I_k$ we generate a distinct alternative candidate $z$ has some heritage with $x$. If $f(z) < f(x)$, then we replace $x$ with $z$ in $(k+1)$:th generation. Therefore the fitness of the next generation as at least as good as the previous. The canon way of choosing the candidate is as follows: 
+
+\begin{enumerate}
+	\item For all $x \in I_k$ pick three distinct points $a, b, c$ from $I_k \setminus \{ x \}$.
+	\item Let $y = a + F(b-c)$ and randomly pick an index $j = 1,2, \ldots, n$. We generate an evolutionary agent $z = (z_1, z_2, \ldots, z_n)$ by having $z_j = y_j$. For $z_l$, where $j \not = l \in \{1,2, \ldots, n\}$ we pick $y_l$ with the probability of $C$ and otherwise $x_l$. Thus $z \not = x$. If $z \not \in D$ then a new candidate is picked or it is scaled back to the search space.
+\end{enumerate}
+
+The number $F$ is called the differential weight and usually $F \in [ 0,2]$. The probability $C$ is the crossover probability. The choice of these parameters obviously influence the convergence. For example, small differential weights and crossover probabilities causes the population to converge quickly.
+
+Since the basic setup of algorithm is very flexible, there are many variants. In the following, we outline the algorithm used in the data analysis of this thesis.
+
+The initial population is chosen with uniform distribution. The size of the population is 1024 for models without default and 512 otherwise. For every 10 (or 5 for models with default) generations, a random check is made to see if there is a culling . The probability of this grows with each generations. The size of the culling is inversely proportional to the amount of replaces during the previous cycle. Only the members with worst fitness are removed. However, the population will always has at least $32$ members.
+
+For the candidate vectors we use two different strategies. Either we pick five distinct $a,b,c,d,e$ and
+	\begin{align}
+		z = a + F(b-c) + F(d-e) 
+	\end{align}
+or we pick four distinct candidates $p, a, b, c$ and
+	\begin{align}
+	z = a + F(p-a) + F(b-c)
+	\end{align}
+where $p$ is in the top $5 \%$ of the candidates. This first behaviour increases the chances of exploration while the latter approach will boost convergence. The algorithm is set up so that earlier exploration is preferred while later on the convergence is favored. Differential weight and the crossover probability are choosen randomly for each candidate. The algorithm is more likely to choose values that promote convergence later on the run.
+
+
+ 

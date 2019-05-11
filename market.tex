@@ -1,0 +1,388 @@
+\section{Arbitrage theory in continuous markets}
+
+We now develop an heuristic model for continuous-time markets. We shall omit most technical definitions, details and proofs. It is an amalgam of the presentations found in \textcite{bjork2004arbitrage}, \textcite{brigo2007interest}, \textcite{duffie2010dynamic}, \textcite{jameswebber2000interest}, \textcite{musielarutkowski2005martingale} and \textcite{wu2009interest}. A rigorous treatment for the subject can be found, for example, in \textcite{musielarutkowski2005martingale}. The fundamentals of this model are the same as the simple discrete model introduced earlier, but due to technicalities, it is not as intuitive.
+
+We consider a probability space $(\Omega, \F, \Pf)$ and a finite time interval $\left[ 0, T' \right]$. Here $\Pf$ is the physical probability measure on $(\Omega, \F)$, $\Omega$ is the sample path space with a $\sigma$-algebra $\F$. The flow of new information is handled with a filtration\footnote{A filtration $(\F_t)$ is a collection $\sigma$-sub-algebras of $\F$ with $\F_s \subseteq \F_t$ for all $0 \leq s \leq t \leq T$.} $(\F_t)$. We also assume some technical conditions for the filtrations. Every $\Pf$-null set\footnote{$\Pf$-null set is a set $A \in \F$ with $\Pf (A) = 0$.} must be a member of $\F_0$ and
+  \begin{align}
+    \F_t = \bigcap_{t < s} \F_s
+  \end{align}
+for all $t \geq 0$.
+
+We assume that the price $S_i$ of a market assets are modeled with It\'{o}-processes\footnote{See \ref{sec:itoprocess}}, so
+  \begin{align}
+    \label{generalassetpriceprocess}
+    S_i(t,\omega) = S_i (0) + \int_0^t \mu (t,\omega) \dx t + \int_0^t \sigma(t, \omega ) \dx W_i (t, \omega),
+  \end{align}
+where $S_i(0)$ is a deterministic constant and $W_i$ is a Brownian motion. The second integral is an It\'{o}-integral and the functions $\mu$ and $\sigma$ are assumed to be $\F_t$-adapted and to satisfy technical conditions so that integrability and the existence of solutions are always guaranteed\footnote{It is usually assumed, for example, that $\int_0^{T^*} \left| \mu(t, \omega) \right| \dx t < \infty$ and $\int_0^{T^*} \sigma(t, \omega)^2 \dx t < \infty$ almost surely}. We usually write the Equation \ref{generalassetpriceprocess} as
+  \begin{align}
+    \dx S_i(t, \omega) = \mu (t,\omega) \dx t + \sigma(t, \omega ) \dx W_i (t, \omega),
+  \end{align}
+but we note that Brownian motions are $\Pf$-surely not differentiable. We assume that the assets all these assets can be bought and sold freely, and the trading shall not affect price process.
+
+We also shall omit $\omega$ from the argument of functions for readability, when it is not absolutely necessary.
+
+Suppose that there are $n$ tradable assets and let $S = (S_1, S_2, \ldots, S_n)$ be the price vector for these assets. The trading strategy (or a portfolio) $w$ is a predictable stochastic process $w(t,\omega) \in \R^n$. This means that while the strategy is a random variable, it is not omniscient and uses only information available up to that point. It is left-continuous, so given the history up to that point, it is deterministic. The corresponding portfolio value process is given by
+  \begin{align}
+    V^w (t) = (w(t))^{\top} S(t)
+  \end{align}
+and a self-financing trading strategy satisfies
+	\begin{align}
+		V^w(t) - V^w(0) = \int_0^t w^{\top}(u) \ \dx S(u),
+	\end{align}
+or
+  \begin{align}
+    \dx V^w = (w(t))^{\top} \dx S(t) .
+  \end{align}
+This means that for self-financing portfolio, there is no inflow or outflow of money from the portfolio and all the value changes are due to changes of prices. An arbitrage\footnote{We note that this type of arbitrage is not strong enough to disallow doubling strategies.} is a self-financing portfolio with a value process $V^w (t)$ such that
+  \begin{align}
+    V^w(0) &= 0, \\
+    \Pf (V^w(t) \geq 0 ) &= 1 \textup{ and } \\
+    \Pf (V^w(t) > 0 ) &> 0.
+  \end{align}
+ for some $0 \leq t \leq T'$. An arbitrage is an opportunity to gain without any associated risk. A market without arbitrage opportunities is arbitrage-free. 
+  
+A contingent claim (or $T$-derivative or $T$-claim) is a $\F_T$-measurable random variable $X$. We say that the is attainable if there is such self-financing trading strategy $w$ that
+  \begin{align}
+    V^w(T) = X(T)
+  \end{align}
+almost surely. The strategy $w$ is thus replicating the pay-off of $X$. As usually, we say that the market is complete if every contingent claim is attainable.
+  
+As earlier, a deflator is strictly positive It\^{o}-process and a num\'{e}raire is an asset with always positive price process. If $D$ is deflator, then the relative (or discounted) market price process is
+  \begin{align}
+    S^D(t) = ( S_i(t) / D(t) )
+  \end{align}
+for all $0 \leq t \leq T'$. A measure $\Pm$ on the space $(\Omega, \F)$ is an equivalent martingale measure (EMM) with respect to the deflator $D$ if it is equivalent\footnote{Meaning that the measures have the same null sets.} to $\Pf$ and if
+  \begin{align}
+    S^D(s) = \E_{\Pm} ( \ S^D(t) \ | \ \F_s \ )
+  \end{align}
+for all $0 \leq s < t$. This means that discounted price processes are martingales under an EMM.  A weaker condition is an equivalent local martingale measure (ELMM) which requires only that the measures are equivalent and discounted price process are local martingale under the ELMM.
+
+We will only consider trading strategies that will satisfy the condition that
+  \begin{align}
+    \int_0^t w(s)^{\top} \dx S^D(s)
+  \end{align}
+are martingales under the the measure $\Pm$ as this guarantees that no doubling strategies are permissable\footnote{Thus the expected values of portfolios are always bounded.}.
+  
+The first fundamental theorem of asset pricing says that if an equivalent martingale measure exists, then the market is arbitrage-free. As we have seen, in discrete time model, these are equivalent conditions. But in continuous models, this in not true. \textcite{delbaenschachermayer1994general} showed that under certain conditions, the absence of arbitrage implies that an equivalent local martingale measure exists. We shall not delve in these technicalities further in this thesis.
+
+The second fundamental theorem of asset pricing ties the uniqueness of this EMM to the ability to hedge every derivative contract. If we assume that the market is arbitrage free and an equivalent martingale measure exists for a deflator $D$, then the market is complete if and only if the equivalent martingale measure for deflator $D$ is unique.
+
+As in discrete setting, we have three distinct cases: the model has no EMM, it has several EMMs or the EMM is unique. 
+
+Ideally the EMM is unique and the model is complete and it allows no arbitrage. Traditionally the discounting in the EMM has been done with respect to the risk-free rate, but \textcite{gemanelkarouirochet1995changes} showed that the choice of the so-called num\'{e}raire is actually arbitrary as long as it is strictly positive non-dividend paying asset process. Different num\'{e}raires produces different EMMs, but if we assume that payoffs are square integrable random variables, then the change of num\'{e}raire does not change replicating portfolios. Thus the price is unique as long as the derivative can be hedged. If $S_0$ is the num\'{e}raire, $X$ is a $T$-derivate with replicating self-financing portfolio's value process given by $V^w(t)$, then we have that $X(T) = V^w(T)$ and every discounted value processes of self-financing portfolio is martingale under the EMM $\Pm_0$ associated with discounting process $S_0$. Thus
+  \begin{align}
+    \frac{V^w(t) }{ S_0(t) } = \E_{\Pm_0} \left( \frac{V^w(T)}{S_0(T)} | \F_t \right) = \E_{\Pm_0} \left( \frac{X(T)}{S_0(T)} | \F_t \right)
+  \end{align}
+meaning that 
+  \begin{align}
+    \label{discountedexpectedvalue}
+    V^w(t) = S_0(t) \E_{\Pm_0} \left( \frac{V^w(T)}{S_0(T)} | \F_t \right) = S_0(t) \E_{\Pm_0} \left( \frac{X(T)}{S_0(T)} | \F_t \right) .
+  \end{align}
+Since there are no arbitrage opportunities, $X(t) = V^w(t)$, where $V^w(t)$ is given by the equation (\ref{discountedexpectedvalue}). This has to hold even if the replicating portfolio is not unique.
+
+If the model has several EMMs, then arbitrage is not possible but there are derivatives that may not be hedged. In this model, a claim that can be replicated has a unique price. Claims that may not be replicated may have multiple prices corresponding to different EMMs. 
+
+This usually means that calibrating prices are taken carefully selected from the most liquid instruments. We can also use more generalized versions of hedging. We could take the set of all sensible portfolio strategies that promise almost surely a payoff that is equal or greater than the contingent claim. A reasonable price candidate for a derivative is the minimum maintenance price of these portfolio strategies.
+
+The worst case is the absence of EMM. This means that the model has arbitrage and pricing cannot be done.
+
+The num\'{e}raire can be freely chosen. \cite{gemanelkarouirochet1995changes} showed that if the market is arbitrage-free, $M$ and $N$ are arbitrary num\'{e}raires, then there exists such EMMs $\Pm_M$ and $\Pm_n$ that
+	\begin{align}
+		\frac{X(t)}{M(t)} &= \E_{\Pm_M} \left( \frac{X(T)}{M(T)} | \F_t \right), \\
+		\frac{X(t)}{N(t)} &= \E_{\Pm_N} \left( \frac{X(T)}{N(T)} | \F_t \right)
+	\end{align}
+for any asset $X$ and $0 \leq t \leq T$. The Radon-Nikod\'{y}m derivate\footnote{See \ref{sec:radonnikodymtheorem}} is
+	\begin{align}
+		\xi(t) = \frac{\dx \Pm_M}{\dx \Pm_N} = \frac{M(t) N(0)}{M(0) N(t)} .
+	\end{align}
+This implies that
+	\begin{align}
+		X(t) &= M(t) \E_{\Pm_M} \left( \frac{X(T)}{M(T)} | \F_t \right) \\ 
+		&= N(t) \E_{\Pm_N} \left( \frac{X(T)}{N(T)} | \F_t \right)
+\end{align}
+and the price is unique, if the claim can be replicated. Also
+	\begin{align}
+		\label{expectationbyradonnikodymderivative}
+		\E_{\Pm_M} \left( Y(T) | \F_t \right) = \frac{\E_{\Pm_N} \left( Y(T) \xi(T)  | \F_t \right)}{\xi(t)} 
+	\end{align}
+holds for any random variable $Y$.
+
+\subsection{Risk-free measure}
+
+The bank account $\Bank(t) > 0$ is a common num\'{e}raire and the EMM $\Pm_0$ induced by it is often called as the risk-free measure. If $X$ is a portfolio and the market is arbitrage-free, then
+	\begin{align}
+		\label{pricingunderriskneutralmeasure}
+		X(t) &= \Bank(t) \E_{\Pm_0} \left( \frac{X(T)}{B(T)} | \F_t \right) \\
+			&= \E_{\Pm_0} \left( \frac{B(t)}{B(T) } X(T) | \F_t \right) \\
+			&= \E_{\Pm_0} \left( D(t,T) X(T)  | \F_t \right),
+	\end{align}
+where $D(t,T)$ is the stochastic discount factor. If $X(t) = \Bond(t,T)$, then $\Bond(T,T)=1$ and we note that
+	\begin{align}
+		\Bond(t,T) = \E_{\Pm_0} \left( D(t,T) \ | \ \F_t \right) .
+	\end{align}
+This shows that price of a bond is expected value of the corresponding stochastic discount factor under the risk-free measure (or any other EMM). Also if
+	\begin{align}
+		\Bank(t) = \e^{ \int_0^t r(s) \ \dx s },
+	\end{align}
+then
+	\begin{align}
+		D(t,T) = \frac{\Bank(t)}{\Bank(T)} = \e^{ - \int_t^T r(s) \ \dx s },
+	\end{align}
+hence
+	\begin{align}
+		X(t) &= \E_{\Pm_0} \left( \e^{ - \int_t^T r(s) \ \dx s } X(T)  | \F_t \right) . 
+\end{align}	
+
+Under the risk-neutral measure, the discounted process $X(t) / B(t)$ will be a martingale.
+	
+\subsection{Black-Scholes--model}
+
+In the celebrated Black-Scholes--model there are two assets, a stock and a bank account, with given dynamics
+  \begin{align}
+    \label{stockprocessinblackscholes}
+    \dx S(t) &= \mu S(t) \dx t + \sigma S(t) \dx W(t) \\
+    \dx \Bank (t) &= r \Bank(t) \dx t, 
+  \end{align}
+under the physical measure $\Pf$, where $\mu, r$ and $\sigma > 0$ are given constants and the Brownian motion $W(t)$ is the sole source of uncertainty. This means that the stock price follows geometric Brownian motion and $\Bank (t) = \Bank (0) \e^{rt}$. To simplify the notation we assume that $\Bank (0) = 1$. We denote the discounted stock price as $S^\Bank(t) = S(t) / \Bank (t)$ and the discount factor is deterministic $\DF (t,T) = \e^{r(T-t)}$. Now $g(t,x) = \e^{-rt} x$ and a simple application of It\^{o}'s lemma\footnote{See \ref{sec:itoprocess}.} yields that
+  \begin{align}
+    \dx S^\Bank(t) &= ( \frac{\partial g}{\partial t} + \mu \frac{\partial g}{\partial x} + \frac{1}{2} \sigma^2 \frac{\partial^2 g}{\partial x^2} ) \dx t + \sigma \frac{\partial g}{\partial x} \dx W(t) \\
+      &= ( -r \e^{-rt} S(t) + \e^{-rt} \mu S(t) + 0 ) \dx t + \sigma \e^{-rt} S(t) \dx W(t) \\
+      &= ( \mu - r ) S^\Bank(t) \dx t + \sigma S^\Bank(t) \dx W(t) .
+  \end{align}
+We can now use Girsanov's theorem\footnote{See \ref{sec:girsanov}.} to change the probability measure in order to make the discounted stock price process driftless. We note the bank account discounted by itself is trivially driftless under any measure. Now the market price of risk
+	\begin{align}
+		\lambda = \frac{r - \mu}{\sigma}
+	\end{align}
+is the only possible Girsanov kernel that makes the new measure an equivalent martingale measure. So there is an unique EMM $\Pm$ for the deflator $B(t)$. hence Black-Scholes model is arbitrage-free and complete. Under this measure $\dx W^{\Pm}(t) = \dx W(t) - \frac{r - \mu}{\sigma} \dx t$ is a Brownian motion. Therefore
+  \begin{align}
+    \dx S^\Bank(t) &= \sigma S^\Bank(t) \dx W^{\Pm}(t), \\
+    \dx \Bank (t) &= r \Bank (t) \dx t, \\
+    \label{BlackScholesProcessesUnderEMM}
+    \dx S(t) &= r S(t) \dx t + \sigma S(t) \dx W^{\Pm}(t)
+  \end{align}
+under the EMM $\Pm$. In other words, the discounted stock price is a martingale and under this measure the drift of the stock price is changed to the risk-free rate $r$. Since the bank account is deterministic, the change of measure does not affect it. The arbitrage-free price of the derivate is at time $0$ is given by
+  \begin{align}
+    X(0) &= \E_{\Pm} \left( X(T) / \Bank (0,T) | \F_0 \right) \\ &= \e^{-rT} \E_{\Pm} \left( X(T) | \F_0 \right) .
+  \end{align}
+Since the stock price process under the risk-free measure is a geometric Brownian motion, we know that
+  \begin{align}
+    \log (S(T) ) &= \log (S(0) ) + \left( r  - \frac{1}{2} \sigma^2 \right) T + \sigma W^{\Pm}(T) \\ &\sim N \left( \log (S(0) ) + \left( r  - \frac{1}{2} \sigma^2 \right), \sigma^2 T \right)
+  \end{align}
+under the measure $\Pm$. Similarly, we could use the stock price $S(t)$ as the numerator. 
+
+If we pick $X(T) = (S(T)-K)^+$, the price of a call option on the stock at the time $T$, then
+	\begin{align}
+		\E_{\Pm} \left( (S(T)-K)^+ | \F_0 \right) &= \E_{\Pm} \left( (S(T)-K) \1_{ \{ S(T) > K\} } | \F_0 \right) \\
+		&= \E_{\Pm} \left( S(T) \1_{ \{ S(T) > K\} } | \F_0 \right) - K \Pm \left( S(T) > K | \F_0 \right)
+	\end{align}
+and the standard calculations will yield that
+  \begin{align}
+    X(T) &= S(0) N(d_+)  -  \e^{-rT} K N(d_-) , \\
+    d_{\pm} &= \frac{\log S/K + (r \pm \sigma^2/2 )T }{\sigma \sqrt{T}},
+  \end{align}
+which is the celebrated Black-Scholes formula.
+
+We shall also give a heuristic derivation of the Black-Scholes differential equation. If $X(t,S(t))$ is a smooth value process of a derivative, then by It\'{o}'s lemma, we have that
+  \begin{align}
+    \label{itolemmatoderivateinblackscholes}
+    \dx X = \left( \frac{\partial X}{\partial t} + \mu S \frac{\partial X}{\partial S} + \frac{1}{2} \sigma^2 S^2 \frac{\partial X^2}{\partial S^2} \right) \dx t + \sigma S \frac{\partial X}{\partial S} \dx W .
+  \end{align}
+Now we assume that we can replicate this derivative with a combination of $\delta_S(t,S)$ stocks and $\delta_B(t,S)$ bonds. This portfolio has a value 
+	\begin{align}
+		V(t,S) = \delta_S S(t) + \delta_B B(t)
+	\end{align}
+and the value follows the process
+	\begin{align}
+		\dx V &= \delta_S \dx S + \delta_B \dx B \\
+			&= \delta_S (\mu S \dx t + \sigma S \dx W ) + \delta_B r B \dx t \\
+			&= (\delta_S \mu S + \delta_B rB) \dx t + \delta_S \sigma S \dx W \\
+			&= (\delta_S \mu S + r (V - \delta_S S)) \dx t + \delta_S \sigma S \dx W
+	\end{align}
+As $\dx V = \dx X$, then the coefficients of $\dx W$ terms must coincide. Thus
+	\begin{align}
+		\label{replicating_delta}
+		\delta_S \sigma S = \sigma S \frac{\partial X}{\partial S},  		
+	\end{align}
+which implies that $\delta_S = \frac{\partial X}{\partial S}$.
+
+Now we consider a portfolio of one derivative and $-\frac{\partial X}{\partial S}$ stocks. The value of this portfolio is
+  \begin{align}
+    V = X - \frac{\partial X}{\partial S} S
+  \end{align}
+and if the portfolio is self-financing, then
+  \begin{align}
+    \dx V &= \dx X - \frac{\partial X}{\partial S} \dx S \\
+      &= \left( \frac{\partial X}{\partial t} + \frac{1}{2} \sigma^2 S^2 \frac{\partial X^2}{\partial S^2} \right) \dx t
+  \end{align}
+after substitution of equations \ref{stockprocessinblackscholes} and \ref{itolemmatoderivateinblackscholes}. Since there is no diffusion, the portfolio is riskless and the absence of arbitrage implies that 
+  \begin{align}
+    \dx V = rV \dx t = \left( rX - r S\frac{\partial X}{\partial S} \right) \dx t .
+  \end{align}
+By equating these, we get the Black-Scholes differential equation
+  \begin{align}
+  	\label{BlackScholesDifferentialEquation}
+    \frac{\partial X}{\partial t} + r S\frac{\partial X}{\partial S} + \frac{1}{2} \sigma^2 S^2 \frac{\partial X^2}{\partial S^2} - r X = 0
+  \end{align}
+or equivalently
+ 	\begin{align}
+		\frac{\partial X}{\partial t} + \frac{1}{2} \sigma^2 S^2 \frac{\partial X^2}{\partial S^2} = r ( X - S\frac{\partial X}{\partial S}) .
+	\end{align}
+The left side is a linear combination of "theta", the time decay of the value, and "gamma", the second derivative of the value with respect to the price of the underlying. The right side of the equation contains the replicating portfolio.
+
+The derivative with pay-out $h(S(T))$ satisfies Equation \ref{BlackScholesDifferentialEquation}. In order to apply Feynman-Kac theorem\footnote{See \ref{sec:faynmankac}.}, we need to find a process with drift $rS(t)$ and diffusion $\sigma S(t)$ under some measure. Under the EMM, the discounted asset price is a martingale, so it grows with the rate risk-free rate $r$. So the price process under the EMM is process we need in order to use Feynman-Kac theorem. We have the EMM $\Pm$ and, by Equation \ref{BlackScholesProcessesUnderEMM},
+	\begin{align}
+		\dx S(t) &= r S(t) \dx t + \sigma S(t) \dx W^{\Pm}(t) ,		
+	\end{align}
+where $W^{\Pm}(t)$ is a Brownian motion under $\Pm$. We may now apply Feynman-Kac theorem and it follows that
+	\begin{align}
+		h(S(t)) = \e^{ -r(T-t) } \E_{\Pm} ( h(S_T) \ | \ \F_t) .
+	\end{align}
+	
+\iffalse
+	
+\subsubsection{Black-Scholes--model with continuous dividend yield}
+
+If $X(t)$ is the price of call option on stock $S(t)$ with strike $K$ at the time $T$ that pays continuous dividend yield $q$, then the extension of Black-Scholes--model gives the price
+	\begin{align}
+		X(t) &= \e^{-r(T-t)} \left( F(t)N(d_+) - KN(d_-) \right), \\
+		F(t) &= S(t)  \e^{(r-q)(T-t)}, \\
+		d_{\pm} &= \frac{\log \frac{S(t)}{K} + (r-q \pm \frac{1}{2} \sigma^2)(T-t)}{\sigma \sqrt{T-t}}		
+	\end{align}
+	
+Suppose now that assets $S_i(t)$ pay continuous dividend yields $q_i$. Suppose that an option gives right to swap asset $S_1$ with asset $S_2$ at the time $T$. 
+
+\fi
+
+\subsection{Black-76--model}
+\label{blackformula}
+
+Black model (or Black-76--model) is an extension of Black-Scholes--model (\cite{black1976pricing}) and it is used to price futures. It also assumes that the risk-free interest rate is a constant. The model assumes that futures price of an asset follows log-normal distribution with constant volatility parameter. The price of a call option on a future contract has price at time $t$ is given by the Black's formula
+\begin{align}
+\e^{-r(T-t)} \left( F N(d_+) - K N(d_-) \right)
+\end{align}
+with
+\begin{align}
+d_{\pm} = \frac{\log \frac{F}{K} \pm \frac{\sigma^2}{2} (T-t) }{ \sigma \sqrt(T-t) } .
+\end{align}
+Here $K$ is the strike price at the maturity $T$, $r$ is the risk-free rate and $\sigma$ is the constant volatility of the log-normal distribution. The futures price process is $F(t)$. The Black's formula is used to price interest rate caps, floors and swaptions and the market practice is to quite these instruments in terms of Black's volatilities.
+	
+\subsection{$T$-forward measure}
+
+Since $\Bond(t,T) > 0$, $T$-bond is a num\'{e}raire. The EMM induced by this as called $T$-forward measure $\Pm_T$. Since $\Bond(T,T) = 1$, we have that
+\begin{align}
+X(t) = \Bond(t,T) \E_{\Pm_T} \left( X(T) | \F_t \right)
+\end{align}
+for every $0 \leq t \leq T$ and attainable claim $X$. The forward rate was defined as
+\begin{align}
+\Rflt(t,T,S) &= \frac{1}{\dayc(T,S)} \left( \frac{\Bond(t,T)}{\Bond(t,S)} - 1 \right) .
+\end{align}
+Thus
+\begin{align}
+\Rflt(t,T,S) \Bond(t,S)  &= \frac{\Bond(t,T)-\Bond(t,S)}{\dayc(T,S)}  ,
+\end{align}
+where the right side is a bond portfolio. As $\Bond(T,T) = 1$, we know that 
+\begin{align}
+\frac{\Bond(t,T)-\Bond(t,S)}{\dayc(T,S)} &= \Bond(t,T) \E_{\Pm_T} \left( \Rflt(T,T,S) | \F_t \right) 
+\end{align}
+Now we have that shown that
+\begin{align}
+\Rflt(t,T,S) &= \E_{\Pm_T} \left( \Rflt(T,S) | \F_t \right) 
+\end{align}
+meaning that the forward rate is expected value of spot rate under the $T$-forward measure.	
+
+Similarly
+\begin{align}
+P(t,T) \E_{\Pm_T} \left( r(T) | \F_t \right) &= \E_{\Pm_0} \left( D(t,T) r(T) | \F_t \right) \\
+&= \E_{\Pm_0} \left( r(T) \e^{-\int_t^T r(s) \dx s} | \F_t \right) \\
+&= \E_{\Pm_0} \left( \frac{\partial}{\partial T} \e^{-\int_t^T r(s)} | \F_t \right) \\
+&= \frac{\partial}{\partial T} \E_{\Pm_0} \left( \e^{-\int_t^T r(s)} | \F_t \right) \\
+&= \frac{\partial}{\partial T} P(t,T) ,
+\end{align}
+which implies that
+\begin{align}
+f(t,T) = \E_{\Pm_T} \left( r(T) | \F_t \right) 
+\end{align}
+meaning that the instantaneous forward rate is the expected value of the short-rate under $T$-forward measure. 
+
+The Equation \ref{expectationbyradonnikodymderivative} implies that  
+\begin{align}
+\xi (t) = \frac{\Bond(t,T)}{\Bond(0,T) \Bank(t)}
+\end{align}
+is the Radon-Nikod\'{y}m-derivative of $T$-forward measure $\Pm_T$ with respect to risk-free measure $\Pm_0$.
+
+
+\subsection{Change of num\'{e}raire}
+
+Now we consider an arbitrage free market model with assets $N$ and $M$, which are num\'{e}raires. If $X$ is a contingent $T$-claim, then we know that arbitrage free price of $X$ at the time $t$ must be
+  \begin{align}
+    V_t (X) &= N(t) \E_{\Pm_N} \left( \frac{X(T)}{N(T)} | \F_t \right) \\
+            &= M(t) \E_{\Pm_M} \left( \frac{X(T)}{M(T)} | \F_t \right)
+  \end{align}
+where $\Pm_N, \Pm_M$ are the martingale measure corresponding to the num\'{e}raires $N$ and $M$. Thus
+  \begin{align}
+    \E_{\Pm_N} \left( \frac{X(T)}{N(T)} | \F_t \right) &= \E_{\Pm_M} \left( \frac{M(t)}{N(t)} \frac{X(T)}{M(T)} | \F_t \right) \\
+      &= \E_{\Pm_M} \left( L_T(t) \frac{X(T)}{N(T)} | \F_t \right),
+  \end{align}
+where
+  \begin{align}
+    L_T(t) = \frac{N(T) / N(t)}{ M(T) / M(t) } = \frac{M(t)}{N(t)} \frac{N(T)}{M(T)} .
+  \end{align}
+Now $L_T(t)$ is a $\Pm_N$-martingale 
+Since $X$ is an arbitrary $\F_T$-measurable random variable, we have heuristically shown the following fundamental result. For the proof, see \cite{gemanelkarouirochet1995changes}.
+  
+\begin{thm}
+Let $\Pm_N$ be the EMM associated with num\'{e}raire $N$ and $\Pm_M$ be the EMM associated with num\'{e}raire $M$. Under some technical conditions, the Radon-Nikod\'{y}m derivate of $\Pm_M$ with respect to $\Pm_N$ is
+  \begin{align}
+    \frac{\dx \Pm_N}{\dx \Pm_M} = \frac{N(T) / N(t)}{ M(T) / M(t) } .
+  \end{align}
+\end{thm}
+
+Since $Z(t,T) > 0$ for all pairs $(t,T)$ we may use zero-coupon bonds as num\'{e}raire. We denote $\Pm_T$ as the equivalent martingale measure given by the $T$-bond. Thus if $X$ is a contingent $T$-claim, then we know that arbitrage free price of $X$ at the time $t$ must be
+  \begin{align}
+    V_t (X) &= Z(t,T) \E_{\Pm_T} \left( X(T) \right) .
+  \end{align}
+
+\iffalse
+ 
+Tähän jotakin siitä, että Björk s. 357.
+
+If $X(T) = (S(T) - K)^+$ is a final pay-out of a contingent claim $X$ for some asset $S$ and fixed $K$, then
+  \begin{align}
+    V_t (X) &= \E_{\Pm} \left( \frac{X(T)}{B(T)} | \F_t \right) \\
+            &= \E_{\Pm} \left( \frac{ (S(T) - K) \1_{ \{S_T > K \} } }{B(T)} | \F_t \right) \\
+            &= \E_{\Pm} \left( \frac{ S(T) }{ B(T) } \1_{ \{S_T > K \} } | \F_t \right) - K \E_{\Pm} \left( \frac{\1_{ \{S_T > K \} } }{B(T)} | \F_t \right) .
+  \end{align}
+If $S$ is also a num\'{e}raire we may write
+  \begin{align}
+    \E_{\Pm} \left( \frac{ S(T) }{ B(T) } \1_{ \{S_T > K \} } | \F_t \right) &= \E_{\Pm_S} \left( L_S(T) \frac{ S(T) }{ B(T) } \1_{ \{S_T > K \} } | \F_t \right) \\
+    &= \E_{\Pm_S} \left( \frac{ S(t) }{ B(t) } \1_{ \{S_T > K \} } | \F_t \right) \\
+    &= \frac{ S(t) }{ B(t) } \Pm_S ( S_T > K )
+  \end{align}
+where we used likelihood ratio
+  \begin{align}
+    L_S (T) = \frac{ S(t) }{ B(t) } \frac{ B(T) }{ S(T) }
+  \end{align}
+to change measure from risk-free measure $\Pm$ to the martingale measure $\Pm_S$ with num\'{e}raire $S$. The second term is
+  \begin{align}
+    \E_{\Pm} \left( \frac{\1_{ \{S_T > K \} } }{B(T)} | \F_t \right) &= \E_{\Pm_T} \left( L_T(T) \frac{\1_{ \{S_T > K \} } }{B(T)} | \F_t \right) \\
+    &= \E_{\Pm_T} \left( \frac{ Z(t,T) }{ B(t) } \1_{ \{S_T > K \} } | \F_t \right) \\
+    &= \frac{ Z(t,T) }{ B(t) } \Pm_T ( S_T > K )
+  \end{align}
+where we used $Z(T,T) = 1$ and likelihood ratio
+  \begin{align}
+    L_T (t) = \frac{ Z(t,T) }{ B(t) } \frac{ B(T) }{ Z(T,T) }
+  \end{align}
+to change measure from risk-free measure $\Pm$ to the $T$-forward measure $\Pm_T$. Thus
+  \begin{align}
+    V_t (X) &= \frac{ S(t) }{ B(t) } \Pm_S ( S_T > K ) - K \frac{ Z(t,T) }{ B(t) } \Pm_T ( S_T > K )
+  \end{align}
+and especially
+  \begin{align}
+    V_0 (X) &= S(0) \Pm_S ( S_T > K ) - K Z(0,T) \Pm_T ( S_T > K ) .
+  \end{align}
+  
+ \fi
+  
+
+ 
+

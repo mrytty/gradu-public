@@ -1,0 +1,264 @@
+\chapter{Interest}
+
+A day count factor between the dates $t$ and $s$ is denoted by $\dayc{s,t}$. We assume that the day count factor is a sufficiently smooth function and and that $\dayc{s,t} = t-s$ when $s$ and $t$ are close.
+
+\subsection{Zero-coupon bonds}
+
+A $T$-maturity zero-coupon bond is a promise to pay one unit of currency at time $T$. This is instrument is also called as pure discount bond. The price of this bond at time $t$ is denoted by $Z(t,T)$ and $Z(T,T) = 1$ if there is no risk of default. We shall call this a $T$-bond.
+
+In the following we shall assume that for every $0 \leq t$ and $t \leq T$, there exists a frictionless market for $Z(t,T)$ and every zero-coupon bond has no risk of default. We also assume that $Z(t,T)$ is differentiable with respect to the time of maturity $T$.
+
+\subsection{Riskless simple rate of interest}
+
+We assume that $0 < t \leq T < S$. If we enter the following contranct at time $0$. At the time $t$ we shall
+  \begin{enumerate}
+    \item sell one $T$-bond with price $Z(t,T)$ and
+    \item we shall buy $Z(t,T) / Z(t,S)$ $S$-bonds for the price $Z(t,S)$
+  \end{enumerate}
+At time $t$ the net payments are $0$. We pay $1$ at time $T$ and receive $Z(t,T) / Z(t,S)$ at time $S$. We netted
+  \begin{align}
+   1 - \frac{Z(t,T)}{Z(t,S)}
+  \end{align}
+but the payments happened at different instances, so the terms are not of equal value. We say that the simple forward rate for $(T,S)$ contracted at $t$ is $L(t,T,S)$ satisfying the equation
+  \begin{align}
+   1 + \dayc{T,S} L(t,T,S) = \frac{Z(t,T)}{Z(t,S)}
+  \end{align}
+or equivalently
+  \begin{align}
+  \label{simplyinterestrate}
+   L(t,T,S) = \frac{Z(t,T) - Z(t,S)}{ \dayc{T,S}  Z(t,S)} .
+  \end{align}  
+If $t=T$, then we denote this rate by $L(t,S)$ and call it as the simple spot rate for $(t,S)$ and thus
+  \begin{align}
+    L(t,S) = \frac{ 1 - Z(t,S) }{ \dayc{t,S} Z(t,S) } .
+  \end{align}
+  
+\subsection{Riskless continously compounded rate of interest}
+  
+Similarly to the equation \ref{simplyinterestrate}, we define the continously compounded forward rate for $(T,S)$ contracted at $t$ as $R(t,T,S)$ satisfying the equation
+  \begin{align}
+   \e^{ \dayc{T,S} R(t,T,S)} = \frac{Z(t,T)}{Z(t,S)} .
+  \end{align}
+or equivalently
+  \begin{align}
+    R(t,T,S) = \frac{ \log Z(t,T) - \log Z(t,S) }{ \dayc{T,S} }
+  \end{align}
+If $t=T$, then we denote this rate by $R(t,S)$ and call it as the continously compounded spot rate for $(t,S)$. Now
+  \begin{align}
+    R(t,S) = - \frac{ \log (Z(t,S)) }{ \dayc{T,S} } .
+  \end{align}
+The motivation for continous compounding comes from the fact that
+  \begin{align}
+    \e^x = \lim_{n \rightarrow \infty} \left( 1 + \frac{x}{n} \right)^n,
+  \end{align}
+where the right-side is the limit of the compounding interest. By the power serie representation
+  \begin{align}
+    \e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots
+  \end{align}
+we see that $R(t,T,S) \approx L(t,T,S)$, when $S$ is very close to $T$.
+
+\subsection{Riskless instantaneous rates}
+  
+The instantanenous forward rate with maturity $T$ contracted at time $t$ is defined by
+  \begin{align}
+    f(t,S) &= \lim_{S \rightarrow T^+} L(t,T,S) \\
+            &= \lim_{S \rightarrow T^+} \frac{Z(t,T) - Z(t,S)}{ \dayc{T,S}  Z(t,S)} ¸\\
+            &= \lim_{S \rightarrow T^+} \frac{1}{ Z(t,S) } \frac{Z(t,T) - Z(t,S)}{ S-T } \\
+            &= - \frac{1}{ Z(t,T) } \frac{ \partial Z(t,T) }{ \partial T } \\
+            &= - \frac{ \partial \log Z(t,T) }{ \partial T } .
+  \end{align}
+Thus
+  \begin{align}
+    Z(t,S) = Z(t,T) \exp \left( - \int_T^S f(t,s) \dx s \right) \\
+  \end{align}
+and in particulary
+  \begin{align}
+    Z(t,S) = \exp \left( - \int_t^S f(t,s) \dx s \right) \\
+  \end{align}
+
+\subsection{Short rate $r(t)$ and the bank account}  
+
+The short rate $r(t)$ at time $t$ is defined by
+  \begin{align}
+    r(t) = f(t,t).
+  \end{align}
+The bank account $B(t)$ is defined by
+  \begin{align}
+    B(t) = \exp \left( \int_0^T r(s) \dx s \right) .
+  \end{align}
+Note that $B(0) = 1$ and equivalently the dynamics may be given by
+  \begin{align}
+    &\dx B(t) = r(t) B(t) \dx t \\
+    &B(0) = 1
+  \end{align}
+  
+\section{Short-rate model for interest rates}
+
+The classical approach to price interest rates derivates is the assume the existance of a short-rate process $r(t)$ which is a solution to a stochastic differential equation
+  \begin{align}
+    \dx r(t) &= \mu(t, r(t)) \dx t + \sigma(t, r(t)) \dx W(t), \\
+    r(0) = r_0,
+  \end{align}
+where $r_0$ is a constant and $W_t$ is brownian motion under the physical probability measure $\Pf$. We assume the existance of risk-free asset $B$ with price process
+  \begin{align}
+    \dx B(t) = r(t) B(t) \dx t .
+  \end{align}
+We also assume 
+  \begin{enumerate}[labelindent=\parindent, leftmargin=*]
+    \item the market for $T$-bonds exists and is arbitrage free,
+    \item the price of a $T$-bond is given by
+      \begin{align}
+        Z(t,T) = F(t,r(t),T) ,
+      \end{align}
+    where $F$ is a smooth function and
+    \item $Z(T,T) = 1$ for all $r(T)$.
+  \end{enumerate}
+
+We have not assumed that $r(t)$ is a tradable asset, but we have assumed that there are markets for derivates of the short-rate. If $F(t,r(t))$ is a smooth function of $t$ and $r(t)$, then we may use It\'{o}'s lemma to derive
+  \begin{align}
+    \label{interest_rate_derivative_process}
+    \dx F = \left( F_t + \mu F_r + \frac{1}{2} \sigma^2 F_{rr} \right) \dx t + \sigma F_r \dx W ,
+  \end{align}
+where we have supressed arguments and subscripts are partial derivates. We now combine to different short-rate derivates $V_1$ and $V_2$ to a portfolio
+  \begin{align}
+    V = V_1 - x V_2.
+  \end{align}
+We assume that the price process $V_i$ is a function of $t$ and $r(t)$ so that $\dx V_i = \mu_i \dx t + \sigma_i \dx W$, where $\mu_i$ and $\sigma_i$ can be derived from equation \ref{interest_rate_derivative_process}. Thus
+  \begin{align}
+    \dx V = (\mu_1 - x \mu_2) \dx t + (\sigma_1 - x \sigma_2) \dx W .
+  \end{align}
+If
+  \begin{align}
+    x = \frac{\sigma_1}{\sigma_2} ,
+  \end{align}
+then 
+  \begin{align}
+    \dx V &= (\mu_1 - \frac{\sigma_1}{\sigma_2} \mu_2) \dx t \\
+      &= r V \dx t \\
+      &= r ( V_1 - \frac{\sigma_1}{\sigma_2} V_2 ) \dx t,
+  \end{align}
+where we have assumed that the absense of arbitrage implies that the now risk-free portfolio must have risk-free interest rate as the growth rate. Thus
+  \begin{align}
+    \mu_1 - rV_1 = \frac{\sigma_1}{\sigma_2} ( \mu_2 - rV_2 ) 
+  \end{align}
+and therefore we have a well-defined function
+  \begin{align}
+    \lambda(t,r(t)) &= \frac{\mu_1(t,r(t)) - r(t)V_1(t,r(t))}{\sigma_2(t,r(t))} \\ &= \frac{\mu_2(t,r(t)) - r(t)V_2(t,r(t))}{\sigma_2(t,r(t))}
+  \end{align}
+which depends only on arguments $t$ and $r(t)$ since the derivates can be arbitralily chosen. We call $\lambda(t,r(t))$ as the market-price of risk. Thus the price $F$ of an arbitrary interest derivate must satisfy the differential equation
+  \begin{align}
+     F_t + ( \mu - \lambda \sigma ) F_r + \frac{1}{2} \sigma^2 F_{rr} - r F = 0 ,
+  \end{align}
+which is a close cousin to the Black-Scholes differential equation. But is more complicated, because the market price of the risk is present. Since the short-rate is not tradable, it may not be hedged and therefore this market is not complete. Since the function $\lambda$ is exogenous to the model, the solution and therefore the price will not be unique. In other words, we have multiple martingale measures.
+
+
+\subsection{Short-rate and the stochastic discount factor}
+
+We often assume that there is a short-rate $r_t$ that is applied to a bank account continously. It may or may not be stochastic. The bank account evolves according to the differential equation
+  \begin{align}
+    \dx B_t = r_t B_t,
+  \end{align}
+where $B_t$ is value of the account at the time $t$. We assume unless otherwise noted that $B_0 = 1$. Thus
+  \begin{align}
+    B_t = B_0 \exp \left( \int_0^t r_s \dx s \right) .
+  \end{align}
+We assume that $r_t \geq 0$ for all $t \geq 0$ and this means that the bank account is riskless in the sense that no deposited money never loses value.
+
+A related concept is the stochastic discount factor $D(t,T)$ between the dates $t < T$, which is defined by
+  \begin{align}
+    D(t,T) = \frac{B_t}{B_T} = \exp \left( - \int_t^T r_s \dx s \right) .
+  \end{align}
+It is the present value as seen at the time $t$ of one unit of currency payable at time $T$. If the short-rate is stochastic, then the discount factor is non-deterministic. 
+
+\subsection{Zero-coupon bonds}
+
+A $T$-maturity zero-coupon bond is a promise to pay one unit of currency at time $T$. This is instrument is also called as pure discount bond. The price of this bond at time $t$ is denoted by $Z(t,T)$. 
+
+If $r_t$ is deterministic and there is no arbitrage, then $D(t,T) = Z(t,T)$, but this does not hold in general. The zero-coupon bond is a derivate itself and can be replicated with a simple buy-and-hold strategy, we have that
+  \begin{align}
+    Z(t,T) &= B_t \E^{\Pm} \left( \frac{1}{B_T} \ | \ F_t \right) \\ 
+      &= \E^{\Pm} \left( \exp \left( - \int_t^T r_s \dx s \right) \ | \ F_t \right) \\
+      &= \E^{\Pm} \left( D(t,T) \ | \ F_t \right) .
+  \end{align}
+A $T$-maturity zero-coupon bond is often a good choise for num\'{e}raire and the assosiated EMM is called $T$-forward measure. We shall see in Theorem \ref{expectedforwardrate} why this is a descriptive name. Since $Z(T,T) = 1$, the price of a derivate can be calculated by
+  \begin{align}
+    h_t = Z(t,T) \E^T ( H_T \ | \ \F_t ).
+  \end{align}
+
+\subsection{Forward rates}
+
+A forward rate $F(t;T,S)$ between the dates $T < S$ is the rate that can be locked at the time $t$ for investment for the future period $[T,S]$. For simple compounding it is defined by
+  \begin{align}
+    F(t;T,S) = \frac{1}{\dayc{T,S}} \left( \frac{Z(t,T) - Z(t,S) }{Z(t,S)} \right)
+  \end{align}
+If $\dayc{T,S} \approx S-T$, when $T \approx S$ and the function $S \mapsto F(t,T,S)$ is smooth, then
+  \begin{align}
+    \lim_{S \rightarrow T^+} F(t;T,S) &= - \lim_{S \rightarrow T^+} \frac{1}{Z(t,S)} \frac{Z(t,S) - Z(t,T)}{S-T} \\
+      &= - \frac{1}{Z(t,S)} \frac{\partial Z(t,T) }{\partial T} \\
+      &= - \frac{\partial \log Z(t,T) }{\partial T}
+  \end{align}
+In practice, the zero curve is constructed so that the smoothness is guarateed and we may define the instantenous forward rate as
+  \begin{align}
+    f(t,T) &= - \frac{\partial \log Z(t,T) }{\partial T}
+  \end{align}
+meaning that
+  \begin{align}
+    Z(t,T) &= \exp \left( - \int_t^T f(t,s) \dx s \right) .
+  \end{align}
+The instantenous forward rate can be seen as the expectation of the future rate.
+
+\begin{thm}
+  \label{expectedforwardrate}
+If there is a derivate $H$ with final payout $H_T = r_T$ at the time $T$ and the short-rate process is smooth, then
+  \begin{align}
+    \E^T ( R_T \ | \ \F_t ) = f(t,T) .
+  \end{align}
+\end{thm}
+
+\begin{proof}
+Under the $T$-forward measure we have that $h_t = Z(t,T) \E^T ( r_T \ | \ \F_t )$ and risk-neutral valuation gives the price
+  \begin{align}
+    h_t &= B_t \E^{\Pm} \left( \frac{r_T}{B_T} \ | \ F_t \right) \\
+      &= \E^{\Pm} \left( \exp \left( -\int_t^T r_s \dx s \right) r_T \ | \ F_t \right) \\
+      &= - \E^{\Pm} \left( \frac{ \partial \exp \left( -\int_t^T r_s \dx s \right)}{\partial T} \ | \ F_t \right) \\
+      &= - \frac{\partial }{\partial T} \E^{\Pm} \left( \exp \left( -\int_t^T r_s \dx s \right) \ | \ F_t \right) \\
+      &= - \frac{\partial Z(t,T)}{\partial T},
+  \end{align}
+where we assumed that the smoothness allows us the change the order of differentation and integration. Now
+  \begin{align}
+    \E^T ( r_T \ | \ \F_t ) &= -\frac{1}{Z(t,T)} \frac{\partial Z(t,T)}{\partial T} = f(t,T) .
+  \end{align}
+\end{proof}
+
+A forward rate agreement (FRA) is a contract that lock a future interest rate . A FRA with a fixed interest rate $K$, expiry time $T$ and maturity time $S$ pays $K \dayc(T,S)$ at the maturity $S$. The fixed rate $K$ is set when the contract 
+
+A caplet is a call option on interest rate $L(S,T)$ for some $0 \leq S < T$. With strike $K$, it has pay-off 
+  \begin{align}
+     \Caplet (T,S,T,K) = (L(S,T) - K)^+ .
+  \end{align}
+at the time $T$. By definition,
+  \begin{align}
+    Z(S,T) = \frac{1}{1+\tau L(S,T)},
+  \end{align}
+where $\tau$ is the day-count adjustment between the dates $S$ and $T$. Thus the pay-out of the caplet can be written as
+  \begin{align}
+    \Caplet (T, S,T,K) &= \left( \frac{1}{\tau} \left( \frac{1}{Z(S,T)} - 1 \right) - K \right)^+.
+  \end{align}
+As the rate $L(S,T)$ is set at the time $S$, the price of the cap at the time $S$ is
+  \begin{align}
+     \Caplet (S,S,T,K) &= Z(S,T) \Caplet (T,S,T,K) \\
+     &= \frac{1}{\tau} \left(  1 - Z(S,T)  - \tau K Z(S,T) \right)^+ \\
+      &= \frac{1}{\tau} \left(  1 - Z(S,T) ( 1 + \tau K ) \right)^+ \\
+      &= \frac{ 1 + \tau K }{\tau} \left( \frac{1}{1 + \tau K}  - Z(S,T) \right)^+
+  \end{align}
+The right-side is the price at the time $S$ of $\frac{ 1 + \tau K }{\tau}$ put options with strike $\frac{1}{1 + \tau K}$ on a zero-coupons bonds with maturity $T$. Therefore the a caplet can be replicated as put options on a zero-coupon bond.
+
+Similarly, a floorlet is a put option on interest rate $L(S,T)$ for some $0 \leq S < T$. With strike $K$, it has pay-off 
+  \begin{align}
+     \Floorlet (T,S,T,K) = (K - L(S,T))^+
+  \end{align}
+at the time $T$. Now we can use the same argumentation as earlier with only the signs of $K$ and $L(S,T)$ changed and we see that
+  \begin{align}
+     \Floorlet (S,S,T,K) &= \frac{ 1 + \tau K }{\tau} \left( Z(S,T) - \frac{1}{1 + \tau K}  \right)^+,
+  \end{align}
+where the caplet has been replicated as call option on a zero-coupon bond $Z(S,T)$.

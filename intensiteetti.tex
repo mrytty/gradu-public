@@ -1,0 +1,505 @@
+\chapter{Intensity models}
+\label{chap:intensity}
+
+\added{A rigorous treatment of intesity modeling can be found in} \textcite{bieleckirutkowski2002credit} and \textcite{brigo2007interest} contains a gentler introduction.
+
+\section{Foundations of intensity models}
+
+\subsection{Introduction}
+
+\added{This section is based on } \textcite[pp. 759--764]{brigo2007interest}.
+
+Let $(\Omega, \F, \Pm)$ be a fixed probability space and $\default$ a random time, meaning that $\default : \Omega \rightarrow \R_+ \cup \{ 0 \}$ is a measurable random variable. In our setting $\default( \omega )$ will be the time of the default. The corresponding indicator variable is $H_t = \1_{ \{\default \leq t \} }$. Hence, $H_t=0$ before the default and $H_t = 1$ at the default and after it.
+
+If we assume that $\default$ is exponentially distributed with parameter $\gamma > 0$, then
+  \begin{align}
+    \label{exponential-cumulative-inverse}
+    \Pm( \default > t ) = \e^{- \gamma t } .
+  \end{align} 
+We note that the random variable $\default \gamma$ is exponentially distributed with parameter $1$, since
+  \begin{align}
+    \label{exponentiallywithparameter1}
+    \Pm( \default \gamma > t ) = \Pm( \default > \frac{t}{\gamma} ) = \e^{-t} .
+  \end{align}
+Now 
+  \begin{align}
+    \Pm( \default > t + \dx t \ | \ \default > t ) & = \frac{ \Pm( \default > t + \dx t ) }{ \Pm( \default > t ) } \\ &= \e^{ - \gamma ( t + \dx t ) } \e^{ \gamma t } \\
+    & =  \e^{ - \gamma \dx t } \\
+    &= \Pm( \default > \dx t ) ,
+  \end{align}
+which implies that the distribution has no memory. While memorylessness is often a desirable property, time homogeneous is not a desirable property in credit risk modeling. 
+
+However, we can easily see the theoretical connection between interest rate and default intensity using a simplified model, where the risk-free rate $r$ and the parameter $\gamma$ are positive constants. Now the zero-coupon bond with maturity $T$ and no recovery value at the default has the expected discounted value of
+  \begin{align}
+    \Pm( \default > t ) \e^{-r T} + \Pm( \default \leq t ) \cdot 0 = \e^{ - (r+\gamma) T} .
+  \end{align}
+Thus the parameter $\gamma > 0$ can be seen as a credit spread over the risk-free rate.
+
+We can generalize the equation \ref{exponential-cumulative-inverse} and introduce time-dependency by setting
+  \begin{align}
+    \Pm( \default > t ) = \e^{- \Gamma(t) } ,
+  \end{align}
+where $\Gamma(t)$ is the cumulative hazard function. Intuitively we assume that $\Gamma$ is a strictly increasing function. Now if $r(t)$ is a deterministic short-rate, then 
+a defaultable zero-coupon bond with maturity $T$ and no recovery value has expected discounted value of
+  \begin{align}
+    \label{price_with_cumulative_hazard_function}
+    \e^{ - \left( \int_0^T r(s) \dx s + \Gamma(T) \right) }.
+  \end{align}
+  
+As in equation \ref{exponentiallywithparameter1}, if $\xi = \Gamma(\default)$, then
+  \begin{align}
+    \Pm( \Gamma(\default) > t ) = \Pm( \default > \Gamma^{-1}(t) ) = \e^{-t}
+  \end{align}
+meaning that $\xi$ is exponentially distributed with parameter $1$ and $\default \sim \Gamma^{-1}(\xi)$. Now we may simulate the default time by drawing a realization of $\xi$ and taking $\default = \Gamma^{-1}(\xi)$.
+
+Next we assume that
+  \begin{align}
+    \label{Gammaisgammaintegral}
+    \Gamma(t) = \int_0^t \gamma (s) \dx s,
+  \end{align}
+where $\gamma > 0$ almost everywhere. Now the equation \ref{price_with_cumulative_hazard_function} can be written as
+  \begin{align}
+    \e^{ - \int_0^T \left( r(s) + \gamma(s) \right) \dx s }
+  \end{align}
+and again $\gamma(t)$ can be viewed as a credit spread over the risk-free rate. Now
+  \begin{align}
+    \Pm( t \leq \default < t + \dx t ) &= \e^{- \Gamma(t) } - \e^{- \Gamma(t + \dx t) } \\
+      &=\e^{- \Gamma(t) } \left( 1 - \e^{ - \int_t^{t + \dx t} \gamma (s) \dx s } \right) \\
+      &\approx \e^{- \Gamma(t) } \int_t^{t + \dx t} \gamma (s) \dx s \\
+      &\approx \e^{- \Gamma(t) } \lambda(t) \dx t \\
+      &= \e^{ - \int_0^t \gamma (s) \dx s } \lambda(t) \dx t ,
+  \end{align}
+where the first approximation uses $\e^x \approx 1 + x$ given $x \approx 0$ and the second is based on the definition of the integral and the assumption that $\lambda$.
+
+Similarly the conditional probability has the following approximation
+  \begin{align}
+    \Pm (\default \leq t + \dx t | \default > t) &= \frac{ \Pm (t < \default \leq t + \dx t) }{ \Pm (\default > t) } \\
+      &= \frac{ \e^{- \Gamma(t) } - \e^{- \Gamma(t + \dx t) } }{ \e^{- \Gamma(t) } } \\
+      &= 1 - \e^{ - \int_t^{t + \dx t} \gamma (s) \dx s } \\
+      &\approx \gamma(t) \dx t
+  \end{align}
+
+Suppose that $F$ is the cumulative distribution function of $\default$, so
+  \begin{align}
+    F(t) = \Pm ( \default \leq t ),
+  \end{align}
+and the function $F$ is absolutely continuous. This means that the derivative of $F$ exists and $F' = f$ almost everywhere, where $f$ is the density funtion of $\default$. We denote $\bar{F} (t) = 1 - F (t) = \Pm ( \default > t )$ and make the following assumptions
+  \begin{enumerate}[labelindent=\parindent, leftmargin=*, label*=(\Alph*)]
+    \item $\Pm ( \default = t ) = F ( 0 ) = 0$ for all $t \geq 0$. \label{intensityassumptionA}
+    \item $F (t) < 1$ for all $0 \leq t < \infty$. \label{intensityassumptionB}
+  \end{enumerate}
+Now we may use Bayes rule to see that
+\begin{align}
+     \frac{\Pm (\default \leq t + \dx t | \default > t)}{\dx t} &= \frac{\Pm (t < \default \leq t + \dx t)}{ \Pm (\default > t) \dx t } \\ 
+     &=  \frac{F(t+\dx t)-F(t)}{ \Pm (\default > t) \dx t } \\
+     &\longrightarrow \frac{f(t)}{\Pm (\default > t)} \\
+     &= \frac{f(t)}{\bar{F} (t)} \\
+     &= - \frac{\dx}{\dx t} \log ( \bar{F} (t) ) \\
+     &= \frac{\dx}{\dx t} \Gamma(t) \\
+     &= \gamma(t)
+  \end{align}
+as $\dx t \rightarrow 0^+$.
+
+We note that
+	\begin{align}
+		\dx \Pm ( \default > t ) &= - \lambda (t) \e^{ - \int_0^t \gamma (s)  \dx s } \\
+			&= - \lambda (t) \dx \Pm ( \default > t )
+	\end{align}
+holds.
+
+In summary,
+  \begin{align}
+    \gamma (t) &= \Gamma' (t) \\
+    \Gamma (t) &= \int_0^t \gamma (s) \dx s \\
+    \Pm ( \default > t ) &= \e^{- \Gamma (t) } = \e^{ - \int_0^t \gamma (s)  \dx s } \\
+    \gamma (t) \dx t &\approx \Pm (\default \leq t + \dx t | \default > t) .
+  \end{align}
+In general setting, the function $\gamma(t)$ is the hazard function of $\default$. The hazard function can be seen as the instantaneous probability of default happening just after the time $t$ given the survival up to time $t$. In the context of credit risk, we shall call the function $\gamma$ as the intensity function.
+
+If $\lambda (t) = \lambda > 0$ is a deterministic constant, then $F$ is the cumulative distribution function of exponential distribution with parameter $\lambda$ and therefore $\E (\default) = 1/\lambda$ and $\Var (\default) = 1/\lambda^2$. Also
+  \begin{align}
+    \label{survivalexpectationforconstanthazard}
+    \E ( \1_{ \{ \default > t \} } ) = \Pm ( \default > t ) = \e^{-\int_0^t \lambda_s \dx s} = \e^{-\lambda t} .
+  \end{align}
+Thus $\default$ is signaled by the first jump of time-homogenous Poisson distribution with parameter $\lambda$. Similarly, if $\lambda (t) > 0$ is deterministic function, then $\default$ is the first jump of non-homogenous Poisson distribution with rate function $\lambda(t)$. If $\lambda (t)$ is a stochastic process, then $\default$ will follow a Cox process.
+
+\subsection{The credit triangle}
+
+\added{The derivation of the credit triangle follows } \textcite[pp. 54--55]{o2011modelling} although the note after the credit triangle might be original.
+
+In this section we consider a simplified CDS contract in the intensity framework. We assume the following
+
+\begin{enumerate}[labelindent=\parindent, leftmargin=*]
+	\item $\lambda (t) = \lambda > 0$ is a deterministic constant.
+	\item The timing of default $\default$ is independent from interest rates under the measure $\Pm$.
+	\item The recovery rate $0 \leq \Rec \leq 1$ is a deterministic constant and it is paid at the moment of the default.
+	\item CDS with no upfront costs pays premium continuously at rate $s$ until the default $\default$ or the termination date $T$.
+\end{enumerate}
+
+The last assumption means that in the interval $[t,t+ \dx t]$ the paid premium is $s \dx t$ and if $\dx t$ is tiny, then the present value of this is $\Bond(0,t) s \dx t$. The value of the premium leg is then
+\begin{align}
+\label{trianglevaluationpremium}
+\E \left( \int_0^T \DF(0,t) s \1_{\{ \default > t \}} \dx t  \right) &= s \int_0^T \E \left( \DF(0,t) \1_{\{ \default > t \}} \right) \dx t \\
+&= s \int_0^T  \Bond(0,t) \Pm ( \default > t ) \dx t .
+\end{align}
+
+For the valuation of the protection leg, we calculate
+\begin{align}
+\E \left( \DF(0,\default) (1-\Rec) \1_{ \{ \default \leq T \} } \right) &= (1-\Rec) \E \left( \int_0^T \DF(0,t) \1_{ \{ t \leq \default < \default + \dx t \} } \right) \\
+&= \LGD \int_0^T \E \left( \DF(0,t) \1_{ \{ t \leq \default < \default + \dx t \} } \right) \\
+&= \LGD \int_0^T \Bond(0,t) \Pm ( t \leq \default < t + \dx t ) \\
+&= - \LGD \int_0^T \Bond(0,t) \dx \Pm ( \default > t ),
+\end{align}
+where in the last step we used the derivative of the identity $\Pm ( \default \leq t ) = 1 - \Pm ( \default > t )$. 
+
+Now
+\begin{align}
+\E \left( \DF(0,\default) \LGD \1_{ \{ \default \leq T \} } \right) = \LGD \lambda \int_0^T \Bond(0,t) \Pm ( \default > t ) \dx t
+\end{align}
+and since this must be equal to value in equation (\ref{trianglevaluationpremium}), we get the following identity
+\begin{align}
+s = \lambda \LGD.
+\end{align}
+This is the credit triangle. It is also quick and easy to understand, but only one of the three variables are actually directly observable from market data. If $\Rec = 0$, then $s = \lambda$ and the default intensity is the coupon rate intensity of the CDS.
+
+It should be noted that the model has pathological behavior if $\Rec \approx 1$. If $\Rec = 1$, then a defaultable zero coupon bond is more valuable than otherwise identical risk-free bond since the defaultable bond might pay the principal earlier\footnote{One reasonable restriction that will preclude this is $\Rec < \Bond(0,T)$}. Since the recovery value is rarely near the notional value, this is not a serious problem.
+
+Nowadays credit default swaps are traded with standardized coupon rates and upfront payments. However, if the CDS has a upfront value of $U$, then
+	\begin{align}
+		U &= s \int_0^T  \Bond(0,t) \Pm ( \default > t ) \dx t - \LGD \lambda \int_0^T \Bond(0,t) \Pm ( \default > t ) \dx t \\
+		&= (s - \lambda \LGD) Q(r, \lambda) ,
+	\end{align}
+where 
+	\begin{align}
+		Q(r, \lambda) &= \int_0^T  \Bond(0,t) \Pm ( \default > t ) \dx t .
+	\end{align}
+If we assume that the short-rate is roughly a constant $r$ for all times $0 < t < T$, then
+	\begin{align}
+		Q(r, \lambda) &\approx \int_0^T  \e^{-(r+\lambda)t} \dx t \\
+			&= \frac{1-\e^{-(r+\lambda)T}}{r+\lambda}
+	\end{align}
+and thus
+	\begin{align}
+		U &= (s - \lambda \LGD) \frac{1-\e^{-(r+\lambda)T}}{r+\lambda}.
+	\end{align}
+
+\section{Pricing}
+
+\added{The pricing argumentation follows closely } \textcite[pp. 790--792]{brigo2007interest}
+
+In this section we assume that the $\sigma$-algebra $(\F_t)$ presents partial market information without default and 
+\begin{align}
+\Hf_t = \sigma( \1_{ \{\default \leq s \} } | s \leq t ) = \sigma( H(s) | s \leq t ) 
+\end{align}
+is the knowledge of the default up to time $t$. By
+\begin{align}
+\G_t = \F_t \vee \Hf_t
+\end{align}
+we denote the smallest $\sigma$-algebra containing $\F_t$ and $\Hf_t$. We assume that conditions \ref{DS1} and \ref{DS2} of Section \ref{sec:doublystochastic} are satisfied by the process $\lambda$.
+
+Theorem \ref{eq_takingthedefaultinformationoutdoubly} is an important tool in our arsenal, so we restate it here. Under very reasonable assumptions, we have that
+	\begin{align}
+		\E_{\Pm} \left( \1_{ \{ \default > T \} } X | \G_t  \right) = \1_{ \{ \default > t \} } \e^{ \int_0^t \lambda(s) \dx s }  \left( \1_{ \{ \default > T \} } X | \F_t \right)
+	\end{align}
+for random variables $X$ and $T \geq t$.
+
+\subsubsection{Defaultable zero coupon bond with no recovery}
+
+A defaultable $T$-bond with no recovery has pay-off $H_T = \1_{\{\default > T\}}$. Now by Lemma \ref{eq_takingthedefaultinformationoutdoubly}, 
+  \begin{align}
+    \DBond_0(t,T) =& \E_{\Pm} \left( \exp^{ - \int_t^T r(s) \dx s } H_T \ | \ \F_t \vee \Hf_t \right) \\
+    =& \1_{\{\default > t\}} \exp^{ \int_0^t \lambda (s) \dx s } \E_{\Pm} \left( \exp^{ - \int_t^T r(s) \dx s } H_T \ | \ \F_t \right) \\
+    =& \1_{\{\default > t\}} \exp^{ \int_0^t \lambda (s) \dx s } \E_{\Pm} \left( \exp^{ - \int_t^T r(s) \dx s } \E_{\Pm} \left( H_T | \F_T \right) \ | \ \F_t \right) \\
+    =& \1_{\{\default > t\}} \exp^{ \int_0^t \lambda (s) \dx s } \E_{\Pm} \left( \exp^{ - \int_t^T r(s) \dx s } \exp^{ - \int_0^T \lambda (s) \dx s }  \ | \ \F_t \right) \\
+=& \1_{\{\default > t\}} \E_{\Pm} \left( \exp^{ - \int_t^T (r(s) + \lambda(s)) \dx s } \ | \ \F_t \right)
+  \end{align}
+If $\lambda(s) \geq 0$ almost surely, then we may see
+  \begin{align}
+  r(s) + \lambda (s) \geq r(s)
+  \end{align}
+is the defaultable short-rate. Thus we may reuse all the machinery from the short-rate models.
+
+\subsubsection{Defaultable zero coupon bond with partial recovery $0 < \Rec < 1$ at the maturity}
+
+A defaultable zero coupon bond with maturity $T$ and partial recovery at the maturity has pay-off 
+  \begin{align}
+    \1_{\{\default > T\}} + \Rec \1_{\{\default \leq T\}} &= ( 1 - \Rec ) \1_{\{\default > T\}} + \Rec \\
+    &= \1_{\{\default > T\}} \LGD + \Rec
+  \end{align} 
+at the maturity. Thus the price of it at the time $t$ is
+  \begin{align}
+    \DBond_M(t,T) = \DBond_0(t,T) \LGD +  \Bond(t,T) \Rec,
+  \end{align}
+where $\DBond_0$ is the price of defaultable zero coupon bond with no recovery and $\Bond$ is the price of non-defaultable zero coupon bond.
+
+\subsubsection{Defaultable zero coupon bond with partial recovery at the default}
+
+The price of a defaultable zero coupon bond with partial recovery at the default is
+\begin{align}
+\DBond_D(t,T) = \DBond_0 (t,T) + \Rec Q(t,T) ,
+\end{align}
+where
+  \begin{align}
+    Q(t,T) = \E_{\Pm} \left( \e^{ - \int_t^{\default} r(s) \dx s } \1_{\{t < \default \leq T\}} \ | \ \F_t \vee \Hf_t \right),
+  \end{align}
+which is the expected value of $1$ paid at the time of the default at the time $t$. Now
+  \begin{align}
+    Q(t,T) &= \frac{ \1_{ \{\default > t \} } }{ \Pm (\default > t | \F_t) } \E_{\Pm} \left( \e^{ - \int_t^{\default} r(s) \dx s } \1_{\{t < \default \leq T\}} \ | \ \F_t \right) \\
+    = & \1_{ \{\default > t \} } \e^{ \int_0^t \lambda(s) \dx s } \E_{\Pm} \left( \int_0^{\infty} \1_{\{t < \default \leq T\}} \DF(t,s) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_t \right) \\
+    = & \1_{ \{\default > t \} } \e^{ \int_0^t \lambda(s) \dx s } \E_{\Pm} \left( \int_{t}^{T} \DF(t,s) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_t \right) .
+  \end{align}
+Now we can use Fubini's theorem to evaluate
+  \begin{align}
+  &\E_{\Pm} \left( \int_{t}^{T} \DF(t,s) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_t \right) \\
+  = &\E_{\Pm} \left( \E_{\Pm}  \left( \int_{t}^{T} \DF(t,s) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_{T} \right) \ | \ \F_t \right) \\
+    = &\E_{\Pm} \left( \int_{t}^{T} \DF(t,s) \E_{\Pm}  \left( \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_{T} \right) \ | \ \F_t \right) \\
+    = &\E_{\Pm} \left( \int_{t}^{T} \DF(t,s) \Pm \left( s \leq \default < s + \dx s \ | \ \F_{T} \right) \ | \ \F_t \right) \\
+    =  &\E_{\Pm} \left( \int_{t}^{T} \DF(t,s) \lambda(s) \e^{ - \int_0^s \lambda(u) \dx u } \dx s \ | \ \F_t \right) \\
+    =  &\E_{\Pm} \left( \int_{t}^{T} \e^{ - \int_t^s r(u) \dx u }  \lambda(s) \e^{ - \int_0^s \lambda(u) \dx u } \dx s \ | \ \F_t \right) .   
+  \end{align}
+Thus
+  \begin{align}
+    Q(t,T) &= \1_{ \{\default > t \} } \E_{\Pm} \left( \int_{t}^{T}  \lambda(s) \e^{ - \int_t^s (r(u) + \lambda(u)) \dx u } \dx s \ | \ \F_t \right) \\
+    &= \1_{ \{\default > t \} } \int_{t}^{T} \E_{\Pm} \left( \lambda(s) \e^{ - \int_t^s (r(u) + \lambda(u)) \dx u } \ | \ \F_t \right) \dx s
+  \end{align}
+ and
+\begin{align}
+\DBond_D(t,T) = \DBond_0 (t,T) + \1_{ \{\default > t \} } \Rec \int_{t}^{T} \E_{\Pm} \left( \lambda(s) \e^{ - \int_t^s (r(u) + \lambda(u)) \dx u } \ | \ \F_t \right) \dx s
+\end{align}
+\subsection{The protection leg of a credit default swap}
+
+We now developed a price for the protection leg that pays $\LGD$ at the default $\default$, if $S < \default \leq T$. The price of it at the time $0 \leq t < T$ is
+  \begin{align}
+    \Protection(t) &= \1_{ \{ \default > t \} } \E_{\Pm} \left( \1_{ \{ S < \default < T \} } \DF(t,\default) \LGD \ | \ \G_t \right) \\
+    &= \frac{ \1_{ \{ \default > t \} } }{ \Pm (\default > t | \F_t ) } \E_{\Pm} \left( \1_{ \{ S < \default < T \} } \DF(t,\default) \LGD \ | \ \F_t \right) .
+  \end{align}
+Now heuristically
+  \begin{align}
+    & \E_{\Pm} \left( \1_{ \{ S < \default < T \} } \DF(t,\default) \ | \ \F_t \right) \\ 
+    = & \E_{\Pm} \left( \int_0^{\infty} \1_{ \{ S < s < T \} } \DF(t,s) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_t \right) \\
+    = & \E_{\Pm} \left( \int_{S}^{T} \DF(t,s) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_t \right) \\
+    = & \E_{\Pm} \left( \E_{\Pm}  \left( \int_{S}^{T} \DF(t,s) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_{T} \right) \ | \ \F_t \right) \\
+    = & \E_{\Pm} \left( \int_{S}^{T} \DF(t,s) \E_{\Pm}  \left( \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_{T} \right) \ | \ \F_t \right) \\
+    = & \E_{\Pm} \left( \int_{S}^{T} \DF(t,s) \Pm \left( s \leq \default < s + \dx s \ | \ \F_{T} \right) \ | \ \F_t \right) \\
+    = & \E_{\Pm} \left( \int_{S}^{T} \DF(t,s) \lambda(u) \exp^{ - \int_0^s \lambda(u) \dx u } \dx s \ | \ \F_t \right) \\
+    = & \E_{\Pm} \left( \int_{S}^{T} \exp^{ - \int_t^s r(u) \dx u }  \lambda(u) \exp^{ - \int_0^s \lambda(u) \dx u } \dx s \ | \ \F_t \right) \\
+    = & \exp^{ \int_0^t \lambda(u) \dx u } \E_{\Pm} \left( \int_{S}^{T}  \lambda(s) \exp^{ - \int_t^s (r(u) + \lambda(u)) \dx u } \dx s \ | \ \F_t \right) .
+  \end{align}
+Thus
+ \begin{align}
+\Protection(t) &= \1_{ \{ \default > t \} } \LGD \E_{\Pm} \left( \int_{S}^{T}  \lambda(s) \exp^{ - \int_t^s (r(u) + \lambda(u)) \dx u } \dx s \ | \ \F_t \right) \\
+	&= \1_{ \{ \default > t \} } \LGD \int_{S}^{T} \E_{\Pm} \left( \lambda(u) \exp^{ - \int_t^s (r(u) + \lambda(s)) \dx u }  \ | \ \F_t \right) \dx s,
+\end{align}
+where we have assumed that the $\LGD$ is a constant.
+
+\subsection{The premium leg of a credit default swap}
+
+The premium leg of a CDS with a coupon rate $C$ has a value
+\begin{align}
+\Premium(t, C) = &\1_{ \{ \default > t \} } \E_{\Pm} \left( \DF(t,\default) C^{h(\default)} \1_{ \{ S < \default < T \} } \ | \ \G_t \right) \\
+	&+ \1_{ \{ \default > t \} } \sum_{i=1}^n \E_{\Pm} \left( \DF(t,t_i) C_i \1_{ \{ \default > t_i \} } \ | \ \G_t \right) ,
+\end{align}
+where $C_i = C \dayc (t_{i-1}, t_i)$, $t_{h(\default)}$ is the last coupon date before the default (if it occurs) and $C^{h(\default)} = C \dayc (t_{h(\default)}, \default) \approx C(\default - t_{h(\default)})$. We have also re-indexed the coupon dates so that $t_0 \leq t \leq t_1$.
+
+Now 
+	\begin{align}
+	 	C_i(t,T) &= \E_{\Pm} \left( \DF(t,t_i) \1_{ \{ \default > t_i \} } \ | \ \G_t \right) \\
+	 	&= \1_{ \{ \default > t_i \} } \exp^{ \int_0^t \lambda(s) \dx s } \E_{\Pm} \left( \DF(t,t_i) \1_{ \{ \default > t_i \} } \ | \ \F_t \right) \\
+	 	&= \1_{ \{ \default > t_i \} } \exp^{ \int_0^t \lambda(s) \dx s } \E_{\Pm} \left( \exp^{ \int_t^{t_i} r(s) \dx s } \exp^{ \int_0^{t_i} \lambda(s) \dx s } \ | \ \F_t \right) \\
+	 	&= \1_{ \{ \default > t_i \} } \E_{\Pm} \left( \exp^{ \int_t^{t_i} (r(s) - \lambda(s)) \dx s } \ | \ \F_t \right)
+	\end{align}
+and, by recycling the earlier calculations, we get that
+	\begin{align}
+C^{h(\default)}(t,T) &= \E_{\Pm} \left( (\default - t_{h(\default)}) \DF(t,\default) \1_{ \{ S < \default < T \} } \ | \ \G_t \right) \\
+	&= \1_{ \{ \default > t \} } \exp^{ \int_0^t \lambda(s) \dx s } E
+\end{align}
+where the expectation
+	\begin{align}
+		E &= \E_{\Pm} \left( (\default - t_{h(\default)}) \DF(t,\default) \1_{ \{ S < \default < T \} } \ | \ \F_t \right) \\
+		&= \E_{\Pm} \left( \int_t^{\infty} (s - t_{h(s)}) \DF(t,s)  \1_{ \{ S < s < T \} } \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_t \right)	\\	
+		&= \E_{\Pm} \left( \E_{\Pm} \left( \int_S^T (s - t_{h(s)}) \DF(t,\default) \1_{ \{ s \leq \default < s + \dx s \} } \ | \ \F_T \right)  \ | \ \F_t \right) \\
+		&= \E_{\Pm} \left( \int_S^T (s - t_{h(s)}) \DF(t,s) \Pm( s \leq \default < s + \dx s \ | \ \F_T )  \ | \ \F_t \right) \\
+		&= \E_{\Pm} \left( \int_S^T (s - t_{h(s)}) \DF(t,s) \e^{ -\int_0^s \lambda(u) \dx u } \lambda(s) \ \dx s  \ | \ \F_t \right) \\
+		&= \int_S^T \E_{\Pm} \left(  (s - t_{h(s)}) \DF(t,s) \e^{ -\int_0^s \lambda(u) \dx u } \lambda(s)  \ | \ \F_t \right) \dx s .
+	\end{align}
+Hence 
+	\begin{align}
+A &= C C^{h(\default)}(t,T) \\
+&= \1_{ \{ \default > t \} } C \int_S^T \E_{\Pm} \left(  (s - t_{h(s)}) \DF(t,s) \e^{ -\int_t^s \lambda(u) \dx u } \lambda(s)  \ | \ \F_t \right) \dx s	.	
+	\end{align}
+Thus
+\begin{align}
+\Premium(t, C) &= \1_{ \{ \default > t \} } C \left( C^{s(\default)}(t,T) + \sum_{i=1}^n \dayc (t_{i-1}, t_i) C_i(t,T) \right) \\
+	&= C \left( \sum_{i=1}^n \dayc (t_{i-1}, t_i) \DBond_0(t,t_i) \right) + A ,
+\end{align}
+where $\DBond_0$ is the price of zero coupon bond with no recovery and $A$ is term representing the accrued coupon before the default.
+
+As we saw here, the most complicated part in the pricing of the premium leg of a CDS is the accrued coupon payment before the default. If we wish to simplify the model, then the accrual payment could be dropped or we could assume that premium is paid continuously. Both will result in biased priced, but this might be acceptable. If the accrued coupon payment is dropped, then the premium leg is just a portfolio of defaultable zero-coupon bonds with no recovery.
+
+If the accrued coupon payment term has to simplified, it could be assumed that default happens in the middle of the coupon period or that the coupon is paid continuously during the accrual period.
+
+\subsubsection{Premium leg of a CDS with continuous premium}
+
+We may also suppose that premium leg pays a continuous premium $c$. If $\dx t > 0$ is small, then premium leg pays from $t$ to $\dx t$ the amount of $c \dx t$ assuming that the credit event does not occur. By using the old tricks, we may value this default intensity as
+	\begin{align}
+		&\E_{\Pm} \left( c \e^{ - \int_t^{t+\dx t} r(s) \dx s} \dx t \1_{ \{ \default > t + \dx t	  \} } \ | \ \G_t \right) \\
+		= &\1_{ \{ \default  > t \} } \E_{\Pm} \left( c \e^{ - \int_t^{t+\dx t} (r(s) + \lambda(s)) \dx s} \dx t \ | \ \F_t \right) .
+	\end{align}
+By taking the limit of this process we have that
+	\begin{align}
+		\Premium(t, c) &= c \int_t^T \1_{ \{ \default  > u \} } \E_{\Pm} \left(  \e^{ - \int_t^{u} (r(s) + \lambda(s)) \dx s} \ | \ \F_t \right) \dx u \\
+		&= c \int_t^T \DBond_0(t,s) \dx s ,
+	\end{align}
+where $\DBond_0(t,u)$ is the price of a defaultable $u$-bond with no recovery at the time $t$.
+
+
+\section{The assumption that the default is independent from interest rates}
+
+All the pricing formulas had the term
+	\begin{align}
+		\E_{\Pm} \left( \exp^{ - \int_t^T (r(s) + \lambda(s)) \dx s } \ | \ \F_t \right) .
+	\end{align}
+If the default is independent of the interest rates under the risk neutral measure, then we may write
+	\begin{align}
+		\E_{\Pm} \left( \exp^{ - \int_t^T (r(s) + \lambda(s)) \dx s } \ | \ \F_t \right) &= \Bond(t,T) \Gamma(t,T), 
+	\end{align}
+where
+	\begin{align}
+		\Gamma(t,T) &= \E_{\Pm} \left( \exp^{ - \int_t^T \lambda(s) \dx s } \ | \ \F_t \right)
+	\end{align}
+Hence
+	\begin{align}
+		\DBond_0(t,T) &= \1_{ \{\default > t \} } \Bond(t,T) \Gamma(t,T) \\
+		\DBond_M(t,T) &= \1_{ \{\default > t \} } \Bond(t,T) \left( \Gamma(t,T) \LGD + \Rec \right) 
+	\end{align}
+for bonds with zero recovery or partial recovery at the maturity. As now
+  \begin{align}
+		Q(t,T) &= \1_{ \{\default > t \} } \int_{t}^{T} \E_{\Pm} \left( \lambda(s) \e^{ - \int_t^s (r(u) + \lambda(u)) \dx u } \ | \ \F_t \right) \dx s \\
+		&= \1_{ \{\default > t \} } \int_{t}^{T} \Bond(t,s) \E_{\Pm} \left( \lambda(s) \e^{ - \int_t^s \lambda(u) \dx u } \ | \ \F_t \right) \dx s \\
+		&= \1_{ \{\default > t \} } \int_{t}^{T} \Bond(t,s) \E_{\Pm} \left( - \frac{\partial}{\partial s} \e^{ - \int_t^s \lambda(u) \dx u } \ | \ \F_t \right) \dx s ,
+	\end{align}
+we have that
+  \begin{align}
+	\DBond_D(t,T) = \DBond_0 (t,T) + \1_{ \{\default > t \} } \Rec \int_{t}^{T} \Bond(t,s) \E_{\Pm} \left( - \frac{\partial}{\partial s} \e^{ - \int_t^s \lambda(u) \dx u } \ | \ \F_t \right) \dx s
+	\end{align}
+	
+\section{$A(M,N)$ model for credit risk}
+
+We assume that there are $N$ state-variables driving short-rate and intensity processes under the risk-neutral measures. Of these, $M$ follow square-root process and $N-M$ are gaussian. We follow the presentation in \textcite[pp. 457--476]{nawalkabeliaevasoto2007dynamic}.
+
+More precisely, the correlated gaussian process are
+\begin{align}
+\dx Y_i(t) &= - k_i Y_i(t) \dx t + \nu_i \dx W_i (t),
+\end{align}
+where $W_i$ is a Wiener process and 
+\begin{align}
+\dx W_i (t) \dx W_j (t) &= \rho_{ij} \dx t    
+\end{align}
+for all $i,j = 1,2, \ldots, N-M$. Here $-1 < \rho_{ij} = \rho_{ji} < 1$ and $\rho_{ii} = 1$. The $M$ square-root processes are
+\begin{align}
+\dx X_m(t) = \alpha_m ( \theta_m - X_m(t) ) \dx t + \sigma_m \sqrt{ X_m(t) } \dx Z_m (t)
+\end{align}
+where $Z_m$ are independent Wiener process and
+\begin{align}
+\dx W_i (t) \dx Z_m (t) &= 0    
+\end{align}
+for all $i = 1,2, \ldots, N-M$ and $m = 1,2, \ldots, M$. The short-rate is defined by
+\begin{align}
+\label{riskfree_process}
+r(t) = \delta_r + \sum_{m=1}^{M} a_mX_m(t) + \sum_{i=1}^{N-M} c_iY_i(t),
+\end{align}
+and the default intensity by
+\begin{align}
+\label{spreadprocess}
+\lambda(t) = \delta_{\lambda} + \sum_{m=1}^{M} b_mX_m(t) + \sum_{i=1}^{N-M} d_iY_i(t),
+\end{align}
+where $\delta_r, \delta_{\lambda}$ are constants and $a_m, c_m$ for $m=1,2, \ldots, M$ and $c_i, d_i$ for $i=1,2, \ldots, N-M$ for non-negative constants.
+
+As shown earlier in Equation \ref{}, the price of a defaultable $T$-bond with recovery of a face value is given by
+	\begin{align}
+		\DBond(t,T) = \DBond_0(t,T) +\Rec \int_t^T \E_{\Pm} \left( \lambda(u) \e^{ - \int_t^u (r(s) + \lambda(s)) \dx s } \ | \ \F_t \right) \dx u ,
+	\end{align}
+where
+	\begin{align}
+		\DBond_0(t,T) = \E_{\Pm} \left( \e^{ - \int_t^T (r(s) + \lambda(s)) \dx s } \ | \ \F_t \right)
+	\end{align}
+is the price of a defaultable bond with no recovery.
+
+We denote
+	\begin{align}
+		G(t,T) &= \E_{\Pm} \left( \lambda(T) \e^{ - \int_t^T (r(s) + \lambda(s)) \dx s } \ | \ \F_t \right) \\
+		&= \frac{\partial}{\partial \phi} \left( \eta(t,T,\phi) \right)_{\phi=0} ,
+	\end{align}
+where
+	\begin{align}
+		\eta(t,T,\phi) &= \E_{\Pm} \left( \e^{ - \int_t^T (r(s) + \lambda(s)) \dx s } \e^{\phi \lambda(T)} \ | \ \F_t \right)
+	\end{align}
+The solution to this expectation is given by (under certain assumptions)
+	\begin{align}
+		\eta(t,T,\phi) = \e^{ A^{\dagger}(\tau) - \sum\limits_{m=1}^M(a_m+b_m)B_m^{\dagger}(\tau)X_m(t) - \sum\limits_{i=1}^{N-M} (c_i + d_i) C_i^{\dagger}(\tau) Y_i(t) - H^{\dagger}(t,T) },
+	\end{align}
+where $\tau = T-t$ and
+\begin{align}
+H^{\dagger}(t,T) &= \int_t^T (\delta_r + \delta_{\lambda}) \dx x = (\delta_r + \delta_{\lambda}) \tau, \\
+\beta_{1m} &= \sqrt{\alpha_m^2 + 2 (a_m+b_m) \sigma_m^2} , \\
+\beta_{2m} &= \frac{-\alpha_m+\beta_{1m}}{2} , \\
+\beta_{3m} &= \frac{-\alpha_m-\beta_{1m}}{2} , \\
+\beta_{4m} &= \frac{-\alpha_m - \beta_{1m} + \phi b_m \sigma_m^2}{-\alpha_m + \beta_{1m} + \phi b_m \sigma_m^2} , \\
+B_m^{\dagger}(\tau) &= \frac{ 2 }{ (a_m + b_m) \sigma_m^2 } \left( \frac{ \beta_{2m} \beta_{4m} \e^{\beta_{1m} \tau} - \beta_{3m} }{ \beta_{4m} \e^{\beta_{1m} \tau} - 1 } \right), \\
+A_X^{\dagger}(\tau) &= \sum_{m=1}^M \frac{\alpha_m \theta_m}{\sigma_m^2} \left( \beta_{3m} \tau + \log \left( \frac{ 1-\beta_{4m}\e^{ \beta_{1m} \tau }  }{1-\beta_{4m}} \right) \right) \\
+q_i &= 1 + \phi k_i \frac{d_i}{c_i + d_i} \\
+C_i^{\dagger}(\tau) &= \frac{1 - q_i\e^{-k_i \tau}}{k_i}, \\
+D^{\dagger} (\tau) &= \tau - q_i C_i^{\dagger}(\tau) - q_j C_j^{\dagger}(\tau) + q_iq_j \frac{ 1 - \e^{ - (k_i + k_j) \tau} }{k_i + k_j} \\
+A_Y^{\dagger}(\tau) &= \sum_{i=1}^{N-M} \sum_{j=1}^{N-M} 
+	\frac{ (c_i+d_i)(c_j+d_j) \nu_i \nu_j \rho_{ij} }{ k_i k_j }
+	 D^{\dagger} (\tau) \\
+A^{\dagger}(\tau) &= \phi \delta_{\lambda} + \frac{1}{2}A_Y^{\dagger}(\tau) - 2 A_X^{\dagger}(\tau)
+\end{align}
+for all $i = 1,2, \ldots, N-M$ and $m=1,2, \ldots, M$. Now $G(t,T)$ can be approximated as the numerical derivative of $\eta(t,T,\phi)$ at $0$.
+
+Under this model
+	\begin{align}
+		\DBond_0(t,T) = \e^{ A^{\dagger}(\tau) - \sum\limits_{m=1}^M(a_m+b_m)B_m^{\dagger}(\tau)X_m(t) - \sum\limits_{i=1}^{N-M} (c_i + d_i) C_i^{\dagger}(\tau) Y_i(t) - H^{\dagger}(t,T) }
+	\end{align},
+where $\tau = T-t$ and
+\begin{align}
+H(t,T) &= \int_t^T \left( \delta_r + \delta_{\lambda} \right) \dx x = \left( \delta_r + \delta_{\lambda} \right) \tau, \\
+\beta_m &= \sqrt{ \alpha_m^2 + 2(a_c+b_m)\sigma_m^2 }, \\
+B_m(\tau) &= \frac{2 (\e^{\beta_m \tau} - 1) }{ \beta_m + (\e^{\beta_m \tau} - 1) + 2 \beta_m }, \\
+A_X (\tau) &=  \sum_{m=1}^M \frac{\alpha_m \theta_m}{\sigma_m^2} \log 
+	\frac{ 2 \beta_m \e^{ \frac{(\beta_m + \alpha_m)\tau}{2} }  }{ (\beta_m + \alpha_m) + (\e^{\beta_m \tau} - 1) + 2 \beta_m }, \\
+C_i (\tau) &= \frac{1 - \e^{ - k_i \tau } }{ k_i }, \\
+D(\tau) &= \tau - C_i(\tau) - C_j(\tau) + \frac{ 1 - \e^{ -(k_i+k_j)\tau } }{k_i + k_j}, \\
+A_Y (\tau) &= \sum_{i=1}^{N_M} \sum_{j=1}^{N_M} \frac{ (c_i+d_i)(c_j+d_j)\nu_i \nu_j \rho_{ij} }{k_i k_j} D(\tau), \\
+A(\tau) &= 2 A_X (\tau) + \frac{1}{2} A_Y (\tau) .
+\end{align}
+The risk-free bond $\Bond(t,T)$ may be priced using the equation above, but with $b_m = 0$ and $d_i = 0$ for all $m=1,2, \ldots M$ and $i=1,2, \ldots, N-M$. By differentiating of $Y_i^*(t) = c_i Y_i(t)$, we get that
+	\begin{align}
+		\dx Y_i^*(t) &= c_i \dx Y_i(t) \\
+			&= -k_i c_i Y_i(t) + c_i \nu_i \dx W_i(t) \\
+			&= -k_i Y_i^*(t) + \left( c_i \nu_i \right) \dx W_i(t) .
+	\end{align}
+This implies that we may use the formulas in Subsection \ref{subsec-AMN-interestrate} by replacing $\nu_i$ with $c_i \nu_i$ and $Y_i(t)$ with $c_i Y_i(t)$. Similarly differentiating $X_m^* = a_m X_m(t)$ yields
+	\begin{align}
+		\dx X_m^*(t) &= a_m \dx X_m(t) \\
+			&= \alpha_m( a_m \theta_m - a_m X_m(t) ) \dx t + \sigma_m \sqrt{a_m} \sqrt{a_mX_m(t)} \dx Z_m(t) \\
+			&= \alpha_m( (a_m \theta_m) - X_m^*(t) ) \dx t + (\sigma_m \sqrt{a_m}) \sqrt{X_m^*(t)} \dx Z_m(t)
+\end{align}
+end we see that $\theta_m$ needs to be replaced to $a_m \theta_m$, $\sigma_m$ to $\sigma_m \sqrt{a_m}$ and $X_m(t)$ to $a_m X_m(t)$. Thus we may also use the machinery of Chapter \ref{chap:fourier} to price derivatives that only depends on the risk-free rate with similar changes.
+
+Since common state-variables may drive both risk-free rate and the default intensity, they may be correlated under the models of this family. As some of the state-variables may not be shared, these models have potentially a very rich structure. 
+
+We adopt the following notation. The model $D((a_X,b_X,c_X),(a_Y,b_Y,c_Y))$ is the model defined in the Equations \ref{riskfree_process} and \ref{spreadprocess} with the following properties
+	\begin{itemize}
+		\item $a_X$ is the number of square-root processes that are present in both Equations \ref{riskfree_process} and \ref{spreadprocess},
+		\item $b_X$ is the number of square-root processes that are unique to the risk-free rate process,
+		\item $c_X$ is the number of square-root processes that are unique to the spread process,
+		\item $a_Y$ is the number of gaussian processes that are present in both Equations \ref{riskfree_process} and \ref{spreadprocess},
+		\item $b_Y$ is the number of gaussian processes that are unique to the risk-free rate process and
+		\item $c_Y$ is the number of gaussian processes that are unique to the spread process.
+	\end{itemize}
+Thus it is $A(M,N)$ model with
+	\begin{align}
+		M &= a_X + b_X + c_X \\
+		N - M &= a_Y + b_Y + c_Y .
+	\end{align}

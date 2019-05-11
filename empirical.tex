@@ -1,0 +1,287 @@
+\chapter{Empirical work}
+\label{chap:empirical}
+
+\section{Research environment}
+
+The computing was done on home PC with i5 3.2 GHz CPU. The code was written in Python 3.6. The main workhorse was Scipy, which is a "Python-based ecosystem of open-source software for mathematics, science, and engineering (\cite{Scipy})". No serious effort was done to write computationally efficient code. The resulting algorithms are very sloppy, and due to hurry, are in dire need of some refactoring. The code did not try to utilize multi-cores, so most of the available computing power was not utilized.
+
+By using the available data, the prices of several theoretical zero coupon bonds were calculated. The maturities of these instruments were taken directly from the retrieved data, so no bootstrapping or interpolation was done by the author. 
+
+The model parameters were chosen so that the sum of squared relative pricing errors were to be minimized. This minimization was done in two stages. First, an initial guess for solution was searched by using a home-made variant of differential evolution. This value was given as the initial value to the L-BFGS-B algorithm (see \textcite{byrd1995limited} and \textcite{zhu1997algorithm}) which has been implemented in SciPy. L-BFGS-B algorithm is a quasi-newtonian method so it uses an approximation of Jacobian matrix to guide iteration toward a local minimum point. It is well suited for optimization problems with large number of parameters but the performance depends very much on the quality of the initial guess as it will not do up hill climbing. However, since the curse of the dimensionality and the rather small population sizes (512 or 1024 for the initial populations), there is no guarantee that initial guesses were close to global minima.
+
+All algorithms either uses authors own code or Scipy's standard libraries with one exception. The symmetry of the parameterized correlation matrix can be guaranteed trivially. But it has also be also positively semi-definite (see, for example, \textcite{higham2002computing}). In order to to guarantee that the estimated matrix will actually be a valid correlation matrix, the code utilizes Python code by \textcite{crouchernearestcorrmatrix} which is an implementation of MATLAB code by \textcite{highamearestcorrmatrix}.
+
+The code, along with Jupyter notebooks used in data analysis, can by found at \url{https://github.com/mrytty/gradu-public} (\cite{rytty}).
+
+\section{Stationary calibration}
+
+\subsubsection{Data}
+
+The data that was used in stationary calibration part was gathered mainly from Eikon Datastream. It consists of 5 data sets:
+\begin{itemize}
+	\item Interest rates derived from overnight indexed swap curve (OIS).
+	\item Interest rates derived from swap curve.
+	\item Yields derived from prices of Germany Government bonds.
+	\item Yields derived from prices of France Government bonds.
+	\item Yields derived from prices of Italy Government bonds.
+\end{itemize}
+The date for all these data sets is $7/26/2018$. Maturities for non-government rates ranged from overnight rate to 30-year rate and maturities for government rates ranged from 6-month rate to 30-year rate. Graphical presentation of implied interest rates, forward rates and zero-coupon bond prices can be seen in Figures \ref{fig:zeros} and \ref{fig:rateswithfwd}. Interpolation of the missing rates for graphical purposes is done using either by linear interpolation, quadratic interpolation or cubic spline interpolation. 
+
+As we can see in Figure \ref{fig:ratesbymethods}, Italy is clear outlier. It has all positive rates, it's rates are much higher and the overall curve has a traditional" shape. Germany and France has pretty similar curves, but the spread between widens over time. Swap curve has an anomaly, for maturities less than one month, it has an odd hook which causes it be smaller than OIS curve. This should happen in the current paradigm, especially for the shortest maturities. There could have been an market anomaly or different curves might have distinct bootstrapping algorithms.
+
+It should be noted that for IOS and swap curves, almost half of the data points are with a maturity less than a year. Therefore the calibration tends to weights the fitting in this section heavily.
+
+\subsection{Models without credit risk}
+
+Calibration was done for 12 models:
+	\begin{itemize}
+		\item 1-factor: $A(0,1)+$, $A(1,1)+$
+		\item 2-factor: $A(0,2)+$, $A(1,2)+$, $A(2,2)+$
+		\item 3-factor: $A(0,3)+$, $A(1,3)+$, $A(2,3)+$, $A(3,3)+$
+		\item 4-factor: $A(2,4)+$, $A(3,4)+$
+		\item 5-factor: $A(4,5)+$
+	\end{itemize}
+These are all of the type $A(M,N)+$. A meaningful calibration of free parameters in $A(M,N)++$ -models requires calibration to cap or swaption prices. Hence they need repeated calculations of bond options prices. For majority of multi-factor models we have no explicit analytical pricing formula\footnote{Single factor models and $G2++$ are exceptions as we have seen.}. Since the Fourier transformation method requires the numerical integration, which is computationally costly without FFT, calibrations of $A(M,N)++$ -models was not attempted. For this and due to lack of data, no caps or swaptions data were used in model calibration for simple $+$-models. As the analytical option prices for zero coupon bonds exists for $A(0,1)$, $A(1,1)$ and $A(0,2)$ models, calibration for respective $++$-models could have been done using these formulas.
+
+The curse of dimensionality refers to the mathematical fact that the sparseness of the optimization space grows exponentially when the dimension of the problem increases. For example, $n$-dimensional hypercube has $2^n$ vertexes. But even if we double the number of sample points with each dimension, the average Euclidean distance between the points keeps growing as the longest diagonal of a $n$-dimensional hypercube is $\sqrt{n}$. 
+
+These affine models have a large number of free parameters. A square root process has $4$ parameters, a Gaussian process has 3 free parameters and $n$ Gaussian processes need $\frac{n(n-1)}{2}$ more parameters for correlations. Also the combined model need one additional parameter for the shift. As we can see from the Table \ref{model_dimensions}, the parameter spaces for the multi-factor models are rather large. As $1024 = 2^{10}$, we see that the initial population used in the differential evolution is much smaller than the number of vertices in corresponding hypercube for $3$-factor models. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lr}
+		Model & Parameters \\
+		\toprule
+		$A(0,1)$+ & 4 \\
+		$A(1,1)$+ & 5 \\
+		$A(0,2)$+ & 8 \\
+		$A(1,2)$+ & 8 \\
+		$A(2,2)$+ & 9 \\
+		$A(0,3)$+ & 13 \\
+		$A(1,3)$+ & 12 \\
+		$A(2,3)$+ & 12 \\
+		$A(3,3)$+ & 13 \\
+		$A(3,4)$+ & 16 \\
+		$A(4,5)$+ & 20 \\
+		\bottomrule
+	\end{tabular}
+	
+	\caption{Number of parameters per model}
+	\label{model_dimensions}
+	
+\end{table}
+
+We note that IOS and swap data set has 13 points, France has 8 and Germany and Italy has only 7 data points. For many of these calibrations this means that there are fewer data points than parameters. However, this is not as serious problem as underdetermined fitting in linear regressions. The reason is that not every zero curve can be replicated in $A(M,N)+$-models. If the model can't fit a curve with certain number of points, then adding an additional point will not make the fit any better. On the contrary, adding an additional interpolated point will probably make the fit of original points worse\footnote{Since we are dealing with stochastic algorithm, it could also make the fit better.} Theoretically the ill-poised calibration might be a problem but by the results we get, it does not seem to be so.
+
+A differential evolution (DE) algorithm with starting population of $1024$ and minimum population of $32$ runnning for $1000$ generations is guaranteed to evaluate only about $33 000$ samples. In practice there seemed to be at least $40 000$ pricing function calls which is still insignificant sample from the optimization space for majority of these models. As this kind of optimization landscape probably has lots of local minimums, therefore it is quite likely that the DE does not explore optimization space enough with these computational resources. This could be solved by using larger populations or by using algorithm that tend to explore the space more efficiently. A potential candidate could have been a variant of particle swarm optimization algorithms that were introduced by \textcite{eberhart1995particle}. In practice, these kind of problems are often solved with another stochastic optimization method called simulated annealing algorithms (SA). One major difference in SA and DE algorithms is that in SA maintains only one candidate solution which is varied. SA is thus better in problems, where the initial guess will be made reasonable well.	
+
+There is also the problem of symmetries for certain models. For example, the models $A(0,2)+$ and $G2++$ are symmetric regarding the Gaussian factors. So if the optimization function has at least one global minima, then it has also another global minima that is achieved by flipping the Gaussian factors. In theory, this could conversely affect convergence as DE algorithm will have sub-populations converging to different optimum values.  
+
+\subsubsection{Results}
+
+All following errors are expressed as relative pricing differences in percentage points.
+
+The best parameter sets per model and curve are presented in Tables \ref{ois_table}, \ref{swap_table}, \ref{germany_table}, \ref{france_table} and \ref{italy_table}. There are lots of cases that the parameter is at the border of the optimization space. For example, correlation coefficients  were contained to a line segment $[-0.99. 0.99]$. Several models with correlations show $\rho$ close to $-1$ or $1$. This implies that the extra factor is not actually present but those highly correlated factors change in unison. Other example of border cases are diffusion parameters that had lower bounds of $0.001$.
+
+The resulting errors by maturity are shown in Figure \ref{fig:zeroserrors}. The charts on left show relative pricing errors and the charts on right show absolute value of relative error. We see that these models calibrations tend to give very similar results with some exceptions. Almost every model and every curve tend to underprice $10$-year maturities. OIS and swap curves are overpriced at $20$-year maturities underpriced at $30$-year maturities. For German and French curve $20$-year maturity is underpriced but for Italy it is overpriced. Overall the fitting quality is poor, because there are plenty of errors with magnitudes over half a percent. Italian curve seems to be easier curve to fit than the others and the model $A(3,4)+$ seems to produce significantly better fit than others for OIS and swap curves. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/zeros_errors}
+	\caption{Calibration errors for models without credit risk}
+	\label{fig:zeroserrors}
+\end{figure}
+
+Figures \ref{fig:A01}--\ref{fig:A45} show how the models struggle in rate perspective to describe the early maturities. However, as the small time-factor lessens errors in zero-coupon prices, these errors are not significant in price perspective.
+
+Overall, the errors are highly correlated as seen in the Figure \ref{fig:creditriskless_error_corr}. Especially multi-factor models have high error correlations and tend to produce similar results.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/corr_rf_all.png}
+	\caption{Error correlations for models without credit risk}
+	\label{fig:creditriskless_error_corr}
+\end{figure}
+ 
+In order to determine the significance of randomness in algorithm, a second calibration with different random number generator seeds was done to selected models. For single factor models, the calibration errors had very little variation. This is presented in Figure \ref{fig:comp_one_factor}. The figures \ref{fig:comp_two_factor} and \ref{fig:comp_three_factor} shows comparison for multi-factor models. For these models, there are significantly more variation. Significantly the alternative calibration of $A(3,3)+$ fits swap rates well but does poorly on OIS rates. The comparison tables for different calibrations are shown in Appendix \ref{defaultless_parameter_comparision}. Single factor model $A(0,1)+$ shows almost identical parameters between curves but the model $A(1,1)+$ has some variation. For multi-factor models the resulting parameters have significant differences even when accounting for symmetries.
+
+The resulting mean absolute errors are shown in Figure \ref{fig:riskfree_model_errors}. The term-structure of Italy looks to be straight-forward as every calibration tends to be fit it quite well. One reason for the good fit of Italy might be the fact that is the only curve that resembles the pre-crisis curves. Some models seem to have a excellent performance with OIS and Swap structures while all the models seem to struggle with France.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/riskfree_model_errors}
+	\caption{Mean absolute calibration error for models without credit risk}
+	\label{fig:riskfree_model_errors}
+\end{figure} 
+
+Again we see that there are no significant quality differences between single factor models. We also see that fitting quality seems to increase with the number of factors in the model, as is expected. The models with correlating Gaussian factors ($A(0,2)+, A(0,3)+, A(1,3)+, A(2,4)+$) do not seem perform well. In this sample, the models $A(3,3)+$ and $A(3,4)+$ tend to have the best performance, especially for OIS and Swap curves.
+
+Due to several sources of uncertainty, it is hard to draw any definitive conclusions from these results. First, no instruments whose prices depend heavily on rate volatility were used. Secondly, we have demonstrated that the given computational resources, the used calibration algorithm tends not perform consistently for multi-factor models. We note that Italy seem to be an easier curve to fit. One reason for this might be the fact that is the only curve that resembles the curves of the pre-crisis curves with all positive rates.
+
+For single-factor models, the fitting quality is not good with the exception of Italy. For multi-factor models, the used calibration methods have been flawed to be used consistently. We saw some acceptable calibrations, which then could not be reproduced with different random number generate set ups. Therefore some of these multi-factor models could be used as references in model risk management practices. But this would warrant more serious effort to set up a proper optimization methodology.
+
+\subsubsection{Cap pricing comparison}
+
+In order to gauge the differences in implied volatility structure, we price three different caps using the calibrated OIS and swap models. For OIS models we used the $A(3,4)+$ as the reference model and for swap models it was $A(3,3)+$. The relative pricing errors are in Figures \ref{fig:cap_comparison_ois} and \ref{fig:cap_comparison_ois}.
+
+As we can see, the prices are widely different. In order to price caps, calibration needs to include instruments whose prices depend on the volatilities or the results will be garbage.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/cap_comparison_ois}
+	\caption{Relative pricing errors of sample caps compared to prices given by OIS $A(3,4)+$-model}
+	\label{fig:cap_comparison_ois}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/cap_comparison_swap}
+	\caption{Relative pricing errors of sample caps compared to prices given by swap
+		 $A(3,3)+$-model}
+	\label{fig:cap_comparison_swap}
+\end{figure}
+
+\subsection{Models with credit risk}
+
+For default risk model, we considered four set-ups. They were
+	\begin{itemize}
+		\item OIS as a risk-free rate and swap rate as a risky rate\footnote{This is interesting case since the spread changes signs.},
+		\item OIS as a risk-free rate and the rate for Italy as a risky rate,
+		\item German rate as a risk-free rate and the rate for France as a risky rate and
+		\item German rate as a risk-free rate and the rate for Italy as a risky rate,
+	\end{itemize}
+Here we do not consider the yield for German Republic is a literal risk-free rate but rather we want to see how we can model the spread between it and the riskier rate. This will lead to bias but the effect is probably negligible.
+
+Six affine models were considered and only $2$-factor models for calibrated because of the performance considerations. The models were
+	\begin{itemize}
+	\item $D((0, 0, 0), (0,1,1))$, 
+	\item $D((0, 0, 0), (1,1,0))$,
+	\item $D((0, 0, 1), (0,1,0))$,
+	\item $D((0, 0, 1), (1,0,0))$,
+	\item $D((1, 0, 0), (0,1,0))$ and 
+	\item $D((1, 0, 0), (1,0,0))$.
+\end{itemize}
+
+Since both the risk-free rate and the risky were calibrated at the same time, the calibration function was heavier to calculate as it has twice as many instrument prices to. Thus we used a starting population of $512$ and a mixumum of $500$ generations.
+
+In the calibration, LGD was not set, it was a free parameter to be optimized. Since the calculation for LGD residual demanded numerical integration which is resource heavy. In order to speed DE algorithm, LGD was set to 1 for DE search and it was not computed. Only the L-BFGS-B optimization had LGD as a free parameter.
+
+The model $D((0, 0, 1), (0,1,0))$ is the only model where there are no interaction between the spread and interest rate process. It is also one of the best fitting models. However, due to deficiencies of the calibration algorithm, this does not necessary imply that spread and interest rate has very little interaction. It is very likely that the capturing both rate curve and differently shaped spread curve with only two-factors is impossible.
+
+\subsubsection{Results}
+
+The mean absolute errors are shown in Table \ref{fig:default_model_errors}. For unknown reasons, the optimizer got stuck when running $D((1, 0, 0), (0,1,0))$ model for the pair of Germany and France, so that model has only 3 calibrations. The calibrated parameters can be found in Appendix \ref{default parameter_comparision}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/default_model_errors}
+	\caption{Mean absolute calibration error for models with default risk}
+	\label{fig:default_model_errors}
+\end{figure}
+
+\added[remark={A new paragraph and figures}]{Figures} \ref{fig:credit_relative_errors} and \ref{fig:credit_absolute_errors} show relative calibration errors. Since the spread between the German and French curves is minimal, it is not surprising that there are no significant differences between model performance in that case. Other cases show more variation between the models. Even for the best models, the worst relative pricing errors are close to one percent, which is unacceptable inaccuracy for practical purposes. It seems that two factors are not enough to capture both the interest rate and spread curves in this environment.
+
+As we can see, the models do not perform well. The mean relative errors are around $0.5 \%$. The models $D((0,0,1), (0, 1, 0))$ and $D(1,0,0), (0, 1, 0))$ have the best fits. However, these calibrations include very high LGD parameters and few corner values. For purely credit spread modeling, the model $D((0,0,1),(1,0,0))$ does fairly well. 
+
+
+However, due to deficiencies of the optimization methodology , these results should not be taken seriously.
+
+\section{Dynamic Euribor calibration without credit risk}
+
+\subsubsection{Data}
+
+The data that was used in stationary calibration part was gathered from Eikon Datastream. It consisted of monthy Euribor rates from February 26, 2004 to January 26, 2019. The data had one week, two week, one month, three month, six month and one year rates. Thus it has $6*180=1080$ datapoints. The graphical presentation of the date can be found in Figures \ref{fig:euribor_rates} and \ref{fig:euribor_rates}. The correlation of between different maturities is very high but changes have more variation as can be seen in Figure \ref{fig:euribor_corr}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/euribor_rates}
+	\caption{Euribor rates from February 26, 2004 to January 26, 2019}
+	\label{fig:euribor_rates}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/euribor_zeros}
+	\caption{Implied Euribor discount factors from February 26, 2004 to January 26, 2019}
+	\label{fig:euribor_zeros}
+\end{figure} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/euribor_corr}
+	\caption{Correlation of Euribor rate changes from February 26, 2004 to January 26, 2019}
+	\label{fig:euribor_corr}
+\end{figure} 
+
+The data is very varied as it has the rising rates of pre-crisis of 2007-08, the crisis period with sharply falling rates and the following tapering toward negative rates during the quantitative easing. The different shapes of the curves can be observed in Figure \ref{fig:euribor_tasot}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{pic/euribor_tasot}
+	\caption{Euribor rate and discount curves}
+	\label{fig:euribor_tasot}
+\end{figure} 
+
+\subsubsection{Calibration}
+
+The calibration was done for 5 different models: $A(0,1)+$, $A(1,1)+$, $A(0,2)+$, $A(1,2)+$ and $A(2,2)+$. The model was first calibrated for the very first date using differential evolution but for the next date calibration was done just by used L-BFGS-B algorithm with the initial parameters value. The assumption behind the choice was that the subsequent curves should be similar and therefore the parameters should be locally stable. But since the L-BFGS-B algorithm may not escape local minimums could also cause unnecessary stability in parameters. Parameter time series is presented in Figure \ref{fig:euribor_parameters}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{pic/euribor_parameters}
+	\caption{Euribor rate and discount curves}
+	\label{fig:euribor_parameters}
+\end{figure}
+
+There is a curious observation conserning model$A(2,2)+$. The components of mean reversion speed $\alpha$ have high positive correlation but after the crisis the correlation is highly negative until after the 2011 the value stabilizes. This is also the the time when rates are getting very close to the zero so the stabilization is not surprising. This stabilization  also can be seen in other models too, most notable in $A(0,2)+$ model.
+
+The quality of the fitting was not very good. As we can see in Figure \ref{fig:euribor_abs_errs}, every tested model had did not perform well during the crisis. Although our calibration algorithm could theoretically prohibit changes in parameter movements, this seems not be the case. If we compare Figures \ref{fig:euribor_parameters} and \ref{fig:euribor_abs_errs}, we see that largest pricing errors occur during the times of volatility in parameter values. After 2013, all the models show very stable pricing errors and parameters. This is highly logical as then the rates are negative and discounting curve is very flat (for the maturities under a year). Errors by maturities are presented in Figures \ref{fig:euribor_errors_by_maturities}. The biggest errors occurs in 1, 3 and 6 month maturities.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{pic/euribor_abs_errs}
+	\caption{Time series of mean absolute relative errors in Euribor fitting.}
+	\label{fig:euribor_abs_errs}
+\end{figure}
+
+Overall, two-factor models had the best performance and $A(1,1)+$ was significantly the worst in performance. The correlation parameter of model $A(0,2)+$ hows that the factors are heavily correlated. First the parameters have near perfect negative correlation but when the short rates get close to zero, the correlation switched to nearly perfect positive correlation. Since the $A(0,2)+$-model has a definitive out-performance over the other Gaussian $A(0,1)+$-model, this high correlation does not seem to imply that only a one factor is sufficient.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{pic/euribor_error_matrix}
+	\caption{Errors in Euribor fitting by model and maturity.}
+	\label{fig:euribor_error_matrix}
+\end{figure}
+
+\begin{tabular}{lr}
+	\toprule
+	{} &  Mean absolute relative error (in percentages) \\
+	Model    &                 \\
+	\midrule
+	$A(0, 1)+$ &        0.002464 \\
+	$A(0, 2)+$ &        0.001577 \\
+	$A(1, 1)+$ &        0.003749 \\
+	$A(1, 2)+$ &        0.002225 \\
+	$A(2, 2)+$ &        0.001755 \\
+	\bottomrule
+\end{tabular}
+
+
+
+As seen in Figure \ref{fig:euribor_abs_errs}, time variability of error levels is high. In order to quantify thism the data was divided into four consecutive periods:
+	\begin{itemize}
+		\item Pre-crisis:  from February 26, 2004 to September 26, 2008
+		\item Surging rates during crisis: from September 26, 2008 to January 26, 2009
+		\item Post-crisis rising rates: from January 26, 2009 to July 26, 2011
+		\item Toward negative rates: from July 26, 2011 to January 26, 2019
+	\end{itemize}
+The actual dates were chosen so that they occur during certain local minimum or maximum rates. We can clearly notice how badly all the models handle shorter and middle range maturities during the when the rates dropped rapidly, but two-factor models seem to get the one -year rat evolution quite right even if it has the largest absolute moves. During rising regimes all the models have problem. When the rates are negative an curve is very flat, all the models seem to get work fairly well.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{pic/euribor_time_periods}
+	\caption{Errors in Euribor fitting by time period.}
+	\label{fig:euribor_time_periods}
+\end{figure}
+
+

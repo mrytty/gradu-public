@@ -1,0 +1,384 @@
+\chapter{Idealized rates and instruments}
+\label{chap:instuments}
+
+\added[comment={Added}]{In this chapter we review idealized versions of interest rates and derivatives of interest rates. By idealized, we mean that the instruments are simplied for analytical purposes. For example, there is no lag between trade and spot date or expiry and delivery date. Neither we do not use funding rate that is separate form the market rates. The treatment is standard and is based mainly on} \textcite[pp. 1--22]{brigo2007interest} unless otherwise noted.
+
+In the following, we assume that $0 < t < T$ are points of time and $\dayc(t,T) \in [ 0, \infty )$ is the day count convention between the points $t$ and $T$. We explicitly assume that $\dayc(t,T) \approx T-t$ when $t \approx T$.
+
+\section{Fundamental rates and instruments}
+
+\subsection{Short-rate, idealized bank account and stochastic discount factor}
+
+When making calculations with idealized bank account, it is customary to assume that the day count-convention $\dayc(t,T) = T-t$ as this will simplify the notation. An idealized bank account is an instrument with the value
+\begin{align}
+\Bank(t) = \exp \left( \int\limits_0^t r(s) \dx s \right)
+\end{align}
+where $r(t)$ is the short-rate rate. The short-rate $r(t)$ may be non-deterministic but we assume that it is smooth enough so that the integral can be defined in some useful sense. We note that $\Bank(0)=1$. If $\delta > 0$ is very small and $r(t)$ is a smooth function, then 
+\begin{align}
+\int\limits_t^{t+\delta} r(s) \dx s \approx r(t) \delta
+\end{align}
+and we see that the first-order expansion of exponential function yields
+\begin{align}
+\Bank(t+\delta) \approx \Bank(t) ( 1+r(t) \delta ) .
+\end{align}
+Thus the short-rate can be seen as continuous interest rate intensity. Short-rate is purely theoretical construction which can be used to price financial instruments. 
+
+Now we may define a stochastic discount factor $\DF(t,T)$ from time $t$ to $T$ as
+\begin{align}
+\DF(t,T) = \frac{\Bank(t)}{\Bank(T)} = \exp \left( - \int\limits_t^T r(s) \dx s \right) .
+\end{align}
+If $r(t)$ is a random variable, then $\Bank(t)$ and $\DF(t,T)$ are stochastic too.
+
+
+
+\subsection{Zero-coupon bond}
+
+A promise to pay one unit of currency at time $T$ is called a $T$-bond. We shall assume that there is no credit risk for these bonds. We further assume that the market is liquid and bond may be freely bought and sold at the same price, furthermore short selling is allowed without limits or extra fees. The price of this bond at time $t$ is denoted by $\Bond(t,T)$ and so $\Bond(t,T) > 0$ and $\Bond(T,T) = 1$.  
+
+As $\DF(0,t)$ is guaranteed to pay one unit of currency at the time $t$, we see that in this case $\DF(0,t) = \Bond(0,t)$. We note that if the short-rate $r(t)$ is deterministic, then
+\begin{align}
+\DF(0,t) = \frac{1}{\Bank(t)}
+\end{align}
+is deterministic too.  We see that if short-rate $r(t)$ is deterministic, then $\DF(t,T) = \Bond(t,T)$ for all $0 \leq t \leq T$. But this does not hold if $r(t)$ is truly stochastic.
+
+\subsection{Simple spot $\Rflt(t,T)$ and $k$-times compounded simple spot rate}
+
+The simple spot rate $\Rflt(t,T)$ is defined by
+	\begin{align}
+		\Rflt(t,T) = \frac{1 - \Bond(t,T)}{\dayc(t,T)\Bond(t,T)} ,
+	\end{align}
+which is equivalent to 
+	\begin{align}
+		\label{discountandrate}
+		1 + \dayc(t,T) \Rflt(t,T) = \frac{1}{\Bond(t,T)} .
+	\end{align}
+	
+For $k \geq 1$, the $k$-times compounded interest rate from $t$ to $T$ is
+\begin{align}
+\Rflt^k(t,T) = \frac{k}{\Bond(t,T)^{\frac{1}{k \dayc(t,T)}}} - k,
+\end{align}
+which is equivalent to 
+\begin{align}
+\Bond(t,T) \left( 1 + \frac{\Rflt^k(t,T)}{k} \right)^{k \dayc(t,T)} = 1 .
+\end{align}
+As
+\begin{align}
+(1 + \frac{x}{k})^k \longrightarrow \e^x
+\end{align}
+when $k \longrightarrow \infty$, then
+\begin{align}
+\left( 1 + \frac{L^k(t,T)}{k} \right)^{k\dayc(t,T)} \longrightarrow \e^{\dayc(t,T)r(t,T)} ,
+\end{align}
+where $\Rflt^k(t,T) \longrightarrow r(t,T)$ when $k \longrightarrow \infty$. 
+
+\subsection{Forward rate agreement}
+
+A forward rate agreement (FRA) is a contract that pays
+\begin{align}
+\dayc_K(t,T) K - \dayc(t,T) \Rflt(t,T)
+\end{align}
+at the time $T$. Here we assume that the contact is made at the present time $0$ and $0 < t < T$, but this assumption is made just to keep the notation simplier. Here $K$ is an interest rate that is fixed at time $0$, $\dayc_K$ is the day count convention for the this fixed rate and $\Rflt(t,T)$ is the spot rate from time $t$ to $T$ (which might not be know at the present). The price of a FRA at the time $s \leq t$ is denoted by $\FRA(s,t,T,K)$. Now
+\begin{align}
+\FRA(t,t,T,K) = \Bond(t,T) \left( \dayc_K(t,T) K - \dayc(t,T) \Rflt(t,T) \right) .
+\end{align}
+
+In order to price a FRA at different times, we consider a portfolio of one long $T$-bond and $x$ short $t$-bonds. The value of this portfolio at the present is $V(0) = \Bond(0,T) - x \Bond(0,t)$ and we note that the portfolio has zero value if
+\begin{align}
+\label{FRAzeroprice}
+x = \frac{\Bond(0,T)}{\Bond(0,t)}.
+\end{align}
+
+At the time $t$, the portfolio has value
+\begin{align}
+V(t) &= \Bond(t,T) - x \\
+&= \Bond(t,T) \left( 1 - \frac{x}{\Bond(t,T)} \right)
+\end{align}
+where $\Bond(t,T)$ is known and
+\begin{align}
+1 + \dayc(t,T) \Rflt(t,T) = \frac{1}{\Bond(t,T)} = y(t,T).
+\end{align}	
+We define $K^*(x) = x^{-1}$. Thus
+\begin{align}
+1 - \frac{x}{\Bond(t,T)} &= x \left( \frac{1}{x} - \frac{1}{\Bond(t,T)} \right) \\
+&= x \left( K^*(x) -  y(t,T)  \right) 
+\end{align}
+and this implies that
+\begin{align}
+\label{forwardpricelemmaquation}
+V(t) &= x \Bond(t,T) \left( K^*(x) - y(t,T) \right) .
+\end{align}
+Without arbitrage
+\begin{align}
+\label{forwardpricelemmaquation1}
+V(T) &= x \left( K^*(x) - y(t,T) \right) \\
+&= x \left( K^*(x) - 1 - \dayc(t,T) \Rflt(t,T) \right)
+\end{align}
+We note that at the time $0$, $K^*(x)$ is a known yield but $y(t,T)$ is an unknown yield if $\Bond(t,T)$ is not deterministic. Now if
+\begin{align}
+K &= \frac{1}{\dayc_K(t,T)} \left( K^*(x) - 1 \right) \\
+&= \frac{1}{\dayc_K(t,T)} \left( \frac{1}{x} - 1 \right)
+\end{align}
+the given portfolio can be used to replicate the cash flows of the FRA and
+\begin{align}
+x \FRA(s,t,T,K) = V(s) .
+\end{align}
+If
+\begin{align}
+x &= \frac{\Bond(0,T)}{p(0,t)}
+\end{align}
+then $V(0) = 0$ and
+\begin{align}
+K &= \frac{1}{\dayc_K(t,T)} \left( \frac{\Bond(0,t)}{\Bond(0,T)} - 1 \right) \\
+&= \frac{\dayc(t,T)}{\dayc_K(t,T)}  \Rflt(t,T) .
+\end{align}
+We see that the forward rate and the rate that defines FRA with zero present value are essentially the same. Thus we define that the forward rate at the time $t$ from time $T$ to $S$ is
+\begin{align}
+	\Rflt(t,T,S) &= \frac{1}{\dayc(T,S)} \left( \frac{\Bond(t,T)}{\Bond(t,S)} - 1 \right) .
+\end{align}
+Since $\dayc(T,S) \approx S-T$ when $T \approx S$, we have that 
+	\begin{align}
+		\Rflt(t,T,S) &= \frac{1}{\dayc(T,S)} \left( \frac{\Bond(t,T)}{\Bond(t,S)} - 1 \right) \\
+				   &\approx \frac{1}{\Bond(t,T)} \frac{\Bond(t,T) - \Bond(T,S)}{S-T}
+	\end{align}
+and therefore
+	\begin{align}
+		\Rflt(t,T,S) & \longrightarrow - \frac{1}{\Bond(t,T)} \frac{ \partial \Bond(t,T) }{ \partial t} \\
+			&= - \frac{\partial \log \Bond(t,T)}{\partial T}
+	\end{align}
+when $S \rightarrow T^+$ under the assumption that the zero curve $\Bond(t,T)$ is differentiable. We now define that the instantaneous forward rate at the time $t$ is
+	\begin{align}
+		\Forwardrate(t,T) = - \frac{\partial \log \Bond(t,T)}{\partial T}.
+	\end{align}
+Now since $\Bond(t,t) = 1$,
+	\begin{align}
+		- \int_t^T f(t,s) \dx s &= \int_t^T \partial \log \Bond(t,s) \dx s \\
+			&=  \log \Bond(t,T) - \log \Bond(t,t) \\ &= \log \Bond(t,T)
+	\end{align}	
+meaning that
+	\begin{align}
+		\Bond(t,T) = \exp \left( - \int\limits_t^T \Forwardrate (t,s) \dx s \right) .
+	\end{align}
+	
+\section{Interest rate instruments}		
+
+\subsection{Fixed leg and floating leg}
+
+A leg with tenor $t_0 < t_1 < t_2 < \ldots < t_n = T$ and coupons $c_1, c_2, \ldots, c_n$ is an instruments that pays $c_i$ at the time $t_i$ for all $1 \leq i \leq n$. The coupons may be functions of some variables. Thus a is a portfolio of $n$ zero-coupon bonds with maturities coinciding with tenor. It has has present value of
+  \begin{align}
+    \sum_{i=1}^n c_i \Bond (t, t_i) \1_{ \{ t \geq t_i \} } 
+  \end{align}
+at the time $t$. 
+
+A floating leg with a unit principal has coupons defined by $c_i = \dayc_1(t_{i-1}, t_i) \Rflt(t_{i-1}, t_i)$, where $\Rflt$ is a reference rate for a floating. It has a present value of
+\begin{align}
+PV_{\text{float}}(t) &= \sum_{i=1}^n \Bond (t,t_i) \dayc_1(t_{i-1}, t_i) \Rflt(t_{i-1}, t_i) \\ 
+	&= \sum_{i=1}^n \Bond (t,t_i) \left( \frac{1}{\Bond(t_{i-1},t_i)} -1 \right) \\
+	&= \sum_{i=1}^n \Bond (t,t_{i-1}) \Bond (t_{i-1},t_i) \left( \frac{1}{\Bond(t_{i-1},t_i)} -1 \right) \\
+	&= \sum_{i=1}^n \left( \Bond (t,t_{i-1}) - \Bond (t,t_{i-1})\Bond (t_{i-1},t_i) \right) \\
+	&= \sum_{i=1}^n \left( \Bond (t,t_{i-1}) - \Bond (t,t_i) \right) \\
+	&= \Bond (t,t_{0}) - \Bond (t,t_n)
+\end{align}
+and especially $PV_{\text{float}}(t_0) = 1 - \Bond (t,t_n)$.
+
+If the coupons are $c_i = K \dayc_0(t_{i-1}, t_i)$ for a fixed rate $K$, then we call it as a fixed leg with a unit principal. It has a present value
+  	\begin{align}
+		PV_{\text{fixed}}(t) &= K \sum_{i=1}^n  \dayc_0(t_{i-1}, t_i) \Bond (t,t_i) .
+	\end{align}
+	
+\subsection{Coupon bearing bond}
+
+A coupon bearing bond with floating coupons and a unit principal is combination of a floating leg and payment of one currency unit coinciding with the last tenor date. Thus it has present value of
+\begin{align}
+PV_{\text{floating bond}}(t) = \Bond (t,t_{0})
+\end{align}
+and especially $PV_{\text{floating bond}}(t_0) = 1$.
+
+Similarly a coupon bearing bond with fixed coupons and a unit principal is combination of a fixed leg and payment of one currency unit coinciding with the last tenor date. It has a present value of
+	\begin{align}
+		PV_{\text{fixed bond}}(t) &= \Bond (t,t_n) + K \sum_{i=1}^n  \dayc_0(t_{i-1}, t_i) \Bond (t,t_i) \\
+		&= \Bond (t,t_n) + PV_{\text{fixed}}(t) .
+	\end{align}
+		
+\subsection{Vanilla interest rate swap}
+
+A vanilla payer interest rate swap (IRS) is a contract defined by paying a fixed leg and receiving a floating leg. A vanilla receiver interest rate swap (IRS) is a contract defined by paying a floating leg and receiving a fixed leg. The legs may have different amount of coupons. Also the coupons dates and day count conventions may not coincide. If $K$ is the common rate for the fixed leg and both legs have the same notional value, then a payer IRS has the present value of
+  	\begin{align}
+		 \sum_{i=1}^m \Bond (t,t'_i) \dayc_1(t'_{i-1}, t'_i) \Rflt(t'_{i-1}, t'_i) - K \sum_{i=1}^n \Bond (t,t_i) \dayc_0(t_{i-1}, t_i)
+	\end{align}
+where $t'_0 < t'_1 < t'_2 < \ldots < t'_m$ are the coupon times for the floating leg. A par swap is a swap with present value of zero and the fixed rate for a par swap is 
+  	\begin{align}
+		K = \frac{ \sum\limits_{i=1}^m \Bond (t,t'_i) \dayc_1(t'_{i-1}, t'_i) \Rflt(t'_{i-1}, t'_i) }{ \sum\limits_{i=1}^n \Bond (t,t_i) \dayc_0(t_{i-1}, t_i) }
+	\end{align}
+It is easy to see that if the both legs have same underlying notional principal and coupon dates are the same, then the swap is just a collection of forward rate agreements with a fixed strike price. A vanilla payer IRS let the payer to hedge interest rate risk by converting a liability with floating rate payments into fixed payments.
+
+\subsection{Overnight indexed swap}
+
+At the end of a banking day, banks and other financial institutions may face surplus or shortage of funds. They may lend the excess or borrow the shortfall on overnight market. Overnight lending rate is often regarded as a proxy for risk-free rate. In Euro area, European Central Bank calculates Eonia, which is a weighted average of all overnight unsecured lending transactions in the interbank market.
+
+Overnight indexed swap (OIS) is a swap where a compounded reference overnight lending rate is exchanged to a fixed rate.
+
+\subsection{Call and put option and call-put parity}
+
+A European call (put) option gives the buyer the right but not an obligation to buy (sell) a designated underlying instrument from the option seller with a fixed price at expiry date. Thus a call option on $T$-bond with strike price $K$ and maturity $S < T$ has the final value
+	\begin{align}
+		\ZBC(S,S,T,K) = \left( \Bond(S,T) - K \right)^+
+	\end{align}
+and the corresponding put option has the final value
+	\begin{align}
+		\ZBP(S,S,T,K) = \left( K - \Bond(S,T) \right)^+ .
+	\end{align}
+	
+A portfolio of long one call and short one put option on a same $T$-bond with identical strike price $K$ and maturity $S$ has final value of
+	\begin{align}
+		\left( \Bond(S,T) - K \right)^+ - \left( K - \Bond(S,T) \right)^+ = \Bond(S,T) - K.
+	\end{align}
+Therefore, without any arbitrage, we have the so called call-put--parity
+	\begin{align}
+		\ZBC(t,S,T,K) - \ZBP(t,S,T,K) = \Bond(t,T) - \Bond(t,S) K
+	\end{align}
+holds for all $t \leq S$.
+
+	
+\subsection{Caplet, cap, floorlet and floor}
+
+In order to keep notation simplier, we assume that the present is $0$ and $0 < t < T$. A caplet is an interest rate derivative in which the buyer receives
+	\begin{align}
+		\left( \Rflt(t,T) - K \right)^+
+	\end{align}
+at the time $T$, where $\Rflt(t,T)$ is some reference rate and $K$ is the fixed strike price. The fixing is done at when the contract is made. 
+
+Suppose that a firm must pay a floating rate $L$. By buying a cap with strike $K$ against $L$, the firm is paying
+	\begin{align}
+		L - \left( L - K \right)^+  = \min (L,K)
+	\end{align}
+meaning that the highest rate will pay will be the strike rate $K$. Thus caps may be used to hedge interest rate risk.
+
+Now
+	\begin{align}
+		\Rflt(t,T) - K &= \frac{1}{\dayc(t,T)} \left( 1+\dayc(t,T)\Rflt(t,T) - K^* \right) \\
+			&= \frac{1}{\dayc(t,T)} \left( \frac{1}{p(t,T)} - K^* \right)
+	\end{align}
+where $K^* = 1+ \dayc(t,T)K$. Thus the value of a caplet at the time $t$ is
+	\begin{align}
+		p(t,T) \left( \Rflt(t,T) - K \right)^+ &= \frac{p(t,T)}{\dayc(t,T)} \left( \frac{1}{p(t,T)} - K^* \right)^+ \\
+			&= \frac{1}{\dayc(t,T)} \left( 1 - p(t,T) K^* \right)^+ \\
+			&= \frac{K^*}{\dayc(t,T)} \left( \frac{1}{K^*} - p(t,T) \right)^+ .
+	\end{align}
+But this is the price of $\frac{K^*}{\dayc(t,T)}$ put options on a $T$-bond with strike price $\frac{1}{K^*}$ at the time of strike $t$. Thus we can price a caplet as a put option on a bond. As the price of a cap contains optionality, we must model the interest rates in order to price it.
+
+A cap is a linear collection of caplets with the same strike price.
+
+A floorlet is an derivate with the payment
+	\begin{align}
+\dayc(t,T) \left( K - \Rflt(t,T) \right)^+
+\end{align}
+at the time $T$, where $\Rflt(t,T)$ is some reference rate with day-count convention $\dayc(t,T)$ and $K$ is the fixed strike price. Similarly a floor is a linear collection of floorlets with the same strike price. We can price a floorlet is the price of $\frac{K^*}{\dayc(t,T)}$ call options on a $T$-bond with strike price $\frac{1}{K^*}$ at the time of strike $t$.
+
+\subsection{Swaption}
+
+A swaption is an interest rate derivative that allows the owner the right but not an obligation to enter into an IRS. A payer swaption gives the owner the right to enter a payer swap (a swap paying a fixed rate while receiving floating rate). A receiver swaption gives the owner the option to initiate a receiver swaption (a swap paying a floating rate while receiving a fixed rate).
+
+A European payer swaption is equivalent to a European put option on a coupon bearing bond. The underlying swap have the value of
+  	\begin{align}
+		\Swap(S) = PV_{\text{float}}(S) - PV_{\text{fixed}}(S) .
+	\end{align}
+at the time of the strike $S$. Thus
+	\begin{align}
+		\Swaption(S) &= \left( PV_{\text{float}}(S) - PV_{\text{fixed}}(S) \right)^+ \\
+			&= \left( 1 - \Bond (t,t_n) - PV_{\text{fixed}}(S) \right)^+ \\
+			&= \left( 1 - PV_{\text{fixed bond}}(S) \right)^+ .
+	\end{align}
+We see that a swaption is a european put option on a fixed rate coupon bond. The coupon rate is the fixed rate of the underlying swap and strike price is the principal of the bond and the underlying swap. 
+
+In some cases we may price a swaption as a portfolio of options on zero-coupon bond. This trick was introduced in \cite{jamshidian1989anexactbondoptionformula}. We now denote the price of a zero coupon bond as a function of a short rate $\Bond(t,T,r)$. We consider a put option with maturity $S$ and strike price $K$ on a bond with coupond $c_i$ occuring at times $t_i$, $i=1,2, \ldots, n$. Let $r^*$ be the rate with the property
+	\begin{align}
+		K &= \sum_{i=1}^n c_i \Bond(S, t_i, r^*)  .
+	\end{align}
+Now the put option has a value 
+	\begin{align}
+		\left( K - \sum_{i=1}^n c_i \Bond(S,t_i) \right)^+ &= \left( \sum_{i=1}^n c_i \left( \Bond(S, t_i, r^*) - \Bond(S,t_i,r(S)) \right) \right)^+ .
+	\end{align}
+If we assume that the bond prices are uniformly decreasing function on the initial short rate, then the options will be exercised if and only if $r^* < r(S)$ and now
+	\begin{align}
+		\Bond(S, t_i, r^*) > \Bond(S,t_i,r(S)) .
+	\end{align}
+for all $i$ Otherwise all $\Bond(S, t_i, r^*) \leq \Bond(S,t_i,r(S))$ for all $i$. Thus the put option has value
+	\begin{align}
+		\sum_{i=1}^n c_i \left( \Bond(S, t_i, r^*) - \Bond(S,t_i,r(S)) \right)^+
+	\end{align}
+which is a portfolio of put options with maturities $S$ on a zero coupon bonds with strike prices of $\Bond(S, t_i, r^*)$. The assumption behind this trick assumes in essence that the prices of the zero coupon bonds moves in unison. This is satisfied by one-factor models but the assumption does not hold for multi-factor models.
+
+Similarly, a European receiver swaption is equivalent to a European call option on a coupon bearing bond. Under the same assumption, we may disassemble a receiver swaption as a portfolio of call options on zero coupon bonds.
+
+\iffalse
+
+\subsection{Eurodollar futures}
+
+Eurodollar futures is a contract that will swap
+	\begin{align}
+		1- \Rflt(T,S)
+	\end{align}
+with
+	\begin{align}
+		1 - \FUT(t,T,S)
+	\end{align}
+at the time $T$, where $t < T < S$ and the futures rate $\FUT(t,T,S)$ is set so that entering futures contract at the time $t$ costs nothing. Futures contracts are resettled continuously, meaning that for a small time horizon $\delta > 0$, the owner of a futures contract will have a cash flow of
+	\begin{align}
+		\FUT(s,T,S) - \FUT(s+\delta,T,S) .
+	\end{align}
+In practice, resettlement is done daily. As $\FUT(T,T,S) = \Rflt (T,S)$, the holder of a futures contract has experienced undiscounted net cash flow of
+	\begin{align}
+		\sum\limits_{t \leq s < T} \left( \FUT(s,T,S) - \FUT(s+\delta,T,S) \right) = \FUT(t,T,S) - \Rflt (T,S) ,
+	\end{align}
+but we note this number contains undiscounted cash flows from different point of times. If interest rates raises, the futures contract will lose value. On the other hand, falling interest rates will make contract more valuable. Assuming that the rates of different tenor move in unison, the refinancing cost of settling a move of $n>0$ basis points is higher than the benefits of reinvesting gains from a movement of $-n$ basis points.
+
+\fi
+
+\section{Defaultable instruments and credit default swaps}
+
+\subsection{Defaultable $T$-bond}
+
+A defaultable $T$-bond with no recovery (NR) is an instrument that pays
+	\begin{align}
+		\DBond(T,T) = \begin{cases} 1, & T < \default \\ 0, & T \geq \default \end{cases}
+	\end{align}
+at the time $T$, where $\default$ is the time of a default of the underlying. The price of a defaultable $T$-bond at the time $t < T$ is denoted by $\DBond(t,T)$.
+
+A defaultable $T$-bond with recovery of treasury (RT) has the same final payout is a defaultable $T$-bond with no recovery but in addition it pays $\delta \Bond(\default, T)$ if $\default \leq T$, where $0 < \delta < 1$. Thus it was a terminal value of
+	\begin{align}
+		\DBond(T,T) = \1_{ \{ \default > T \} } + \delta \1_{ \{ \default \leq T \} } .
+	\end{align}
+
+A defaultable $T$-bond with recovery of face value (RFV) has the same final payout is a defaultable $T$-bond with no recovery but in addition it pays $\delta$ at the default if $\default \leq T$, where $0 < \delta < 1$. Thus it was a terminal value of
+	\begin{align}
+		\DBond(T,T) = \1_{ \{ \default > T \} } + \delta \1_{ \{ \default \leq T \} } \Bond(\default,T) .
+	\end{align}
+	
+A defaultable $T$-bond with recovery of market value (RMV) has the same final payout is a defaultable $T$-bond with no recovery but in addition it pays $\delta\DBond(\default,T)$ at the default if $\default \leq T$, where $0 < \delta < 1$. Thus it was a terminal value of
+\begin{align}
+\DBond(T,T) = \1_{ \{ \default > T \} } + \delta \1_{ \{ \default \leq T \} } \Bond(\default,T) .
+\end{align}
+
+\subsection{Credit default swap}
+
+A credit default swap (CDS) is an instrument where the seller of the contract will compensate the buyer if the reference instrument or entity has a credit event such as a default. In exchange, the buyer will make periodic payments to the seller until the end of the contract or the default event. The buyer of CDS will be hedged against the credit risk of the reference entity. Originally physical settlement was used. If the credit event occurs before the maturity of the CDS, then the seller is obligated to buy the underlying reference debt for face value. Since the notional value of credit default swaps may be greater than the underlying debt, physical settlement is a cumbersome process and cash settlements are held instead. In order to determine the value of a contract after the default, a credit event auction is held to determine the recovery value $\Rec$ (\cite{ISDAbigbang}, \cite{BISquarterlyreview2010}).
+
+Suppose that the CDS will offer protection from $S$ to $T$ and $\default$ is the time of the credit event. The protection seller has agreed to pay the buyer $\LGD = 1 - \Rec$ at the time $\default$ if $S \leq \default \leq T$. The protection leg of CDS has a value of
+	\begin{align}
+		\Protection(t) = \Bond(t, \default) \LGD \1_{ \{ S \leq \default \leq T \} }
+	\end{align}
+at the time $t$. Let $S = t_0 < t_1 < t_2 < \ldots <t_n = T$. The premium leg will pay a coupon rate $C$ at the times $t_1 < t_2 < \ldots < t_n$ if the credit event has not occurred. If the credit event happes, then the buyer will pay the accrued premium rate at the time of the default. The premium leg has a value of
+	\begin{align}
+		\Premium(t, C) =\sum_{i=1}^n \Bond(t, t_i) \dayc(t_{i-1},t_i) C \1_{ \{ \default > t_i \} } + \Bond(t, \default) \dayc(t,\default) C \1_{ \{ t_s \leq \default \leq t_{s+1} \} }
+	\end{align}
+where $t_s$ is the last date from $t_0 < t_1 < \ldots < t_n$ before the credit event (if it occurs).
+
+Standardized CDS contracts have quarterly coupon payments and rates are usually set to be either $25$, $100$, $500$ or $1000$ basis points. So when traded the buyer will pay 
+	\begin{align}
+		\Premium(0, C) - \Protection(0) .
+	\end{align}
+Earlier the coupon rate $C$ was set so that $\Premium(0, C) = \Protection(0)$ and no money was exchanged at the trade.
+
+
+
+

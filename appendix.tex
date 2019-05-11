@@ -1,0 +1,676 @@
+\chapter{Charts and graphs}
+\label{chap:charts}
+
+\pagebreak
+
+\section{Graphical presentation of the initial curve data}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/rates_with_fwd}
+	\caption{Interpolated interest rates and instantaneous forward rate curves}
+	\label{fig:rateswithfwd}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/rates_by_methods}
+	\caption{Interpolated interest rates}
+	\label{fig:ratesbymethods}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/zeros}
+	\caption{Theoretical zero coupon bond prices inferred from the rate data by using different interpolation methods}
+	\label{fig:zeros}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/rates_by_curve}
+	\caption{Theoretical zero coupon bond prices inferred from the rate data}
+	\label{fig:ratesbycurve}
+\end{figure}
+
+\section{Comparison of actual inferred rates and calibrated model prices without default risk}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A01}
+	\caption{Calibrated rates by model $A(0,1)$}
+	\label{fig:A01}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A11}
+	\caption{Calibrated rates by model $A(1,1)$}
+	\label{fig:A11}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A02}
+	\caption{Calibrated rates by model $A(0,2)$}
+	\label{fig:A02}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A12}
+	\caption{Calibrated rates by model $A(1,2)$}
+	\label{fig:A12}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A22}
+	\caption{Calibrated rates by model $A(2,2)$}
+	\label{fig:A22}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A03}
+	\caption{Calibrated rates by model $A(0,3)$}
+	\label{fig:A03}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A13}
+	\caption{Calibrated rates by model $A(1,3)$}
+	\label{fig:A13}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A23}
+	\caption{Calibrated rates by model $A(2,3)$}
+	\label{fig:A23}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A24}
+	\caption{Calibrated rates by model $A(2,4)$}
+	\label{fig:A24}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A33}
+	\caption{Calibrated rates by model $A(3,3)$}
+	\label{fig:A33}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A34}
+	\caption{Calibrated rates by model $A(3,4)$}
+	\label{fig:A34}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/A45}
+	\caption{Calibrated rates by model $A(4,5)$}
+	\label{fig:A45}
+\end{figure}
+
+\section{Comparison of different calibrations between models without default risk}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/comp_one_factor}
+	\caption{Comparison of alternative calibrations for single factor models}
+	\label{fig:comp_one_factor}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/comp_two_factor}
+	\caption{Comparison of alternative calibrations for $2$-factor models}
+	\label{fig:comp_two_factor}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/comp_three_fact}
+	\caption{Comparison of alternative calibrations for multifactor models}
+	\label{fig:comp_three_factor}
+\end{figure}
+
+\pagebreak
+
+
+\section{Model parameters for affine models without default risk}
+
+\begin{table}[H]
+	\centering
+	\caption{Overnight index swap}
+	\label{ois_table}
+	
+	\begin{adjustbox}{width=\textwidth}
+
+\begin{tabular}{lrrlrllllllll}
+	\toprule
+	{} &   0, 1 &   1, 1 &            0, 2 &   1, 2 &            2, 2 &            1, 3 &                    0, 3 &            2, 3 &                   3, 3 &                   3, 4 &            2, 4 &                          4, 5 \\
+	\midrule
+	$X_0$   &        &  0.001 &                 &  0.001 &   [0.001, 0.08] &           0.002 &                         &  [0.001, 0.079] &  [0.017, 0.007, 0.031] &   [0.02, 0.084, 0.072] &   [0.019, 0.03] &  [0.041, 0.058, 0.038, 0.002] \\
+	$Y_0$   & -0.030 &        &  [-0.046, 0.04] &  0.021 &                 &    [-0.08, 0.1] &   [-0.1, 0.062, -0.022] &          -0.054 &                        &                   -0.1 &   [-0.02, 0.09] &                        -0.038 \\
+	$\alpha$ &        &  0.057 &                 &  0.338 &  [0.444, 0.703] &           0.396 &                         &  [2.654, 1.373] &  [2.173, 0.185, 1.918] &  [1.827, 2.999, 1.103] &  [0.308, 1.782] &      [3.0, 2.988, 2.992, 3.0] \\
+	$\delta$ &  0.017 & -0.011 &            0.02 & -0.027 &           -0.08 &          -0.031 &                   0.049 &          -0.023 &                 -0.046 &                 -0.068 &          -0.095 &                        -0.089 \\
+	$k$     &  0.287 &        &  [0.387, 2.362] &  0.894 &                 &  [2.539, 1.731] &   [0.483, 0.949, 2.998] &           0.404 &                        &                  0.059 &  [1.317, 2.993] &                         0.342 \\
+	$\nu$    &  0.001 &        &  [0.029, 0.212] &  0.250 &                 &  [0.068, 0.246] &   [0.001, 0.237, 0.002] &           0.013 &                        &                  0.024 &  [0.176, 0.001] &                         0.001 \\
+	$\rho$   &        &        &          -0.566 &        &                 &           -0.99 &  [0.872, -0.011, -0.19] &                 &                        &                        &           -0.99 &                               \\
+	$\sigma$ &        &  0.240 &                 &  0.233 &  [0.118, 0.247] &           0.001 &                         &  [0.001, 0.133] &  [0.185, 0.249, 0.001] &   [0.046, 0.25, 0.245] &  [0.097, 0.055] &   [0.159, 0.249, 0.249, 0.25] \\
+	$\theta$ &        &  0.100 &                 &  0.100 &      [0.1, 0.0] &           0.055 &                         &  [0.018, 0.023] &    [0.0, 0.075, 0.016] &   [0.085, 0.023, 0.05] &  [0.057, 0.066] &      [0.084, 0.0, 0.0, 0.021] \\
+	\bottomrule
+\end{tabular}
+
+  \end{adjustbox}
+
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Swap}
+	\label{swap_table}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+\begin{tabular}{lrrlrllllllll}
+	\toprule
+	{} &   0, 1 &   1, 1 &            0, 2 &   1, 2 &            2, 2 &            1, 3 &                    0, 3 &            2, 3 &                   3, 3 &                   3, 4 &            2, 4 &                          4, 5 \\
+	\midrule
+	$X_0$   &        &  0.001 &                 &  0.001 &  [0.012, 0.069] &             0.1 &                         &  [0.001, 0.094] &  [0.003, 0.033, 0.061] &  [0.048, 0.025, 0.002] &    [0.098, 0.1] &   [0.016, 0.098, 0.001, 0.05] \\
+	$Y_0$   & -0.031 &        &   [-0.1, 0.045] &  0.050 &                 &   [0.002, -0.1] &   [0.081, -0.1, -0.041] &          -0.038 &                        &                 -0.006 &  [-0.025, -0.1] &                        -0.076 \\
+	$\alpha$ &        &  0.279 &                 &  0.381 &   [0.328, 0.92] &           0.734 &                         &  [0.388, 0.981] &  [0.291, 2.303, 1.296] &  [0.001, 2.249, 0.054] &  [1.356, 0.905] &  [0.306, 1.746, 2.521, 1.534] \\
+	$\delta$ &  0.019 & -0.013 &           0.052 & -0.051 &          -0.079 &          -0.002 &                   0.048 &          -0.065 &                   -0.1 &                 -0.068 &          -0.076 &                          -0.1 \\
+	k     &  0.326 &        &  [0.526, 0.969] &  0.888 &                 &  [2.722, 0.496] &    [1.04, 0.541, 2.541] &           2.636 &                        &                      3 &   [2.12, 0.527] &                         2.336 \\
+	$\nu$    &  0.001 &        &   [0.001, 0.25] &  0.154 &                 &  [0.065, 0.001] &   [0.238, 0.049, 0.211] &           0.124 &                        &                  0.157 &  [0.001, 0.001] &                         0.041 \\
+	$\rho$   &        &        &           0.456 &        &                 &           0.811 &  [-0.734, 0.416, 0.312] &                 &                        &                        &            0.99 &                               \\
+	$\sigma$ &        &  0.129 &                 &  0.248 &   [0.25, 0.147] &           0.001 &                         &  [0.248, 0.214] &    [0.25, 0.25, 0.243] &   [0.025, 0.25, 0.166] &  [0.152, 0.222] &    [0.25, 0.101, 0.21, 0.003] \\
+	$\theta$ &        &  0.035 &                 &  0.100 &  [0.094, 0.023] &           0.021 &                         &      [0.1, 0.0] &    [0.072, 0.063, 0.0] &    [0.045, 0.009, 0.1] &  [0.095, 0.001] &      [0.093, 0.0, 0.045, 0.0] \\
+	\bottomrule
+\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Germany}
+	\label{germany_table}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+		\begin{tabular}{lrrlrllllllll}
+			\toprule
+			{} &   0, 1 &   1, 1 &              0, 2 &   1, 2 &            2, 2 &             1, 3 &                     0, 3 &            2, 3 &                   3, 3 &                   3, 4 &             2, 4 &                          4, 5 \\
+			\midrule
+			$X_0$   &        &  0.053 &                   &  0.001 &  [0.016, 0.072] &            0.001 &                          &  [0.025, 0.068] &  [0.045, 0.061, 0.001] &    [0.057, 0.012, 0.1] &   [0.001, 0.051] &  [0.071, 0.001, 0.001, 0.075] \\
+			$Y_0$   & -0.037 &        &  [-0.021, -0.094] & -0.055 &                 &  [0.057, -0.078] &  [-0.054, 0.022, -0.091] &          -0.014 &                        &                   -0.1 &  [-0.054, 0.094] &                        -0.039 \\
+			$\alpha$ &        &  0.077 &                   &  0.022 &  [0.061, 0.873] &            0.004 &                          &  [0.052, 1.214] &    [0.008, 3.0, 0.565] &    [2.183, 0.057, 3.0] &   [0.004, 0.609] &    [3.0, 0.005, 0.534, 2.808] \\
+			$\delta$ &  0.028 & -0.062 &               0.1 &  0.039 &          -0.098 &            0.031 &                    0.055 &          -0.097 &                   -0.1 &                 -0.071 &           -0.091 &                          -0.1 \\
+			$k$     &  0.105 &        &    [0.428, 0.005] &  0.099 &                 &    [2.674, 0.58] &      [0.186, 1.371, 3.0] &           2.499 &                        &                  1.182 &    [1.48, 1.537] &                         0.855 \\
+			$\nu$    &  0.016 &        &    [0.001, 0.001] &  0.038 &                 &    [0.01, 0.133] &     [0.036, 0.25, 0.189] &           0.023 &                        &                  0.246 &    [0.03, 0.086] &                          0.23 \\
+			$\rho$   &        &        &             0.641 &        &                 &            0.558 &  [0.422, -0.924, -0.044] &                 &                        &                        &           -0.184 &                               \\
+			$\sigma$ &        &  0.062 &                   &  0.001 &   [0.133, 0.15] &            0.001 &                          &  [0.073, 0.075] &  [0.001, 0.181, 0.072] &   [0.001, 0.001, 0.12] &    [0.001, 0.13] &  [0.002, 0.001, 0.225, 0.204] \\
+			$\theta$ &        &  0.098 &                   &  0.100 &   [0.09, 0.071] &              0.1 &                          &  [0.077, 0.066] &    [0.1, 0.027, 0.035] &  [0.001, 0.031, 0.081] &     [0.095, 0.1] &   [0.05, 0.085, 0.057, 0.039] \\
+			\bottomrule
+		\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{France}
+	\label{france_table}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+\begin{tabular}{lrrlrllllllll}
+	\toprule
+	{} &   0, 1 &   1, 1 &              0, 2 &   1, 2 &            2, 2 &            1, 3 &                     0, 3 &            2, 3 &                   3, 3 &                   3, 4 &            2, 4 &                          4, 5 \\
+	\midrule
+	$X_0$   &        &  0.016 &                   &  0.019 &   [0.02, 0.064] &           0.067 &                          &   [0.06, 0.002] &  [0.095, 0.001, 0.009] &  [0.002, 0.012, 0.043] &   [0.093, 0.07] &  [0.085, 0.062, 0.001, 0.049] \\
+	$Y_0$   & -0.049 &        &  [-0.088, -0.027] & -0.010 &                 &   [-0.1, 0.084] &  [-0.036, 0.028, -0.087] &           0.034 &                        &                  0.032 &   [0.039, -0.1] &                        -0.099 \\
+	$\alpha$ &        &  0.159 &                   &  0.148 &  [2.999, 0.131] &             0.1 &                          &  [0.469, 0.005] &   [2.411, 1.31, 0.064] &   [0.012, 0.545, 2.65] &  [2.999, 0.134] &  [1.868, 0.018, 1.162, 2.772] \\
+	$\delta$ &  0.039 & -0.025 &               0.1 & -0.026 &            -0.1 &          -0.066 &                      0.1 &           -0.09 &                   -0.1 &                 -0.087 &            -0.1 &                        -0.076 \\
+	$k$     &  0.115 &        &    [0.005, 0.348] &  2.492 &                 &  [1.241, 1.384] &    [0.445, 2.866, 0.005] &           2.298 &                        &                  0.963 &  [2.995, 2.199] &                         0.047 \\
+	$\nu$    &  0.021 &        &    [0.001, 0.001] &  0.097 &                 &  [0.026, 0.137] &     [0.011, 0.21, 0.001] &           0.001 &                        &                  0.177 &  [0.177, 0.189] &                         0.002 \\
+	$\rho$   &        &        &             -0.99 &        &                 &          -0.374 &  [-0.836, -0.894, 0.503] &                 &                        &                        &          -0.572 &                               \\
+	$\sigma$ &        &  0.006 &                   &  0.011 &  [0.179, 0.046] &           0.038 &                          &  [0.007, 0.001] &    [0.1, 0.116, 0.039] &  [0.023, 0.218, 0.195] &   [0.042, 0.01] &  [0.085, 0.085, 0.234, 0.005] \\
+	$\theta$ &        &  0.047 &                   &  0.049 &    [0.028, 0.1] &             0.1 &                          &      [0.1, 0.1] &    [0.0, 0.095, 0.035] &  [0.049, 0.099, 0.021] &  [0.027, 0.099] &    [0.004, 0.049, 0.1, 0.008] \\
+	\bottomrule
+\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Italy}
+	\label{italy_table}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+		\begin{tabular}{lrrlrllllllll}
+			\toprule
+			{} &   0, 1 &   1, 1 &            0, 2 &   1, 2 &            2, 2 &             1, 3 &                   0, 3 &            2, 3 &                   3, 3 &                   3, 4 &             2, 4 &                          4, 5 \\
+			\midrule
+			$X_0$   &        &  0.001 &                 &  0.016 &  [0.001, 0.051] &             0.06 &                        &  [0.004, 0.093] &   [0.014, 0.018, 0.02] &    [0.1, 0.001, 0.033] &   [0.078, 0.004] &    [0.024, 0.003, 0.04, 0.08] \\
+			$Y_0$   & -0.048 &        &   [-0.1, 0.064] &  0.024 &                 &  [0.022, -0.061] &  [0.1, -0.074, -0.065] &          -0.055 &                        &                 -0.077 &  [-0.026, 0.025] &                        -0.075 \\
+			$\alpha$ &        &  0.213 &                 &  0.314 &  [0.433, 0.647] &            1.893 &                        &    [1.978, 3.0] &  [0.328, 1.651, 0.001] &  [1.503, 2.256, 1.875] &   [1.343, 0.413] &  [2.978, 0.376, 0.998, 0.822] \\
+			$\delta$ &  0.039 & -0.008 &           0.039 & -0.032 &          -0.056 &           -0.012 &                  0.039 &          -0.025 &                  -0.05 &                 -0.058 &           -0.076 &                        -0.071 \\
+			$k$     &  0.378 &        &  [0.511, 0.904] &  2.483 &                 &    [2.536, 0.43] &  [2.141, 2.818, 0.448] &           0.418 &                        &                  0.478 &   [0.906, 1.684] &                         0.789 \\
+			$\nu$    &  0.001 &        &  [0.001, 0.001] &  0.114 &                 &   [0.063, 0.016] &  [0.012, 0.007, 0.001] &           0.001 &                        &                  0.009 &   [0.046, 0.057] &                         0.102 \\
+			$\rho$   &        &        &          -0.886 &        &                 &             0.99 &  [0.868, 0.508, 0.868] &                 &                        &                        &            0.243 &                               \\
+			$\sigma$ &        &  0.250 &                 &  0.216 &  [0.137, 0.142] &             0.16 &                        &  [0.029, 0.001] &   [0.09, 0.247, 0.018] &  [0.249, 0.112, 0.197] &    [0.12, 0.001] &   [0.233, 0.247, 0.016, 0.25] \\
+			$\theta$ &        &  0.069 &                 &  0.086 &    [0.099, 0.0] &            0.053 &                        &  [0.029, 0.035] &   [0.07, 0.004, 0.006] &    [0.0, 0.046, 0.052] &   [0.061, 0.057] &    [0.028, 0.1, 0.001, 0.006] \\
+			\bottomrule
+		\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\section{Comparison of parameters for affine models without default risk between different calibration attempts}
+
+\label{defaultless_parameter_comparision}
+
+\begin{tabular}{llll}
+	\toprule
+	OIS&       &               Original &            Alternative \\
+	\midrule
+	$A(0, 1)+$ & $Y_0$ &                  -0.03 &                  -0.03 \\
+	& $\delta$ &                  0.017 &                  0.017 \\
+	& $k$ &                  0.287 &                  0.286 \\
+	& $\nu$ &                  0.001 &                  0.001 \\
+	$A(0, 2)+$ & $Y_0$ &         [-0.046, 0.04] &           [0.04, -0.1] \\
+	& $\delta$ &                   0.02 &                  0.055 \\
+	& $k$ &         [0.387, 2.362] &         [0.864, 0.481] \\
+	& $\nu$ &         [0.029, 0.212] &          [0.25, 0.013] \\
+	& $\rho$ &                 -0.566 &                 -0.562 \\
+	$A(1, 1)+$ & $X_0$ &                  0.001 &                  0.001 \\
+	& $\alpha$ &                  0.057 &                  0.057 \\
+	& $\delta$ &                 -0.011 &                 -0.011 \\
+	& $\sigma$ &                   0.24 &                   0.24 \\
+	& $\theta$ &                    0.1 &                    0.1 \\
+	$A(2, 2)+$ & $X_0$ &          [0.001, 0.08] &         [0.059, 0.022] \\
+	& $\alpha$ &         [0.444, 0.703] &         [0.807, 0.416] \\
+	& $\delta$ &                  -0.08 &                 -0.079 \\
+	& $\sigma$ &         [0.118, 0.247] &          [0.12, 0.103] \\
+	& $\theta$ &             [0.1, 0.0] &           [0.0, 0.099] \\
+	$A(3, 3)+$ & $X_0$ &  [0.017, 0.007, 0.031] &   [0.037, 0.03, 0.001] \\
+	& $\alpha$ &  [2.173, 0.185, 1.918] &  [2.989, 2.964, 0.111] \\
+	& $\delta$ &                 -0.046 &                  -0.06 \\
+	& $\sigma$ &  [0.185, 0.249, 0.001] &    [0.25, 0.175, 0.25] \\
+	& $\theta$ &    [0.0, 0.075, 0.016] &  [0.023, 0.021, 0.073] \\
+	$A(3, 4)+$ & $X_0$ &   [0.02, 0.084, 0.072] &   [0.004, 0.07, 0.079] \\
+	& $Y_0$ &                   -0.1 &                 -0.099 \\
+	& $\alpha$ &  [1.827, 2.999, 1.103] &    [0.252, 2.995, 3.0] \\
+	& $\delta$ &                 -0.068 &                 -0.044 \\
+	& $k$ &                  0.059 &                  2.999 \\
+	& $\nu$ &                  0.024 &                  0.019 \\
+	& $\sigma$ &   [0.046, 0.25, 0.245] &   [0.181, 0.001, 0.25] \\
+	& $\theta$ &   [0.085, 0.023, 0.05] &   [0.05, 0.016, 0.004] \\
+	\bottomrule
+\end{tabular}
+
+\begin{tabular}{llll}
+	\toprule
+	Swap&       &               Original &            Alternative \\
+	\midrule
+	$A(0, 1)+$ & $Y_0$ &                 -0.031 &                 -0.031 \\
+	& $\delta$ &                  0.019 &                  0.019 \\
+	& $k$ &                  0.326 &                  0.326 \\
+	& $\nu$ &                  0.001 &                  0.001 \\
+	$A(0, 2)+$ & $Y_0$ &          [-0.1, 0.045] &         [0.055, -0.07] \\
+	& $\delta$ &                  0.052 &                  0.019 \\
+	& $k$ &         [0.526, 0.969] &         [1.062, 0.488] \\
+	& $\nu$ &          [0.001, 0.25] &         [0.018, 0.001] \\
+	& $\rho$ &                  0.456 &                 -0.643 \\
+	$A(1, 1)+$ & $X_0$ &                  0.001 &                  0.001 \\
+	& $\alpha$ &                  0.279 &                  0.096 \\
+	& $\delta$ &                 -0.013 &                  -0.01 \\
+	& $\sigma$ &                  0.129 &                   0.25 \\
+	& $\theta$ &                  0.035 &                  0.071 \\
+	$A(2, 2)+$ & $X_0$ &         [0.012, 0.069] &          [0.079, 0.02] \\
+	& $\alpha$ &          [0.328, 0.92] &         [2.115, 0.418] \\
+	& $\delta$ &                 -0.079 &                 -0.089 \\
+	& $\sigma$ &          [0.25, 0.147] &         [0.137, 0.021] \\
+	& $\theta$ &         [0.094, 0.023] &         [0.043, 0.065] \\
+	$A(3, 3)+$ & $X_0$ &  [0.003, 0.033, 0.061] &  [0.054, 0.027, 0.001] \\
+	& $\alpha$ &  [0.291, 2.303, 1.296] &  [0.736, 0.007, 0.079] \\
+	& $\delta$ &                   -0.1 &                 -0.085 \\
+	& $\sigma$ &    [0.25, 0.25, 0.243] &  [0.198, 0.048, 0.121] \\
+	& $\theta$ &    [0.072, 0.063, 0.0] &    [0.047, 0.0, 0.075] \\
+	$A(3, 4)+$ & $X_0$ &  [0.048, 0.025, 0.002] &    [0.001, 0.1, 0.001] \\
+	& $Y_0$ &                 -0.006 &                 -0.009 \\
+	& $\alpha$ &  [0.001, 2.249, 0.054] &  [2.012, 1.052, 0.381] \\
+	& $\delta$ &                 -0.068 &                   -0.1 \\
+	& $k$ &                      3 &                  1.625 \\
+	& $\nu$ &                  0.157 &                  0.155 \\
+	& $\sigma$ &   [0.025, 0.25, 0.166] &   [0.105, 0.164, 0.25] \\
+	& $\theta$ &    [0.045, 0.009, 0.1] &    [0.042, 0.0, 0.096] \\
+	\bottomrule
+\end{tabular}
+
+\begin{tabular}{llll}
+	\toprule
+	Germany&       &               Original &            Alternative \\
+	\midrule
+	$A(0, 1)+$ & $Y_0$ &                 -0.037 &                 -0.037 \\
+	& $\delta$ &                  0.028 &                  0.028 \\
+	& $k$ &                  0.105 &                  0.105 \\
+	& $\nu$ &                  0.016 &                  0.016 \\
+	$A(0, 2)+$ & $Y_0$ &       [-0.021, -0.094] &       [-0.022, -0.059] \\
+	& $\delta$ &                    0.1 &                  0.025 \\
+	& $k$ &         [0.428, 0.005] &         [0.063, 2.854] \\
+	& $\nu$ &         [0.001, 0.001] &         [0.001, 0.219] \\
+	& $\rho$ &                  0.641 &                   0.99 \\
+	$A(1, 1)+$ & $X_0$ &                  0.053 &                  0.027 \\
+	& $\alpha$ &                  0.077 &                  0.139 \\
+	& $\delta$ &                 -0.062 &                 -0.036 \\
+	& $\sigma$ &                  0.062 &                  0.009 \\
+	& $\theta$ &                  0.098 &                  0.052 \\
+	$A(2, 2)+$ & $X_0$ &         [0.016, 0.072] &         [0.012, 0.002] \\
+	& $\alpha$ &         [0.061, 0.873] &         [0.005, 0.304] \\
+	& $\delta$ &                 -0.098 &                 -0.028 \\
+	& $\sigma$ &          [0.133, 0.15] &         [0.001, 0.221] \\
+	& $\theta$ &          [0.09, 0.071] &           [0.1, 0.027] \\
+	$A(3, 3)+$ & $X_0$ &  [0.045, 0.061, 0.001] &  [0.021, 0.036, 0.023] \\
+	& $\alpha$ &    [0.008, 3.0, 0.565] &  [0.175, 0.001, 1.515] \\
+	& $\delta$ &                   -0.1 &                 -0.086 \\
+	& $\sigma$ &  [0.001, 0.181, 0.072] &   [0.033, 0.223, 0.25] \\
+	& $\theta$ &    [0.1, 0.027, 0.035] &  [0.099, 0.087, 0.005] \\
+	$A(3, 4)+$ & $X_0$ &    [0.057, 0.012, 0.1] &  [0.001, 0.082, 0.099] \\
+	& $Y_0$ &                   -0.1 &                 -0.099 \\
+	& $\alpha$ &    [2.183, 0.057, 3.0] &  [0.512, 0.613, 0.624] \\
+	& $\delta$ &                 -0.071 &                   -0.1 \\
+	& $k$ &                  1.182 &                  0.005 \\
+	& $\nu$ &                  0.246 &                  0.001 \\
+	& $\sigma$ &   [0.001, 0.001, 0.12] &   [0.242, 0.242, 0.25] \\
+	& $\theta$ &  [0.001, 0.031, 0.081] &    [0.1, 0.058, 0.064] \\
+	\bottomrule
+\end{tabular}
+
+\begin{tabular}{llll}
+	\toprule
+	France&       &               Original &            Alternative \\
+	\midrule
+	$A(0, 1)+$ & $Y_0$ &                 -0.049 &                 -0.049 \\
+	& $\delta$ &                  0.039 &                  0.039 \\
+	& $k$ &                  0.115 &                  0.115 \\
+	& $\nu$ &                  0.021 &                  0.021 \\
+	$A(0, 2)+$ & $Y_0$ &       [-0.088, -0.027] &       [-0.027, -0.088] \\
+	& $\delta$ &                    0.1 &                    0.1 \\
+	& $k$ &         [0.005, 0.348] &         [0.349, 0.005] \\
+	& $\nu$ &         [0.001, 0.001] &         [0.003, 0.001] \\
+	& $\rho$ &                  -0.99 &                  -0.65 \\
+	$A(1, 1)+$ & $X_0$ &                  0.016 &                  0.053 \\
+	& $\alpha$ &                  0.159 &                  0.107 \\
+	& $\delta$ &                 -0.025 &                 -0.062 \\
+	& $\sigma$ &                  0.006 &                  0.071 \\
+	& $\theta$ &                  0.047 &                    0.1 \\
+	$A(2, 2)+$ & $X_0$ &          [0.02, 0.064] &         [0.001, 0.001] \\
+	& $\alpha$ &         [2.999, 0.131] &         [0.185, 0.004] \\
+	& $\delta$ &                   -0.1 &                 -0.016 \\
+	& $\sigma$ &         [0.179, 0.046] &         [0.231, 0.001] \\
+	& $\theta$ &           [0.028, 0.1] &           [0.041, 0.1] \\
+	$A(3, 3)+$ & $X_0$ &  [0.095, 0.001, 0.009] &  [0.001, 0.002, 0.076] \\
+	& $\alpha$ &   [2.411, 1.31, 0.064] &  [0.004, 0.489, 0.725] \\
+	& $\delta$ &                   -0.1 &                 -0.083 \\
+	& $\sigma$ &    [0.1, 0.116, 0.039] &   [0.001, 0.143, 0.14] \\
+	& $\theta$ &    [0.0, 0.095, 0.035] &    [0.098, 0.098, 0.0] \\
+	$A(3, 4)+$ & $X_0$ &  [0.002, 0.012, 0.043] &  [0.016, 0.069, 0.001] \\
+	& $Y_0$ &                  0.032 &                 -0.004 \\
+	& $\alpha$ &   [0.012, 0.545, 2.65] &   [0.005, 2.999, 0.39] \\
+	& $\delta$ &                 -0.087 &                 -0.075 \\
+	& $k$ &                  0.963 &                  2.175 \\
+	& $\nu$ &                  0.177 &                  0.001 \\
+	& $\sigma$ &  [0.023, 0.218, 0.195] &   [0.001, 0.222, 0.16] \\
+	& $\theta$ &  [0.049, 0.099, 0.021] &     [0.1, 0.034, 0.04] \\
+	\bottomrule
+\end{tabular}
+
+\begin{tabular}{llll}
+	\toprule
+	Italy&       &               Original &            Alternative \\
+	\midrule
+	$A(0, 1)+$ & $Y_0$ &                 -0.048 &                 -0.048 \\
+	& $\delta$ &                  0.039 &                  0.039 \\
+	&  $k$ &                  0.378 &                  0.378 \\
+	&  $\nu$ &                  0.001 &                  0.001 \\
+	$A(0, 2)+$ & $Y_0$ &          [-0.1, 0.064] &          [0.062, -0.1] \\
+	& $\delta$ &                  0.039 &                  0.041 \\
+	& $k$ &         [0.511, 0.904] &         [0.919, 0.512] \\
+	& $\nu$ &         [0.001, 0.001] &         [0.057, 0.001] \\
+	& $\rho$ &                 -0.886 &                  0.173 \\
+	$A(1, 1)+$ & $X_0$ &                  0.001 &                  0.001 \\
+	& $\alpha$ &                  0.213 &                  0.213 \\
+	& $\delta$ &                 -0.008 &                 -0.008 \\
+	& $\sigma$ &                   0.25 &                   0.25 \\
+	& $\theta$ &                  0.069 &                  0.069 \\
+	$A(2, 2)+$ & $X_0$ &         [0.001, 0.051] &         [0.038, 0.011] \\
+	& $\alpha$ &         [0.433, 0.647] &         [0.005, 0.318] \\
+	& $\delta$ &                 -0.056 &                 -0.055 \\
+	& $\sigma$ &         [0.137, 0.142] &         [0.021, 0.005] \\
+	& $\theta$ &           [0.099, 0.0] &         [0.066, 0.057] \\
+	$A(3, 3)+$ & $X_0$ &   [0.014, 0.018, 0.02] &  [0.001, 0.046, 0.011] \\
+	& $\alpha$ &  [0.328, 1.651, 0.001] &  [0.028, 2.362, 0.385] \\
+	& $\delta$ &                  -0.05 &                  -0.05 \\
+	& $\sigma$ &   [0.09, 0.247, 0.018] &   [0.25, 0.087, 0.227] \\
+	& $\theta$ &   [0.07, 0.004, 0.006] &  [0.076, 0.018, 0.069] \\
+	$A(3, 4)+$ & $X_0$ &    [0.1, 0.001, 0.033] &  [0.047, 0.025, 0.086] \\
+	& $Y_0$ &                 -0.077 &                   -0.1 \\
+	& $\alpha$ &  [1.503, 2.256, 1.875] &  [1.761, 2.749, 1.214] \\
+	& $\delta$ &                 -0.058 &                 -0.065 \\
+	& $k$ &                  0.478 &                  0.525 \\
+	& $\nu$ &                  0.009 &                  0.001 \\
+	& $\sigma$ &  [0.249, 0.112, 0.197] &  [0.121, 0.234, 0.016] \\
+	& $\theta$ &    [0.0, 0.046, 0.052] &    [0.011, 0.094, 0.0] \\
+	\bottomrule
+\end{tabular}
+
+\section{Actual prices and calibrated prices of default models}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/OISvsSWAP}
+	\caption{Calibration and actual prices for OIS and swap rate}
+	\label{fig:OISvsSWAP}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/OISvsITA}
+	\caption{Calibration and actual prices for OIS and Italy}
+	\label{fig:OISvsSWAP}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/GERvsFRA}
+	\caption{Calibration and actual prices for Germany and France}
+	\label{fig:GERvsFRA}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{pic/GERvsITA}
+	\caption{Calibration and actual prices for Germany and Italy}
+	\label{fig:GERvsITA}
+\end{figure}
+
+\section{Relative errors of default models}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/credit_relative_errors}
+	\caption{Relative calibration errors for credit risk models}
+	\label{fig:credit_relative_errors}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{pic/credit_absolute_errors}
+	\caption{Absolute relative calibration errors for credit risk models}
+	\label{fig:credit_absolute_errors}
+\end{figure}
+
+\section{Comparison of calibrated parameters for affine models with default risk}
+
+\label{default parameter_comparision}
+
+\begin{table}[H]
+	\centering
+	\caption{Overnight index swap and swap curve}
+	\label{ois_swap}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+\begin{tabular}{lllllll}
+	\toprule
+	{} & (0, 0, 1),(0, 1, 0) & (0, 0, 1),(1, 0, 0) & (1, 0, 0),(1, 0, 0) & (1, 0, 0),(0, 1, 0) & (0, 0, 0),(0, 1, 1) & (0, 0, 0),(1, 1, 0) \\
+	\midrule
+	LGD    &                0.97 &               0.426 &               0.441 &               0.435 &               0.776 &               0.748 \\
+	$X_0$    &                0.01 &               0.047 &               0.001 &               0.013 &                 NaN &                 NaN \\
+	$Y_0$    &              -0.032 &              -0.036 &              -0.033 &              -0.036 &      [-0.032, 0.01] &     [0.012, -0.036] \\
+	$a_m$    &                 [0] &                 [0] &                 [1] &                 [1] &                  [] &                  [] \\
+	$\alpha$  &                   3 &               0.544 &               0.228 &               2.857 &                 NaN &                 NaN \\
+	$b_m$    &                 [1] &                 [1] &                 [1] &                 [1] &                  [] &                  [] \\
+	$c_i$    &                 [1] &                 [1] &                 [1] &                 [1] &              [1, 0] &              [1, 1] \\
+	$d_i$    &                 [0] &                 [1] &                 [1] &                 [0] &              [0, 1] &              [1, 0] \\
+	$\delta$  &               0.017 &               0.017 &               0.005 &               0.017 &               0.017 &               0.017 \\
+	$k$      &               0.314 &               0.384 &               2.508 &               0.342 &      [0.321, 2.727] &       [2.48, 0.342] \\
+	$\nu$     &               0.001 &               0.002 &               0.219 &               0.001 &       [0.007, 0.25] &      [0.001, 0.001] \\
+	$\rho$    &                 NaN &                 NaN &                 NaN &                 NaN &               -0.99 &               0.258 \\
+	$\sigma$  &               0.041 &               0.041 &               0.032 &               0.161 &                 NaN &                 NaN \\
+	spread &               0.002 &               0.002 &               0.002 &               0.002 &               0.004 &               0.002 \\
+	$\theta$  &                   0 &                   0 &               0.015 &                   0 &                 NaN &                 NaN \\
+	\bottomrule
+\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Overnight index swap and Italy}
+	\label{ois_italy}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+\begin{tabular}{lllllll}
+	\toprule
+	{} & (0, 0, 1),(0, 1, 0) & (0, 0, 1),(1, 0, 0) & (1, 0, 0),(1, 0, 0) & (1, 0, 0),(0, 1, 0) & (0, 0, 0),(0, 1, 1) & (0, 0, 0),(1, 1, 0) \\
+	\midrule
+	LGD    &               0.294 &               0.798 &                0.95 &               0.766 &               0.911 &                0.56 \\
+	$X_0$    &               0.004 &               0.037 &               0.049 &               0.001 &                     &                     \\
+	$Y_0$    &              -0.031 &              -0.038 &              -0.056 &               0.021 &    [-0.046, -0.071] &    [-0.023, -0.017] \\
+	$a_m$    &                 [0] &                 [0] &                 [1] &                 [1] &                  [] &                  [] \\
+	$\alpha$  &               0.577 &               1.335 &               2.601 &               0.146 &                     &                     \\
+	$b_m$    &                 [1] &                 [1] &                 [1] &                 [1] &                  [] &                  [] \\
+	$c_i$    &                 [1] &                 [1] &                 [1] &                 [1] &              [1, 0] &              [1, 1] \\
+	$d_i$    &                 [0] &                 [1] &                 [1] &                 [0] &              [0, 1] &              [1, 0] \\
+	$\delta$  &               0.017 &               0.024 &               0.004 &              -0.016 &               0.017 &               0.017 \\
+	$k$      &               0.303 &               0.276 &               0.736 &               2.761 &       [0.596, 2.63] &      [0.316, 2.403] \\
+	$\nu$     &               0.001 &               0.032 &                0.01 &                0.17 &      [0.007, 0.151] &      [0.016, 0.141] \\
+	$\rho$    &                     &                     &                     &                     &              -0.594 &              -0.896 \\
+	$\sigma$  &               0.014 &               0.066 &               0.212 &               0.234 &                     &                     \\
+	spread &               0.001 &               0.007 &               0.013 &               0.001 &               0.023 &               0.025 \\
+	$\theta$  &               0.022 &               0.035 &               0.012 &                0.06 &                     &                     \\
+	\bottomrule
+\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Germany and Italy}
+	\label{germany_italy}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+		\begin{tabular}{lllllll}
+			\toprule
+			{} & (0, 0, 1),(0, 1, 0) & (0, 0, 1),(1, 0, 0) & (1, 0, 0),(1, 0, 0) & (1, 0, 0),(0, 1, 0) & (0, 0, 0),(0, 1, 1) & (0, 0, 0),(1, 1, 0) \\
+			\midrule
+			LGD    &               0.354 &               0.583 &               0.665 &               0.605 &                0.37 &               0.328 \\
+			$X_0$    &               0.003 &               0.083 &               0.001 &               0.001 &                     &                     \\
+			$Y_0$    &              -0.028 &              -0.042 &              -0.006 &              -0.018 &    [-0.028, -0.022] &    [-0.022, -0.063] \\
+			$a_m$    &                 [0] &                 [0] &                 [1] &                 [1] &                  [] &                  [] \\
+			$\alpha$  &                0.87 &               1.809 &                0.04 &               0.591 &                     &                     \\
+			$b_m$    &                 [1] &                 [1] &                 [1] &                 [1] &                  [] &                  [] \\
+			$c_i$    &                 [1] &                 [1] &                 [1] &                 [1] &              [1, 0] &              [1, 1] \\
+			$d_i$    &                 [0] &                 [1] &                 [1] &                 [0] &              [0, 1] &              [1, 0] \\
+			$\delta$  &               0.014 &               0.013 &              -0.011 &              -0.002 &               0.014 &               0.023 \\
+			$k$      &               0.237 &               0.485 &                1.88 &               0.175 &      [0.237, 0.883] &      [1.803, 0.631] \\
+			$\nu$     &               0.001 &               0.005 &               0.005 &               0.001 &      [0.001, 0.001] &      [0.063, 0.087] \\
+			$\rho$    &                     &                     &                     &                     &              -0.348 &               0.012 \\
+			$\sigma$  &               0.111 &               0.115 &                0.18 &               0.023 &                     &                     \\
+			spread &               0.001 &               0.024 &               0.013 &               0.009 &               0.026 &               0.027 \\
+			$\theta$  &               0.025 &               0.002 &               0.094 &               0.016 &                     &                     \\
+			\bottomrule
+		\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Germany and France}
+	\label{germany_france}
+	
+	\begin{adjustbox}{width=\textwidth}
+		
+\begin{tabular}{llllll}
+	\toprule
+	{} & (0, 0, 1),(0, 1, 0) & (0, 0, 1),(1, 0, 0) & (1, 0, 0),(1, 0, 0) & (0, 0, 0),(0, 1, 1) & (0, 0, 0),(1, 1, 0) \\
+	\midrule
+	LGD    &               0.817 &               0.891 &                   1 &               0.596 &               0.263 \\
+	$X_0$    &               0.001 &                0.01 &               0.008 &                     &                     \\
+	$Y_0$    &              -0.039 &              -0.027 &              -0.016 &    [-0.038, -0.011] &    [-0.008, -0.031] \\
+	$a_m$    &                 [0] &                 [0] &                 [1] &                  [] &                  [] \\
+	$\alpha$  &               0.116 &               0.001 &               0.029 &                     &                     \\
+	$b_m$    &                 [1] &                 [1] &                 [1] &                  [] &                  [] \\
+	$c_i$    &                 [1] &                 [1] &                 [1] &              [1, 0] &              [1, 1] \\
+	$d_i$    &                 [0] &                 [1] &                 [1] &              [0, 1] &              [1, 0] \\
+	$\delta$  &               0.029 &               0.019 &              -0.009 &               0.029 &               0.023 \\
+	$k$      &               0.116 &               0.127 &                2.98 &       [0.103, 1.38] &      [2.307, 0.105] \\
+	$\nu$     &               0.018 &               0.008 &                0.25 &      [0.016, 0.034] &      [0.094, 0.016] \\
+	$\rho$    &                     &                     &                     &              -0.978 &              -0.853 \\
+	$\sigma$  &               0.008 &               0.163 &               0.085 &                     &                     \\
+	spread &                   0 &               0.013 &                   0 &               0.003 &               0.004 \\
+	$\theta$  &               0.007 &               0.022 &               0.079 &                     &                     \\
+	\bottomrule
+\end{tabular}
+		
+	\end{adjustbox}
+	
+\end{table}
+
+\section{Dynamic Euribor calibration without credit risk}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\linewidth]{pic/euribor_errors_by_maturities}
+	\caption{Relative errors in Euribor fitting by maturities.}
+	\label{fig:euribor_errors_by_maturities}
+\end{figure}
+

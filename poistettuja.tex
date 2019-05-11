@@ -1,0 +1,91 @@
+\begin{thm}[Abstract Bayes' Rule]
+	Let $\Pf$ and $\Pm$ be probability measures on the probability space $(\Omega, \F)$ with $\Pm \ll \Pf$ and Radon-Nikod\'{y}m derivate
+	\begin{align}
+	L = \frac{ \dx \Pm }{ \dx \Pf } .
+	\end{align}
+	If $\G$ is a sub-$\sigma$ algebra of $\F$ and $X$ is integrable $\G$-measurable random variable, then
+	\begin{align}
+	\E_{\Pm} (X| \G) = \frac{\E_{\Pf} (LX| \G)}{\E_{\Pf} (L| \G)} .
+	\end{align}
+\end{thm}
+
+\begin{proof}
+	First we note that
+	\begin{align}
+	\Pm ( \E_{\Pf} (L| \G) = 0 ) &= \int \1_{ \{ \E_{\Pf} (L| \G) = 0 \} } \dx \Pm \\
+	&= \int_{ \{ \E_{\Pf} (L| \G) = 0 \} } L \dx \Pf \\
+	&= \int_{ \{ \E_{\Pf} (L| \G) = 0 \} } \E_{\Pf} (L| \G) \dx \Pf \\
+	&= 0
+	\end{align}
+	which implies that $\E_{\Pf} (L| \G) > 0$. Now we have to prove only that 
+	\begin{align}
+	\E_{\Pm} (X| \G) \E_{\Pf} (L| \G) = \E_{\Pf} (LX| \G) .
+	\end{align}
+	If $G \in \G$, then $\E_{\Pm} (X| \G)$ is $\G$-measurable and thus
+	\begin{align}
+	\int_G \E_{\Pm} (X| \G) \E_{\Pf} (L| \G) \dx \Pf &= \int_G \E_{\Pf} (L \E_{\Pm} (X| \G) | \G) \dx \Pf  \\
+	&= \int_G L \E_{\Pm} (X| \G)  \dx \Pf  \\
+	&= \int_G \E_{\Pm} (X| \G)  \dx \Pm \\
+	&= \int_G X \dx \Pm \\
+	&= \int_G L X \dx \Pf \\
+	&= \int_G \E_{\Pf} (LX | \G ) \dx \Pf .
+	\end{align}
+	and concludes the proof.
+\end{proof}
+
+If filtration $(\F_t)$ consists of sub-$\sigma$-algebras of $\F$, then, by Radon-Nikod\'{y}m-theorem, we have Radon-Nikod\'{y}m derivates
+\begin{align}
+L_t = \frac{\dx \Pm}{\dx \Pf}
+\end{align}
+with respect to $\sigma$-algebra $\F_t$ for all $t \geq 0$. By equation \ref{Radon-Nikodymderivateconditional},
+\begin{align}
+L_t = \E_{\Pf} ( L_s | \F_t )
+\end{align}
+for $0 \leq t < s$ implying that $(L_t)$ is a martingale with respect to the filtration $(\F_t)$. The process $(L_t)$ is called likelihood-process.
+
+Abstract Bayes' rule and the fact $\E_{\Pf} (L_t) = 1$ implies the following theorem.
+
+\begin{thm}
+	Let $\Pf$ and $\Pm$ be probability measures with $\Pm \ll \Pf$ and Radon-Nikod\'{y}m derivate
+	\begin{align}
+	L = \frac{ \dx \Pm }{ \dx \Pf } .
+	\end{align}
+	Now the process $(X_t)$ is $\Pm$-martingale if and only if $LX_t$ is $\Pf$-martingale, where $L$ is the likelihood-process.
+\end{thm}
+
+\subsection{A consequence of Radon-Nikod\'{y}m-theorem}
+
+If $\G$ is a sub-$\sigma$-algebra of $\F$, then Radon-Nikod\'{y}m-derivates $L_{\G}$ and $L_{\F}$ of $\Pf$ with respect to $\Pm$ need not be equal as $L_{\F}$ may not be $\G$-measurable. However, we know that for every $G \in \G$
+\begin{align}
+\int_G \E_{\Pf} ( L_{\F} | \G ) \dx \Pf = \int_G L_{\F} \dx \Pf = \Pm (G)
+\end{align}
+meaning that 
+\begin{align}
+L_{\G} = \E_{\Pf} ( L_{\F} | \G ) .
+\end{align}
+
+Thus we have proved the following.
+
+\begin{lemma}
+	If $\Pm \ll \Pf$ and $\G$ is a sub-$\sigma$-algebra of $\F$, then
+	\begin{align}
+	\label{Radon-Nikodymderivateconditional}
+	L_{\G} = \E_{\Pf} ( L_{\F} | \G ) ,
+	\end{align}
+	where $L_{\G}$ is Radon-Nikod\'{y}m-derivate of $\Pf$ with respect to $\Pm$ and filtration $\G$ and $L_{\F}$ is Radon-Nikod\'{y}m-derivate of $\Pf$ with respect to $\Pm$ and filtration $\F$.
+\end{lemma}
+
+Let $\Pm$ and $\Pf$ be equivalent measures with a filtration $(\F_t)$. W define a density process by
+\begin{align}
+\Lambda_t = \E_{\Pf} \left( \frac{\dx \Pm}{\dx \Pf} \ | \ \F_t \right)
+\end{align}
+Now	
+\begin{align}
+\E_{\Pf} \left( \Lambda_T \ | \ \F_t \right) &= \E_{\Pf} \left( \E_{\Pf} \left( \frac{\dx \Pm}{\dx \Pf} \ | \ \F_T \right) \ | \ \F_t \right) \\
+&= \E_{\Pf} \left( \frac{\dx \Pm}{\dx \Pf} \ | \ \F_t \right) \\
+&= \Lambda_t
+\end{align}
+for all $0 \leq t \leq T$ meaning that $\Lambda_t$ is a martingale. Also
+\begin{align}
+\Lambda_0 = \E_{\Pf} \left( \frac{\dx \Pm}{\dx \Pf} \ | \ \F_0 \right)
+\end{align}	

@@ -1,0 +1,150 @@
+\section{Option valuation using Fourier inversion method}
+\label{chap:fourier}
+
+Now we show how to value options using the Fourier inversion method introduced by \textcite{heston1993closed}. Our approach is based on \textcite[pp. 222--233]{nawalkabeliaevasoto2007dynamic}.
+
+We make the following assumptions. The interest rate model is affine $A_M(N)$ model. Thus
+	\begin{align}
+		r(t) = \delta(t) + \sum_{m=1}^M X_m(t) + \sum_{i=1}^{N-M} Y_i(t) .
+	\end{align}
+The correlated gaussian process are
+\begin{align}
+\dx Y_i(t) &= - k_i Y_i(t) \dx t + \nu_i \dx W_i (t),
+\end{align}
+where $W_i$ is a Wiener process and 
+\begin{align}
+\dx W_i (t) \dx W_j (t) &= \rho_{ij} \dx t    
+\end{align}
+for all $i,j = 1,2, \ldots, N-M$. Here $-1 < \rho_{ij} = \rho_{ji} < 1$ and $\rho_{ii} = 1$. The $M$ square-root processes are
+\begin{align}
+\dx X_m(t) = \alpha_m ( \theta_m - X_m(t) ) \dx t + \sigma_m \sqrt{ X_m(t) } \dx Z_m (t)
+\end{align}
+where $Z_m$ are independent Wiener process and
+\begin{align}
+\dx W_i (t) \dx Z_m (t) &= 0    
+\end{align}
+for all $i = 1,2, \ldots, N-M$ and $m = 1,2, \ldots, M$. 
+
+We explicitly assume that $\delta(t) = 0$ for all $t \geq 0$ to keep notation simple and we do the dynamic extension of Section \ref{sec:dynamicextension} to add the $\delta(t)$ afterwards. Now zero-coupon bond prices are given by
+	\begin{align}
+		\label{fourierbondaffineassumption}
+		\Bond(t,T) = \e^{A(\tau) - B^{\top} (\tau) X(t) - C^{\top} (\tau) Y(t) } ,
+	\end{align} 
+where $\tau = T-t$. This is a simplification from \textcite[p. 433--435]{nawalkabeliaevasoto2007dynamic}.
+	
+The price of a call option expiring on $S$ written on $T$-bond with strike price $K$ is
+	\begin{align}
+		c(t) &= \E_{\Pm_0} \left( \e^{ - \int_t^S r(s) \dx s } \left( \Bond(S,T)) - K \right)_+ \ | \ \F_t \right) \\
+			&= \E_{\Pm_0} \left( \e^{ - \int_t^S r(s) \dx s } \left( \Bond(S,T)) - K \right) \1_{ \Bond(S,T) - K \geq 0 } \ | \ \F_t \right) \\
+			&= \Bond(t,T) \Pi_1 - K \Bond(t,S) \Pi_2 ,
+	\end{align}
+where
+	\begin{align}
+		\Pi_1 &= \E_{\Pm_0} \left( \frac{\e^{ - \int_t^S r(s) \dx s } \Bond(S,T) \1_{ \Bond(S,T) \geq K }}{\Bond(t,T)} \ | \ \F_t \right) \\
+		\Pi_2 &= \E_{\Pm_0} \left( \frac{\e^{ - \int_t^S r(s) \dx s } \1_{ \Bond(S,T) \geq K }}{\Bond(t,T)} \ | \ \F_t \right) .
+	\end{align}
+Here all the expectations are taken under the risk-free measure. We now write $\Pi_1$ under a different measure. As $\Bond(t,T) \geq K$ is equivalent to $\ln \Bond(t,T) \geq  \ln K$, we change the variable by $y = \ln \Bond(t,T)$ and get
+	\begin{align}
+		\label{fourierchangeofvariable}
+		\Pi_1 &= \int_{\ln K}^{\infty} \left( \frac{\e^{ - \int_t^S r(s) \dx s } \Bond(S,T) }{\Bond(t,T)} f(y) \right) \ \dx y .
+	\end{align}
+We notice that 
+	\begin{align}
+		\xi_1 (t) &= \frac{\Bond(S,T) \Bank(t)}{\Bond(t,T) \Bank(S)} \\
+		&= \frac{ \Bond(S,T) }{\Bond(t,T)} \e^{ - \int_t^S r(s) \dx s } .
+\end{align}
+is the Radon-Nikod\'{y}m derivative of $T$-forward measure with respect to risk-free measure. Thus
+	\begin{align}
+		\Pi_1 &= \int_{\ln K}^{\infty} \xi_1(t) f(y) \ \dx y \\
+			&= \int_{\ln K}^{\infty} f_1(y) \ \dx y
+\end{align}
+where $f_1$ is the probability density function under the $T$-forward measure. Let $g_1$ be the characteristic function of $T$-forward measure, hence 
+	\begin{align}
+		g_1 (\omega) &= \int_{-\infty}^{\infty} \e^{i\omega y} f_1(y) \ \dx y \\
+			&= \int_{-\infty}^{\infty} \left( \e^{i\omega y} \xi_1(t) f(y) \right) \ \dx y \\
+			&= \E_{\Pm_0} \left( \e^{i\omega \ln \Bond(S,T)} \xi_1(t)  \ | \ \F_t \right) \text{ and } \\
+		g_1 (\omega) \Bond(S,T) &= \E_{\Pm_0} \left( \e^{(1+i\omega) \ln \Bond(S,T)} \e^{ - \int_t^S r(s) \dx s } \ | \ \F_t \right)
+	\end{align}
+as, by Equation \ref{fourierbondaffineassumption},
+	\begin{align}
+		y = \ln \Bond(S,T) = A(\tau) - B^{\top} (\tau) X(t) - C^{\top} (\tau) Y(t) .
+	\end{align}
+Feynman-Kac theorem this expected value may be presented as a $N$-dimensional stochastic partial differential equation. \textcite{nawalkabeliaevasoto2007dynamic} shows that a solution is
+\begin{align}
+\exp \left( A_1^*(s) - \sum_{m=1}^M B_{1m}^*(s) X_m(t) - \sum_{i=1}^{N-M} C_{1m}^*(s) Y_i(t) \right) ,
+\end{align}
+where
+\begin{align}
+A_1^*(0) &= a_1 = A(U) ( 1+\boldsymbol{i} \omega ) \\ 
+B_{1m}^*(0) &= b_{1m} = B_m(U) ( 1+\boldsymbol{i} \omega ) \\ 
+C_{1i}^*(0) &= c_{1i} = C_i(U) ( 1+\boldsymbol{i} \omega )
+\end{align}
+for $i= 1,2, \ldots, N-M$ and $m=1,2, \ldots , M$. Here
+\begin{align}
+A_1^*(z) &= a_1  +  \frac{1}{2} \sum_{i=1}^{N-M} \sum_{j=1}^{N-M} \frac{\nu_i \nu_j \rho_{ij}}{k_ik_j} ( z - q_i C_i(z) - q_j C_j(z) \\ &+ q_iq_j \frac{1 - \exp^{ - (k_i+k_j)z } }{k_i+k_j} ) \\
+&- 2 \sum_{m=1}^M \frac{\alpha_m \theta_m}{\sigma_m^2} \left( \beta_{3m} z + \log ( \frac{1 - \beta_ {4m} \exp^{ \beta_{1m} z } }{1 - \beta_{4m}} )  \right) \\
+B_{1m}^*(z) &= \frac{2}{\sigma_m^2} \left( \frac{ \beta_{2m} \beta_{4m} \exp^{\beta_{1m} z} - \beta_{3m} }{ \beta_{4m} \exp^{\beta_{1m} z} - 1 } \right) \\
+C_{1i}^* (z) &= \frac{1-q_i \exp^{-k_iz}}{k_i},
+\end{align}
+where
+\begin{align}
+q_i &= 1 - k c_{1j} \\
+\beta_{1m} &= \sqrt{\alpha_m^2 + 2 \sigma_m^2} \\
+\beta_{2m} &= \frac{- \alpha_m + \beta_{1m}}{2} \\
+\beta_{3m} &= \frac{- \alpha_m - \beta_{1m}}{2} \\
+\beta_{4m} &= \frac{ - \alpha_m - \beta_{1m} - b_{1m} \sigma_m^2 }{ - \alpha_m + \beta_{1m} - b_{1m} \sigma_m^2 }
+\end{align}
+for $i= 1,2, \ldots, N-M$ and $m=1,2, \ldots , M$. It should be noted that $a_1, b_{1m}$ and $c_{1i}$ are actually functions of $\omega$ and therefore $A_1^*, B_{1m}^*$ and $C_{1i}^*$ also depend on $\omega$.
+
+Thus the characteristic function is
+\begin{align}
+g_1 (\omega) &= \frac{ \exp \left( A_1^*(s) - \sum_{m=1}^M B_{1m}^*(s) X_m(t) - \sum_{i=1}^{N-M} C_{1m}^*(s) Y_i(t)  \right) }{\Bond(t,T)} 
+\end{align}
+which allows us to calculate the values of characteristic functions. Now
+	\begin{align}
+		\Pi_1 &= \int_{\ln K}^{\infty} f_1(y) \ \dx y \\
+			&= \frac{1}{2} + \frac{1}{\pi} \int_0^{\infty} \Re \left( \frac{\exp^{-\boldsymbol{i}\omega \log K} g_1(\omega)}{\boldsymbol{i} \omega} \right) \dx \omega
+	\end{align}
+which can be calculated numerically. \textcite{nawalkabeliaevasoto2007dynamic} note that this computation only requires that the model has analytical bond pricing formulas, so it can be utilized in variety of models.
+
+
+We can solve $\Pi_2$ similarly. Instead of Equation \ref{fourierchangeofvariable}, we have
+	\begin{align}
+		\Pi_2 &= \int_{\ln K}^{\infty} \left( \frac{\e^{ - \int_t^S r(s) \dx s } \Bond(S,T) }{\Bond(t,T)} f(y) \right) \ \dx y .
+	\end{align}
+and similar reasoning shows that
+	\begin{align}
+		\Pi_2 = \frac{1}{2} + \frac{1}{\pi} \int_0^{\infty} \Re \left( \frac{\exp^{-\boldsymbol{i}\omega \log K} g_2(\omega)}{\boldsymbol{i} \omega} \right) \dx \omega .
+	\end{align}
+Now
+	\begin{align}
+		g_2 (\omega) &= \frac{ \exp \left( A_2^*(s) - \sum_{m=1}^M B_{2m}^*(s) X_m(t) - \sum_{i=1}^{N-M} C_{1m}^*(s) Y_i(t)  \right) }{\Bond(t,S)} 
+	\end{align}	
+where
+\begin{align}
+A_2^*(0) &= a_2 = A(U) ( \boldsymbol{i} \omega ) \\ 
+B_{2m}^*(0) &= b_{2m} = B_m(U) ( \boldsymbol{i} \omega ) \\ 
+C_{2i}^*(0) &= c_{2i} = C_i(U) ( \boldsymbol{i} \omega )
+\end{align}
+for $i= 1,2, \ldots, N-M$ and $m=1,2, \ldots , M$. Similarly as before 
+\begin{align}
+A_2^*(z) &= a_2  +  \frac{1}{2} \sum_{i=1}^{N-M} \sum_{j=1}^{N-M} \frac{\nu_i \nu_j \rho_{ij}}{k_ik_j} ( z - q_i C_i(z) - q_j C_j(z) \\ &+ q_iq_j \frac{1 - \exp^{ - (k_i+k_j)z } }{k_i+k_j} ) \\
+&- 2 \sum_{m=1}^M \frac{\alpha_m \theta_m}{\sigma_m^2} \left( \beta_{3m} z + \log ( \frac{1 - \beta_ {4m} \exp^{ \beta_{1m} z } }{1 - \beta_{4m}} )  \right) \\
+B_{2m}^*(z) &= \frac{2}{\sigma_m^2} \left( \frac{ \beta_{2m} \beta_{4m} \exp^{\beta_{1m} z} - \beta_{3m} }{ \beta_{4m} \exp^{\beta_{1m} z} - 1 } \right) \\
+C_{2i}^* (z) &= \frac{1-q_i \exp^{-k_iz}}{k_i},
+\end{align}
+where
+\begin{align}
+q_i &= 1 - k c_{2j} \\
+\beta_{1m} &= \sqrt{\alpha_m^2 + 2 \sigma_m^2} \\
+\beta_{2m} &= \frac{- \alpha_m + \beta_{2m}}{2} \\
+\beta_{3m} &= \frac{- \alpha_m - \beta_{2m}}{2} \\
+\beta_{4m} &= \frac{ - \alpha_m - \beta_{2m} - b_{2m} \sigma_m^2 }{ - \alpha_m + \beta_{2m} - b_{2m} \sigma_m^2 }
+\end{align}
+for $i= 1,2, \ldots, N-M$ and $m=1,2, \ldots , M$. Again, it should be noted that $a_2, b_{2m}$ and $c_{2i}$ are actually functions of $\omega$ and therefore $A_2^*, B_{2m}^*$ and $C_{2i}^*$ also depend on $\omega$.
+	
+Since the computations above involves numerical integration, it is computationally costly. However \textcite{carrmadan1999optionvaluation} showed that Fast Fourier Transform (FFT) can utilized in the computation, which can reduce the complexity significantly. Sadly, this was not attempted in this thesis. 
+
+As we explicitly assumed that $\delta = 0$, we can add the shift to the model by the extension method introduced in Section \ref{sec:dynamicextension}.
+
+

@@ -1,0 +1,104 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {english}{}
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.1}{\ignorespaces OTC derivatives notional amount outstanding. Source: \cite {bis2019statistics}}}{9}{figure.1.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1.2}{\ignorespaces OTC derivatives gross market values. Source: \cite {bis2019statistics}}}{9}{figure.1.2}% 
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Calibration errors for models without credit risk}}{99}{figure.6.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Error correlations for models without credit risk}}{100}{figure.6.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Mean absolute calibration error for models without credit risk}}{101}{figure.6.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Relative pricing errors of sample caps compared to prices given by OIS $A(3,4)+$-model}}{102}{figure.6.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Relative pricing errors of sample caps compared to prices given by swap $A(3,3)+$-model}}{103}{figure.6.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Mean absolute calibration error for models with default risk}}{104}{figure.6.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Euribor rates from February 26, 2004 to January 26, 2019}}{105}{figure.6.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Implied Euribor discount factors from February 26, 2004 to January 26, 2019}}{106}{figure.6.8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Correlation of Euribor rate changes from February 26, 2004 to January 26, 2019}}{106}{figure.6.9}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.10}{\ignorespaces Euribor rate and discount curves}}{107}{figure.6.10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.11}{\ignorespaces Euribor rate and discount curves}}{108}{figure.6.11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.12}{\ignorespaces Time series of mean absolute relative errors in Euribor fitting.}}{109}{figure.6.12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.13}{\ignorespaces Errors in Euribor fitting by model and maturity.}}{110}{figure.6.13}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.14}{\ignorespaces Errors in Euribor fitting by time period.}}{111}{figure.6.14}% 
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Interpolated interest rates and instantaneous forward rate curves}}{140}{figure.B.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.2}{\ignorespaces Interpolated interest rates}}{141}{figure.B.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.3}{\ignorespaces Theoretical zero coupon bond prices inferred from the rate data by using different interpolation methods}}{142}{figure.B.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.4}{\ignorespaces Theoretical zero coupon bond prices inferred from the rate data}}{143}{figure.B.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.5}{\ignorespaces Calibrated rates by model $A(0,1)$}}{145}{figure.B.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.6}{\ignorespaces Calibrated rates by model $A(1,1)$}}{146}{figure.B.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.7}{\ignorespaces Calibrated rates by model $A(0,2)$}}{147}{figure.B.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.8}{\ignorespaces Calibrated rates by model $A(1,2)$}}{148}{figure.B.8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.9}{\ignorespaces Calibrated rates by model $A(2,2)$}}{149}{figure.B.9}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.10}{\ignorespaces Calibrated rates by model $A(0,3)$}}{150}{figure.B.10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.11}{\ignorespaces Calibrated rates by model $A(1,3)$}}{151}{figure.B.11}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.12}{\ignorespaces Calibrated rates by model $A(2,3)$}}{152}{figure.B.12}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.13}{\ignorespaces Calibrated rates by model $A(2,4)$}}{153}{figure.B.13}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.14}{\ignorespaces Calibrated rates by model $A(3,3)$}}{154}{figure.B.14}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.15}{\ignorespaces Calibrated rates by model $A(3,4)$}}{155}{figure.B.15}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.16}{\ignorespaces Calibrated rates by model $A(4,5)$}}{156}{figure.B.16}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.17}{\ignorespaces Comparison of alternative calibrations for single factor models}}{157}{figure.B.17}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.18}{\ignorespaces Comparison of alternative calibrations for $2$-factor models}}{158}{figure.B.18}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.19}{\ignorespaces Comparison of alternative calibrations for multifactor models}}{159}{figure.B.19}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.20}{\ignorespaces Calibration and actual prices for OIS and swap rate}}{167}{figure.B.20}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.21}{\ignorespaces Calibration and actual prices for OIS and Italy}}{168}{figure.B.21}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.22}{\ignorespaces Calibration and actual prices for Germany and France}}{169}{figure.B.22}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.23}{\ignorespaces Calibration and actual prices for Germany and Italy}}{170}{figure.B.23}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.24}{\ignorespaces Relative calibration errors for credit risk models}}{171}{figure.B.24}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.25}{\ignorespaces Absolute relative calibration errors for credit risk models}}{172}{figure.B.25}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {B.26}{\ignorespaces Relative errors in Euribor fitting by maturities.}}{175}{figure.B.26}% 
